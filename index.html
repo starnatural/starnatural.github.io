@@ -47,43 +47,46 @@
   </div>
 
 <script>
-  // 1. Registrar el Service Worker
+  // Registrar Service Worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(() => console.log('Service Worker listo'))
-      .catch(err => console.error('Error SW:', err));
+    navigator.serviceWorker.register('./sw.js');
   }
 
-  let eventoInstalacion;
+  let deferredPrompt;
   const banner = document.getElementById('banner-instalacion');
   const btnInstalar = document.getElementById('btn-instalar');
+  const textoBanner = document.getElementById('texto-banner');
 
-  // 2. Capturar el evento de instalación
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    eventoInstalacion = e;
+  // Detectar si es Firefox
+  const esFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 
-    // Lanza la ventana emergente automáticamente en cuanto el navegador lo permite
-    // (Opcional) Puedes darle un pequeño retraso de 2 segundos para no saturar al cargar
-    setTimeout(() => {
-      lanzarInstalacionAutomatica();
-    }, 2000);
-  });
-
-  async function lanzarInstalacionAutomatica() {
-    if (eventoInstalacion) {
-      // Dispara directamente el mensaje nativo del sistema operativo/navegador
-      eventoInstalacion.prompt();
-      const { outcome } = await eventoInstalacion.userChoice;
-      console.log(`El usuario respondió: ${outcome}`);
-      eventoInstalacion = null;
+  if (esFirefox) {
+    // Para Firefox mostramos un mensaje instructivo directo
+    if (banner && textoBanner) {
+      textoBanner.innerText = "Para instalar la App, toca el menú (⋮) de Firefox y elige 'Instalar'";
+      btnInstalar.style.display = 'none'; // Ocultamos el botón porque Firefox no permite clic directo
+      banner.style.display = 'block';
     }
   }
 
-  // Mantenemos el botón manual por si el usuario cierra el prompt nativo y quiere volver a intentarlo
+  // Capturar evento para Chrome / Edge
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (banner) {
+      banner.style.display = 'block';
+    }
+  });
+
   if (btnInstalar) {
-    btnInstalar.addEventListener('click', () => {
-      lanzarInstalacionAutomatica();
+    btnInstalar.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`Resultado: ${outcome}`);
+        deferredPrompt = null;
+        banner.style.display = 'none';
+      }
     });
   }
 </script>
