@@ -46,40 +46,46 @@
     <button id="btn-instalar">Instalar</button>
   </div>
 
-  <script>
-    // 1. Registrar el Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('Service Worker registrado con éxito'))
-        .catch(err => console.error('Error al registrar Service Worker:', err));
+<script>
+  // 1. Registrar el Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('Service Worker listo'))
+      .catch(err => console.error('Error SW:', err));
+  }
+
+  let eventoInstalacion;
+  const banner = document.getElementById('banner-instalacion');
+  const btnInstalar = document.getElementById('btn-instalar');
+
+  // 2. Capturar el evento de instalación
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    eventoInstalacion = e;
+
+    // Lanza la ventana emergente automáticamente en cuanto el navegador lo permite
+    // (Opcional) Puedes darle un pequeño retraso de 2 segundos para no saturar al cargar
+    setTimeout(() => {
+      lanzarInstalacionAutomatica();
+    }, 2000);
+  });
+
+  async function lanzarInstalacionAutomatica() {
+    if (eventoInstalacion) {
+      // Dispara directamente el mensaje nativo del sistema operativo/navegador
+      eventoInstalacion.prompt();
+      const { outcome } = await eventoInstalacion.userChoice;
+      console.log(`El usuario respondió: ${outcome}`);
+      eventoInstalacion = null;
     }
+  }
 
-    // 2. Capturar el evento de instalación PWA
-    let eventoInstalacion;
-    const banner = document.getElementById('banner-instalacion');
-    const btnInstalar = document.getElementById('btn-instalar');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Previene que Chrome o Android muestren el aviso por defecto de inmediato
-      e.preventDefault();
-      // Guarda el evento para ejecutarlo después
-      eventoInstalacion = e;
-      // Muestra tu banner personalizado
-      banner.style.display = 'block';
+  // Mantenemos el botón manual por si el usuario cierra el prompt nativo y quiere volver a intentarlo
+  if (btnInstalar) {
+    btnInstalar.addEventListener('click', () => {
+      lanzarInstalacionAutomatica();
     });
-
-    // 3. Acción al hacer clic en el botón de instalar
-    btnInstalar.addEventListener('click', async () => {
-      if (eventoInstalacion) {
-        // Muestra el mensaje nativo del sistema
-        eventoInstalacion.prompt();
-        const { outcome } = await eventoInstalacion.userChoice;
-        console.log(`Respuesta del usuario: ${outcome}`);
-        // Oculta el banner una vez tomada la decisión
-        eventoInstalacion = null;
-        banner.style.display = 'none';
-      }
-    });
-  </script>
+  }
+</script>
 </body>
 </html>
