@@ -1,1 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Etiqueta - Star Natural</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #2e7d32;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .brand {
+            font-size: 14pt;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #2e7d32;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            font-size: 32pt;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #0f172a;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 14pt;
+            color: #475569;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .details-card {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2e7d32;
+        }
+
+        .detail-row {
+            display: table;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            display: table-cell;
+            font-weight: 600;
+            color: #64748b;
+            width: 40%;
+            font-size: 11pt;
+            text-transform: uppercase;
+        }
+
+        .detail-value {
+            display: table-cell;
+            font-weight: 700;
+            color: #0f172a;
+            width: 60%;
+            font-size: 12pt;
+        }
+
+        .price-section {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            color: #ffffff;
+            text-align: center;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .price-label {
+            font-size: 11pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .price-amount {
+            font-size: 36pt;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 9pt;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="brand">Star Natural</div>
+            <h1 class="title">ORIGEN</h1>
+            <div class="subtitle">Alimento en Disco Prensado</div>
+        </div>
+
+        <div class="details-card">
+            <div class="detail-row">
+                <div class="detail-label">Marca:</div>
+                <div class="detail-value">Star Natural</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Línea de Producto:</div>
+                <div class="detail-value">ORIGEN</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Presentación 1:</div>
+                <div class="detail-value">ORIGEN 360 mL</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Presentación 2:</div>
+                <div class="detail-value">ORIGEN 400 mL</div>
+            </div>
+        </div>
+
+        <div class="price-section">
+            <div class="price-label">Precio Especial</div>
+            <div class="price-amount">$15.555</div>
+        </div>
+
+        <div class="footer-note">
+            Documento de prueba generado para la línea de productos Star Natural - ORIGEN
+        </div>
+    </div>
+
+</body>
+</html>
