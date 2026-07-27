@@ -3,6 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Natural</title>
+  
+  <!-- Configuración PWA -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#10b981">
+  
+  <!-- Tipografía Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+  <!-- Encabezado / Header -->
+  <header class="header">
+    <h1 class="brand-title">StarNatural<span class="dot">.app</span></h1>
+  </header>
+
+  <!-- Banner de instalación PWA -->
+  <div id="pwa-banner" class="pwa-banner" style="display: none;">
+    <p>Instala la app de <strong>Star Natural</strong> en tu inicio para comprar más rápido.</p>
+    <button id="btn-install" class="btn-primary">Instalar App</button>
+  </div>
+
+  <!-- Contenido Principal / Catálogo -->
+  <main class="container">
+    <section class="hero">
+      <h2>Productos Naturales & Bienestar</h2>
+      <p>Descubre nuestra línea de alta calidad para tu salud.</p>
+    </section>
+
+    <!-- Lista de Productos (Ejemplo) -->
+    <section class="products-grid">
+      <div class="card">
+        <div class="card-badge">Estrella</div>
+        <h3>VCOL</h3>
+        <p class="subtitle">Colágeno Hidrolizado</p>
+        <button class="btn-secondary">Ver detalle</button>
+      </div>
+
+      <div class="card">
+        <h3>ORIGEN</h3>
+        <p class="subtitle">Alimento en Disco Prensado</p>
+        <button class="btn-secondary">Ver detalle</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Star Natural App</title>
 
   <!-- Vinculación del Manifest -->
