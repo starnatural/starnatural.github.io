@@ -3,174 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Star Natural</title>
-  
-  <!-- Configuración PWA -->
+  <title>Star Natural | Tienda Oficial</title>
+
+  <!-- PWA Metadata -->
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#10b981">
-  
-  <!-- Tipografía Urbanist -->
+  <meta name="theme-color" content="#0d9488">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Google Fonts: Urbanist -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700;1,800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./css/styles.css">
+  
+  <!-- SDK oficial del Widget de Wompi -->
+  <script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
 </head>
 <body>
 
-  <!-- Encabezado / Header -->
-  <header class="header">
-    <h1 class="brand-title">StarNatural<span class="dot">.app</span></h1>
+  <!-- Header principal -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-name">StarNatural<span class="dot">.app</span></span>
+      </div>
+      <button id="cart-icon-btn" class="cart-btn" aria-label="Ver Carrito">
+        🛒 <span id="cart-count" class="cart-badge">0</span>
+      </button>
+    </div>
   </header>
 
   <!-- Banner de instalación PWA -->
-  <div id="pwa-banner" class="pwa-banner" style="display: none;">
-    <p>Instala la app de <strong>Star Natural</strong> en tu inicio para comprar más rápido.</p>
-    <button id="btn-install" class="btn-primary">Instalar App</button>
+  <div id="pwa-install-banner" class="pwa-banner hidden">
+    <div class="pwa-content">
+      <div class="pwa-text">
+        <strong>Instala StarNatural.app</strong>
+        <span>Accede más rápido desde tu pantalla de inicio</span>
+      </div>
+      <button id="btn-install-app" class="btn-install">Instalar</button>
+    </div>
   </div>
 
-  <!-- Contenido Principal / Catálogo -->
-  <main class="container">
-    <section class="hero">
-      <h2>Productos Naturales & Bienestar</h2>
-      <p>Descubre nuestra línea de alta calidad para tu salud.</p>
+  <main class="main-container">
+    <!-- Seccion Hero / Banner -->
+    <section class="hero-card">
+      <span class="hero-tag">Salud & Bienestar Natural</span>
+      <h2>Nutrición avanzada para tu cuerpo</h2>
+      <p>Productos con registro sanitario, envío seguro a toda Colombia y pago protegido.</p>
     </section>
 
-    <!-- Lista de Productos (Ejemplo) -->
-    <section class="products-grid">
-      <div class="card">
-        <div class="card-badge">Estrella</div>
-        <h3>VCOL</h3>
-        <p class="subtitle">Colágeno Hidrolizado</p>
-        <button class="btn-secondary">Ver detalle</button>
-      </div>
-
-      <div class="card">
-        <h3>ORIGEN</h3>
-        <p class="subtitle">Alimento en Disco Prensado</p>
-        <button class="btn-secondary">Ver detalle</button>
+    <!-- Catálogo de Productos -->
+    <section class="catalog-section">
+      <h3 class="section-title">Nuestros Productos</h3>
+      <div class="product-grid" id="product-grid">
+        <!-- Carga dinámica por JS -->
       </div>
     </section>
   </main>
 
-  <script src="./js/app.js"></script>
-</body>
-</html>
+  <!-- Modal del Carrito -->
+  <div id="cart-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Tu Carrito de Compras</h3>
+        <button id="close-cart-btn" class="close-btn">&times;</button>
+      </div>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Star Natural App</title>
+      <div id="cart-items-container" class="cart-items">
+        <!-- Elementos del carrito cargados por JS -->
+      </div>
 
-  <!-- Vinculación del Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#2e7d32">
+      <div class="modal-footer">
+        <div class="summary-line">
+          <span>Subtotal:</span>
+          <strong id="cart-total">$0 COP</strong>
+        </div>
+        
+        <!-- Datos de Envío -->
+        <div class="shipping-form">
+          <h4>Datos para la Entrega</h4>
+          <input type="text" id="customer-name" placeholder="Nombre completo" required>
+          <input type="tel" id="customer-phone" placeholder="Celular (WhatsApp)" required>
+          <input type="text" id="customer-address" placeholder="Dirección y Ciudad" required>
+        </div>
 
-  <style>
-    /* Estilo para el banner de instalación */
-    #banner-instalacion {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #2e7d32;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      z-index: 1000;
-      text-align: center;
-    }
-
-    #btn-instalar {
-      background-color: #ffffff;
-      color: #2e7d32;
-      border: none;
-      padding: 8px 16px;
-      margin-left: 10px;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Banner de aviso -->
-  <div id="banner-instalacion">
-    <span>¿Instalar Star Natural App en tu móvil?</span>
-    <button id="btn-instalar">Instalar App</button>
+        <button id="btn-wompi-pay" class="btn-checkout">
+          🔒 Pagar con Wompi (Nequi / PSE / Tarjeta)
+        </button>
+      </div>
+    </div>
   </div>
 
-<script>
-  // Registrar Service Worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
-  }
+  <footer class="footer">
+    <p><strong>Star Natural</strong> • Bienestar Natural Garantizado</p>
+    <p class="sub">www.starnatural.app</p>
+  </footer>
 
-  let deferredPrompt;
-  const banner = document.getElementById('banner-instalacion');
-  const btnInstalar = document.getElementById('btn-instalar');
-  const textoBanner = document.getElementById('texto-banner');
-
-  // Detectar si es Firefox
-  const esFirefox = navigator.userAgent.toLowerCase().includes('firefox');
-
-  if (esFirefox) {
-    // Para Firefox mostramos un mensaje instructivo directo
-    if (banner && textoBanner) {
-      textoBanner.innerText = "Para instalar la App, toca el menú (⋮) de Firefox y elige 'Instalar'";
-      btnInstalar.style.display = 'none'; // Ocultamos el botón porque Firefox no permite clic directo
-      banner.style.display = 'block';
-    }
-  }
-
-  // Capturar evento para Chrome / Edge
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    if (banner) {
-      banner.style.display = 'block';
-    }
-  });
-
-  if (btnInstalar) {
-    btnInstalar.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`Resultado: ${outcome}`);
-        deferredPrompt = null;
-        banner.style.display = 'none';
-      }
-    });
-  }
-</script>
-
-  <!-- Cargar el SDK de Wompi -->
-<script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
-
-<script>
-  function abrirCheckoutWompi(montoEnCentavos, referenciaPedido) {
-    var checkout = new WidgetCheckout({
-      currency: 'COP',
-      amountInCents: montoEnCentavos, // Ejemplo: $50.000 COP es 5000000 (en centavos)
-      reference: referenciaPedido,    // Código único del pedido (ej: SN-1001)
-      publicKey: 'pub_prod_TU_LLAVE_PUBLICA_AQUI', // Tu llave pública de Wompi
-      redirectUrl: 'https://starnatural.app/confirmacion.html' // Página de éxito
-    });
-
-    checkout.open(function ( result ) {
-      var transaction = result.transaction;
-      console.log('Estado de la transacción: ', transaction.status);
-      if (transaction.status === 'APPROVED') {
-        alert('¡Pago aprobado! Procesando tu envío...');
-      }
-    });
-  }
-</script>
+  <script src="./js/app.js"></script>
 </body>
 </html>
