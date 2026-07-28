@@ -34,7 +34,7 @@ body {
 
 .brand-title {
   font-weight: 700;
-  font-style: italic;
+  font-style: normal;
   font-size: 1.8rem;
   margin: 0;
   color: var(--dark);
