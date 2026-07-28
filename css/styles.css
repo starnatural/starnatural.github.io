@@ -176,3 +176,34 @@ body {
 .btn-add-cart {
   width: 100%;
 }
+/* Botón Volver Arriba Flotante */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 46px;
+  height: 46px;
+  background-color: var(--dark);
+  color: #ffffff;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  font-size: 1.4rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 150;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-to-top.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+.back-to-top:active {
+  transform: scale(0.92);
+}
