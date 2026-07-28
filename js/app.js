@@ -4,24 +4,25 @@ const PRODUCTS = [
     name: "VCOL",
     badge: "Estrella",
     description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 15600,
-    unit: "Frasco x 360mL"
+    price: 65000,        // Precio de venta actual
+    originalPrice: 85000, // Precio original (tachado)
+    unit: "Frasco x 500g"
   },
   {
     id: "origen-disco",
     name: "ORIGEN",
     badge: "Línea Nutricional",
     description: "Alimento funcional prensado a base de fibra natural y extractos botánicos.",
-    price: 17800,
-    unit: "Caja x 12 discos"
+    price: 48000,        // Precio de venta actual
+    originalPrice: 60000, // Precio original (tachado)
+    unit: "Caja x 30 discos"
   }
 ];
 
 let cart = JSON.parse(localStorage.getItem("starnatural_cart") || "[]");
 let deferredPrompt = null;
 
-// Reemplaza esta llave con tu Llave Pública de Wompi en producción
-const WOMPI_PUBLIC_KEY = "pub_prod_hTKZ7t71m1Xue0eFgOc3vSvKTvcUl1gZ"; 
+const WOMPI_PUBLIC_KEY = "pub_prod_TU_LLAVE_PUBLICA_AQUI"; 
 
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
@@ -32,22 +33,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function renderProducts() {
   const container = document.getElementById("product-grid");
-  container.innerHTML = PRODUCTS.map(product => `
-    <div class="product-card">
-      <div class="product-header">
-        <div>
-          <h4 class="product-title">${product.name}</h4>
-          <span style="font-size:0.8rem; color:#64748b;">${product.unit}</span>
+  container.innerHTML = PRODUCTS.map(product => {
+    // Calculamos el ahorro exacto en pesos
+    const ahorro = product.originalPrice - product.price;
+    const ahorroFormateado = ahorro > 0 ? `🔥 ¡Ahorras $${ahorro.toLocaleString("es-CO")}!` : '';
+
+    return `
+      <div class="product-card">
+        <div class="product-header">
+          <div>
+            <h4 class="product-title">${product.name}</h4>
+            <span style="font-size:0.8rem; color:#64748b;">${product.unit}</span>
+          </div>
+          ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
         </div>
-        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+        <p class="product-desc">${product.description}</p>
+        
+        <!-- Precios y Ahorro -->
+        <div class="price-container">
+          <div class="prices-row">
+            <span class="product-price">$${product.price.toLocaleString("es-CO")} COP</span>
+            <span class="original-price">$${product.originalPrice.toLocaleString("es-CO")}</span>
+          </div>
+          ${ahorro > 0 ? `<span class="savings-tag">${ahorroFormateado}</span>` : ''}
+        </div>
+
+        <div class="product-footer" style="margin-top: 0.8rem;">
+          <button class="btn-add-cart" onclick="addToCart('${product.id}')">+ Agregar al Carrito</button>
+        </div>
       </div>
-      <p class="product-desc">${product.description}</p>
-      <div class="product-footer">
-        <span class="product-price">$${product.price.toLocaleString("es-CO")} COP</span>
-        <button class="btn-add-cart" onclick="addToCart('${product.id}')">+ Agregar</button>
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 function addToCart(productId) {
@@ -120,7 +136,7 @@ function handleWompiCheckout() {
   
   const checkout = new WidgetCheckout({
     currency: 'COP',
-    amountInCents: totalPrice * 100, // Wompi procesa en centavos
+    amountInCents: totalPrice * 100,
     reference: `SN-${Date.now()}`,
     publicKey: WOMPI_PUBLIC_KEY,
     customerData: { fullName: name, phoneNumber: phone, phoneNumberPrefix: '+57' }
