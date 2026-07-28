@@ -149,5 +149,28 @@
     });
   }
 </script>
+
+  <!-- Cargar el SDK de Wompi -->
+<script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
+
+<script>
+  function abrirCheckoutWompi(montoEnCentavos, referenciaPedido) {
+    var checkout = new WidgetCheckout({
+      currency: 'COP',
+      amountInCents: montoEnCentavos, // Ejemplo: $50.000 COP es 5000000 (en centavos)
+      reference: referenciaPedido,    // Código único del pedido (ej: SN-1001)
+      publicKey: 'pub_prod_TU_LLAVE_PUBLICA_AQUI', // Tu llave pública de Wompi
+      redirectUrl: 'https://starnatural.app/confirmacion.html' // Página de éxito
+    });
+
+    checkout.open(function ( result ) {
+      var transaction = result.transaction;
+      console.log('Estado de la transacción: ', transaction.status);
+      if (transaction.status === 'APPROVED') {
+        alert('¡Pago aprobado! Procesando tu envío...');
+      }
+    });
+  }
+</script>
 </body>
 </html>
