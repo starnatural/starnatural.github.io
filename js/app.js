@@ -172,3 +172,22 @@ function setupPWAInstall() {
     navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
   }
 }
+// Detectar el desplazamiento (scroll) para mostrar/ocultar el botón
+function setupBackToTop() {
+  const btnTop = document.getElementById("btn-back-to-top");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      btnTop.classList.remove("hidden");
+    } else {
+      btnTop.classList.add("hidden");
+    }
+  });
+
+  btnTop.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" // Desplazamiento suave hacia arriba
+    });
+  });
+}
