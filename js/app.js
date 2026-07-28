@@ -4,16 +4,16 @@ const PRODUCTS = [
     name: "VCOL",
     badge: "Estrella",
     description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 65000,
-    unit: "Frasco x 500g"
+    price: 15600,
+    unit: "Frasco x 360mL"
   },
   {
     id: "origen-disco",
     name: "ORIGEN",
     badge: "Línea Nutricional",
     description: "Alimento funcional prensado a base de fibra natural y extractos botánicos.",
-    price: 48000,
-    unit: "Caja x 30 discos"
+    price: 17800,
+    unit: "Caja x 12 discos"
   }
 ];
 
