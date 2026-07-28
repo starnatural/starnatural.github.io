@@ -4,18 +4,18 @@ const PRODUCTS = [
     name: "VCOL",
     badge: "Estrella",
     description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 65000,
-    originalPrice: 85000,
-    unit: "Frasco x 500g"
+    price: 15600,
+    originalPrice: 22300,
+    unit: "Frasco x 360mL"
   },
   {
     id: "origen-disco",
     name: "ORIGEN",
     badge: "Línea Nutricional",
     description: "Alimento funcional prensado a base de fibra natural y extractos botánicos.",
-    price: 48000,
-    originalPrice: 60000,
-    unit: "Caja x 30 discos"
+    price: 17800,
+    originalPrice: 25450,
+    unit: "Frasco x 15 Discos"
   }
 ];
 
@@ -23,8 +23,8 @@ let cart = JSON.parse(localStorage.getItem("starnatural_cart") || "[]");
 let deferredPrompt = null;
 
 // Configuración de Wompi
-const WOMPI_PUBLIC_KEY = "pub_prod_TU_LLAVE_PUBLICA_AQUI"; 
-const WOMPI_INTEGRITY_SECRET = "prod_integrity_TU_SECRETO_DE_INTEGRIDAD_AQUI"; // <-- Pega tu secreto aquí
+const WOMPI_PUBLIC_KEY = "pub_prod_hTKZ7t71m1Xue0eFgOc3vSvKTvcUl1gZ"; 
+const WOMPI_INTEGRITY_SECRET = "prod_integrity_DcxdEMXNcfNVP0vLgE2RDmIK61d3ldNU";
 
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
