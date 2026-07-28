@@ -130,7 +130,7 @@ function setupEventListeners() {
   document.getElementById("btn-wompi-pay").addEventListener("click", handleWompiCheckout);
 }
 
-async function handleWompiCheckout() {
+function handleWompiCheckout() {
   if (cart.length === 0) {
     alert("Agrega al menos un producto al carrito.");
     return;
@@ -146,60 +146,40 @@ async function handleWompiCheckout() {
   }
 
   if (typeof WidgetCheckout === 'undefined') {
-    alert("El sistema de Wompi no se cargó correctamente. Revisa tu conexión a internet.");
+    alert("El sistema de Wompi no se cargó correctamente. Revisa tu conexión.");
     return;
   }
 
-  const btnPay = document.getElementById("btn-wompi-pay");
-  btnPay.disabled = true;
-  btnPay.innerText = "Cargando pasarela...";
+  const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+  const amountInCents = Math.round(totalPrice * 100);
+  
+  // Generamos una referencia limpia para evitar repeticiones
+  const reference = `SN-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-  try {
-    // 1. Obtener un token de aceptación fresco directamente desde la API de Wompi
-    const response = await fetch(`https://production.wompi.co/v1/merchants/${WOMPI_PUBLIC_KEY}`);
-    const data = await response.json();
-    const acceptanceToken = data.data.presigned_acceptance.acceptance_token;
+  const checkout = new WidgetCheckout({
+    currency: 'COP',
+    amountInCents: amountInCents,
+    reference: reference,
+    publicKey: WOMPI_PUBLIC_KEY,
+    customerData: {
+      fullName: name,
+      phoneNumber: phone,
+      phoneNumberPrefix: '+57'
+    },
+    redirectUrl: 'https://starnatural.app/'
+  });
 
-    const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-    const amountInCents = Math.round(totalPrice * 100);
-    const reference = `SN-${Date.now()}`;
-
-    // 2. Crear e instanciar el checkout con el token fresco
-    const checkout = new WidgetCheckout({
-      currency: 'COP',
-      amountInCents: amountInCents,
-      reference: reference,
-      publicKey: WOMPI_PUBLIC_KEY,
-      acceptanceToken: acceptanceToken, // <-- Token obligatorio y actualizado
-      customerData: {
-        fullName: name,
-        phoneNumber: phone,
-        phoneNumberPrefix: '+57'
-      },
-      redirectUrl: 'https://starnatural.app/'
-    });
-
-    checkout.open(function ( result ) {
-      btnPay.disabled = false;
-      btnPay.innerText = "🔒 Pagar con Wompi (Nequi / PSE / Tarjeta)";
-
-      const transaction = result.transaction;
-      if (transaction.status === 'APPROVED') {
-        alert(`¡Pago Aprobado! Gracias ${name}. Procesaremos tu pedido de inmediato.`);
-        cart = [];
-        saveAndRefreshCart();
-        closeCartModal();
-      } else if (transaction.status === 'DECLINED') {
-        alert("El pago fue rechazado. Intenta con otro medio de pago.");
-      }
-    });
-
-  } catch (error) {
-    console.error("Error al preparar el pago con Wompi:", error);
-    alert("Ocurrió un error al conectar con la pasarela. Inténtalo de nuevo.");
-    btnPay.disabled = false;
-    btnPay.innerText = "🔒 Pagar con Wompi (Nequi / PSE / Tarjeta)";
-  }
+  checkout.open(function ( result ) {
+    const transaction = result.transaction;
+    if (transaction.status === 'APPROVED') {
+      alert(`¡Pago Aprobado! Gracias ${name}. Procesaremos tu pedido de inmediato.`);
+      cart = [];
+      saveAndRefreshCart();
+      closeCartModal();
+    } else if (transaction.status === 'DECLINED') {
+      alert("La transacción fue rechazada por la entidad financiera.");
+    }
+  });
 }
 
 function setupPWAInstall() {
