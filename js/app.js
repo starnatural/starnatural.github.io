@@ -29,7 +29,8 @@ const PRODUCTS = [
 let cart = JSON.parse(localStorage.getItem("starnatural_cart") || "[]");
 let deferredPrompt = null;
 
-const WOMPI_PUBLIC_KEY = "pub_prod_TU_LLAVE_PUBLICA_AQUI"; 
+const WOMPI_PUBLIC_KEY = "pub_prod_hTKZ7t71m1Xue0eFgOc3vSvKTvcUl1gZ
+"; 
 
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
