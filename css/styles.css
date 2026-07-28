@@ -135,3 +135,44 @@ body {
 
 .btn-checkout { width: 100%; background: var(--primary); color: white; border: none; padding: 1rem; border-radius: 12px; font-family: 'Urbanist', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; }
 .footer { text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted); }
+/* Estilos para precios con descuento y ahorro */
+.price-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.6rem;
+}
+
+.prices-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.product-price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.original-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.savings-tag {
+  display: inline-block;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.btn-add-cart {
+  width: 100%;
+}
