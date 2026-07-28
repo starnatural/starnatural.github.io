@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", () => {
+  renderProducts();
+  updateCartUI();
+  setupPWAInstall();
+  setupEventListeners();
+  setupBackToTop(); // <-- Agregas esta línea aquí
+});
 const PRODUCTS = [
   {
     id: "vcol-colageno",
