@@ -1,47 +1,42 @@
-document.addEventListener("DOMContentLoaded", () => {
-  renderProducts();
-  updateCartUI();
-  setupPWAInstall();
-  setupEventListeners();
-  setupBackToTop(); // <-- Agregas esta línea aquí
-});
 const PRODUCTS = [
   {
     id: "vcol-colageno",
     name: "VCOL",
     badge: "Estrella",
     description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 15600,        // Precio de venta actual
-    originalPrice: 22300, // Precio original (tachado)
-    unit: "Frasco x 360mL"
+    price: 65000,
+    originalPrice: 85000,
+    unit: "Frasco x 500g"
   },
   {
     id: "origen-disco",
     name: "ORIGEN",
     badge: "Línea Nutricional",
     description: "Alimento funcional prensado a base de fibra natural y extractos botánicos.",
-    price: 17800,        // Precio de venta actual
-    originalPrice: 25450, // Precio original (tachado)
-    unit: "Frasco x 15 Discos"
+    price: 48000,
+    originalPrice: 60000,
+    unit: "Caja x 30 discos"
   }
 ];
 
 let cart = JSON.parse(localStorage.getItem("starnatural_cart") || "[]");
 let deferredPrompt = null;
 
-const WOMPI_PUBLIC_KEY = "pub_prod_hTKZ7t71m1Xue0eFgOc3vSvKTvcUl1gZ"; 
+// Configuración de Wompi
+const WOMPI_PUBLIC_KEY = "pub_prod_TU_LLAVE_PUBLICA_AQUI"; 
+const WOMPI_INTEGRITY_SECRET = "prod_integrity_TU_SECRETO_DE_INTEGRIDAD_AQUI"; // <-- Pega tu secreto aquí
 
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   updateCartUI();
   setupPWAInstall();
   setupEventListeners();
+  setupBackToTop();
 });
 
 function renderProducts() {
   const container = document.getElementById("product-grid");
   container.innerHTML = PRODUCTS.map(product => {
-    // Calculamos el ahorro exacto en pesos
     const ahorro = product.originalPrice - product.price;
     const ahorroFormateado = ahorro > 0 ? `🔥 ¡Ahorras $${ahorro.toLocaleString("es-CO")}!` : '';
 
@@ -56,7 +51,6 @@ function renderProducts() {
         </div>
         <p class="product-desc">${product.description}</p>
         
-        <!-- Precios y Ahorro -->
         <div class="price-container">
           <div class="prices-row">
             <span class="product-price">$${product.price.toLocaleString("es-CO")} COP</span>
@@ -130,7 +124,16 @@ function setupEventListeners() {
   document.getElementById("btn-wompi-pay").addEventListener("click", handleWompiCheckout);
 }
 
-function handleWompiCheckout() {
+// Función Criptográfica para calcular la Firma SHA-256 exigida por Wompi
+async function generateIntegritySignature(reference, amountInCents, currency, secret) {
+  const cadenaConcatenada = `${reference}${amountInCents}${currency}${secret}`;
+  const encondedText = new TextEncoder().encode(cadenaConcatenada);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encondedText);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function handleWompiCheckout() {
   if (cart.length === 0) {
     alert("Agrega al menos un producto al carrito.");
     return;
@@ -152,59 +155,48 @@ function handleWompiCheckout() {
 
   const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
   const amountInCents = Math.round(totalPrice * 100);
-  
-  // Generamos una referencia limpia para evitar repeticiones
+  const currency = "COP";
   const reference = `SN-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-  const checkout = new WidgetCheckout({
-    currency: 'COP',
-    amountInCents: amountInCents,
-    reference: reference,
-    publicKey: WOMPI_PUBLIC_KEY,
-    customerData: {
-      fullName: name,
-      phoneNumber: phone,
-      phoneNumberPrefix: '+57'
-    },
-    redirectUrl: 'https://starnatural.app/'
-  });
+  try {
+    // Generar la firma SHA-256 en tiempo real
+    const signature = await generateIntegritySignature(reference, amountInCents, currency, WOMPI_INTEGRITY_SECRET);
 
-  checkout.open(function ( result ) {
-    const transaction = result.transaction;
-    if (transaction.status === 'APPROVED') {
-      alert(`¡Pago Aprobado! Gracias ${name}. Procesaremos tu pedido de inmediato.`);
-      cart = [];
-      saveAndRefreshCart();
-      closeCartModal();
-    } else if (transaction.status === 'DECLINED') {
-      alert("La transacción fue rechazada por la entidad financiera.");
-    }
-  });
-}
+    const checkout = new WidgetCheckout({
+      currency: currency,
+      amountInCents: amountInCents,
+      reference: reference,
+      publicKey: WOMPI_PUBLIC_KEY,
+      signature: { integrity: signature }, // <-- Firma enviada correctamente a Wompi
+      customerData: {
+        fullName: name,
+        phoneNumber: phone,
+        phoneNumberPrefix: '+57'
+      },
+      redirectUrl: 'https://starnatural.app/'
+    });
 
-function setupPWAInstall() {
-  const banner = document.getElementById("pwa-install-banner");
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    banner.classList.remove("hidden");
-  });
+    checkout.open(function ( result ) {
+      const transaction = result.transaction;
+      if (transaction.status === 'APPROVED') {
+        alert(`¡Pago Aprobado! Gracias ${name}. Procesaremos tu pedido de inmediato.`);
+        cart = [];
+        saveAndRefreshCart();
+        closeCartModal();
+      } else if (transaction.status === 'DECLINED') {
+        alert("La transacción fue rechazada por la entidad financiera.");
+      }
+    });
 
-  document.getElementById("btn-install-app").addEventListener("click", async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') { banner.classList.add("hidden"); }
-    deferredPrompt = null;
-  });
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
+  } catch (error) {
+    console.error("Error al generar la firma de Wompi:", error);
+    alert("Error al preparar la transacción. Intenta de nuevo.");
   }
 }
-// Detectar el desplazamiento (scroll) para mostrar/ocultar el botón
+
 function setupBackToTop() {
   const btnTop = document.getElementById("btn-back-to-top");
+  if (!btnTop) return;
 
   window.addEventListener("scroll", () => {
     if (window.scrollY > 300) {
@@ -215,9 +207,30 @@ function setupBackToTop() {
   });
 
   btnTop.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth" // Desplazamiento suave hacia arriba
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
+}
+
+function setupPWAInstall() {
+  const banner = document.getElementById("pwa-install-banner");
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (banner) banner.classList.remove("hidden");
+  });
+
+  const btnInstall = document.getElementById("btn-install-app");
+  if (btnInstall) {
+    btnInstall.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted' && banner) { banner.classList.add("hidden"); }
+      deferredPrompt = null;
+    });
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
+  }
 }
