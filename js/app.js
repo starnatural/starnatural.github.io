@@ -234,6 +234,54 @@ _Pago verificado exitosamente vía Wompi._`;
   }
 }
 
+    checkout.open(function ( result ) {
+      const transaction = result.transaction;
+      if (transaction.status === 'APPROVED') {
+
+        // Mensaje detallado para tu WhatsApp con CC y Correo
+        const message = 
+`✅ *¡NUEVO PEDIDO PAGADO EN STAR NATURAL!*
+----------------------------------
+📌 *Referencia Wompi:* ${transaction.id || reference}
+💰 *Monto Pagado:* $${totalPrice.toLocaleString("es-CO")} COP
+
+🛒 *PRODUCTOS:*
+${orderSummary}
+
+👤 *DATOS DE ENVÍO Y FACTURACIÓN:*
+• *Nombre/Razón Social:* ${name}
+• *CC / NIT:* ${idNum}
+• *Correo:* ${email}
+• *Teléfono:* ${phone}
+• *Ciudad:* ${city}
+• *Dirección:* ${address}
+${notes ? `• *Notas:* ${notes}` : ''}
+
+----------------------------------
+_Pago verificado exitosamente vía Wompi._`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+        alert(`¡Pago Aprobado con éxito! Presiona Aceptar para enviar la confirmación de envío por WhatsApp.`);
+        
+        cart = [];
+        saveAndRefreshCart();
+        closeCartModal();
+
+        window.open(whatsappUrl, '_blank');
+
+      } else if (transaction.status === 'DECLINED') {
+        alert("La transacción fue rechazada por la entidad financiera.");
+      }
+    });
+
+  } catch (error) {
+    console.error("Error al generar la firma de Wompi:", error);
+    alert("Error al preparar la transacción. Intenta de nuevo.");
+  }
+}
+
 function setupBackToTop() {
   const btnTop = document.getElementById("btn-back-to-top");
   if (!btnTop) return;
