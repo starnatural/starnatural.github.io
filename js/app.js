@@ -1,34 +1,34 @@
 const PRODUCTS = [
-  {
+ {
     id: "vcol-colageno",
-    name: "VCOL",
+    name: "Chupa Panza",
     badge: "Estrella",
     description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 2000,
-    originalPrice: 2250,
-    unit: "Frasco x 360mL"
+    price: 11000,
+    originalPrice: 22000,
+    unit: "Frasco x 100 Capsulas 500mg"
   },
   {
     id: "vcol-colageno",
-    name: "VCOL",
+    name: "Chupa Panza",
     badge: "Estrella",
     description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 15600,
-    originalPrice: 22300,
-    unit: "Frasco x 360mL"
+    price: 11000,
+    originalPrice: 22000,
+    unit: "Frasco x 100 Capsulas 500mg"
   },
   {
     id: "origen-disco",
-    name: "ORIGEN",
+    name: "Fenogreco",
     badge: "Línea Nutricional",
     description: "Alimento funcional prensado a base de fibra natural y extractos botánicos.",
-    price: 17800,
-    originalPrice: 25450,
-    unit: "Frasco x 15 Discos"
+    price: 11000,
+    originalPrice: 22000,
+    unit: "Frasco x 100 Capsulas 500mg"
   }
 ];
 
-let cart = JSON.parse(localStorage.getItem("starnatural_cart") || "[]");
+let cart = JSON.parse(localStorage.getItem("naturalmedix_cart") || "[]");
 let deferredPrompt = null;
 
 // Configuración de Wompi
@@ -93,7 +93,7 @@ function updateQty(productId, delta) {
 }
 
 function saveAndRefreshCart() {
-  localStorage.setItem("starnatural_cart", JSON.stringify(cart));
+  localStorage.setItem("naturalmedix_cart", JSON.stringify(cart));
   updateCartUI();
 }
 
@@ -192,7 +192,7 @@ async function handleWompiCheckout() {
         legalId: idNum,
         legalIdType: 'CC' // Puedes cambiarlo según corresponda
       },
-      redirectUrl: 'https://starnatural.app/'
+      redirectUrl: 'https://naturalmedix.app/'
     });
 
     checkout.open(function ( result ) {
@@ -223,54 +223,6 @@ _Pago verificado exitosamente vía Wompi._`;
 
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${573027109685}?text=${encodedMessage}`;
-
-        alert(`¡Pago Aprobado con éxito! Presiona Aceptar para enviar la confirmación de envío por WhatsApp.`);
-        
-        cart = [];
-        saveAndRefreshCart();
-        closeCartModal();
-
-        window.open(whatsappUrl, '_blank');
-
-      } else if (transaction.status === 'DECLINED') {
-        alert("La transacción fue rechazada por la entidad financiera.");
-      }
-    });
-
-  } catch (error) {
-    console.error("Error al generar la firma de Wompi:", error);
-    alert("Error al preparar la transacción. Intenta de nuevo.");
-  }
-}
-
-    checkout.open(function ( result ) {
-      const transaction = result.transaction;
-      if (transaction.status === 'APPROVED') {
-
-        // Mensaje detallado para tu WhatsApp con CC y Correo
-        const message = 
-`✅ *¡NUEVO PEDIDO PAGADO EN STAR NATURAL!*
-----------------------------------
-📌 *Referencia Wompi:* ${transaction.id || reference}
-💰 *Monto Pagado:* $${totalPrice.toLocaleString("es-CO")} COP
-
-🛒 *PRODUCTOS:*
-${orderSummary}
-
-👤 *DATOS DE ENVÍO Y FACTURACIÓN:*
-• *Nombre/Razón Social:* ${name}
-• *CC / NIT:* ${idNum}
-• *Correo:* ${email}
-• *Teléfono:* ${phone}
-• *Ciudad:* ${city}
-• *Dirección:* ${address}
-${notes ? `• *Notas:* ${notes}` : ''}
-
-----------------------------------
-_Pago verificado exitosamente vía Wompi._`;
-
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
         alert(`¡Pago Aprobado con éxito! Presiona Aceptar para enviar la confirmación de envío por WhatsApp.`);
         
