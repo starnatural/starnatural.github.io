@@ -38,16 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
   setupBackToTop();
 });
-
 // URLs de emojis animados en alta calidad (Telegram / Fluent 3D style)
 const EMOJIS = {
   fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",      // 🔥 Fuego animado
-  package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",   // 🍾 Botella
+  package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4e6/512.webp",   // 📦 Paquete
   factory: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f3ed/512.webp",   // 🏭 Fábrica
   shield: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6e1_fe0f/512.webp", // 🛡️ Escudo
   sparkles: "https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp",  // ✨ Destellos
   calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp"  // 📅 Calendario
-  cart: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6d2/512.webp"      // 🛒 Carrito
 };
 
 function renderProducts() {
@@ -116,10 +114,6 @@ function renderProducts() {
         <div class="product-footer" style="margin-top: 0.8rem;">
           <button class="btn-add-cart" onclick="addToCart('${product.id}')">+ Agregar al Carrito</button>
         </div>
-<div class="product-footer" style="margin-top: 0.8rem;">
-          <button class="btn-add-cart" onclick="addToCart('${product.id}')">+ Agregar al Carrito</button>
-        </div>
-</div>
       </div>
     `;
   }).join("");
