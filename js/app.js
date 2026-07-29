@@ -4,8 +4,8 @@ const PRODUCTS = [
     name: "VCOL",
     badge: "Estrella",
     description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 1000,
-    originalPrice: 22300,
+    price: 2000,
+    originalPrice: 2250,
     unit: "Frasco x 360mL"
   },
   {
