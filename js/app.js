@@ -75,7 +75,7 @@ function renderProducts() {
 
         <div style="font-size:0.85rem; color:#334155; margin: 0.8rem 0; line-height: 1.4;">
           <p style="margin-bottom:0.3rem; color:#0f172a; font-weight:600; display: flex; align-items: center; gap: 4px;">
-            <img src="${EMOJIS.package}" class="animated-emoji" alt="Paquete"> ${product.netContent}
+            <img src="${EMOJIS.package}" class="animated-emoji" alt="Botella"> ${product.netContent}
           </p>
           ${product.description ? `<p style="margin-bottom:0.3rem; color:#475569;">${product.description}</p>` : ''}
           ${product.benefit ? `<p style="margin-bottom:0.3rem;"><strong>• Beneficio:</strong> ${product.benefit}</p>` : ''}
