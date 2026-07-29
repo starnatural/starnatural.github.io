@@ -8,20 +8,20 @@ const PRODUCTS = [
     invima: "RSA-0000000-202X", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
-    price: 65000,
-    originalPrice: 85000
+    price: 15600,
+    originalPrice: 22300
   },
   {
     id: "origen-disco",
     name: "ORIGEN",
-    badge: "Línea Nutricional",
+    badge: "Línea ORIGEN",
     brand: "Star Natural",
-    netContent: "Cont. Neto: Caja x 30 discos (30 porciones)",
-    invima: "RSA-0000000-202X", // <-- Coloca el Invima real de ORIGEN aquí
+    netContent: "Cont. Neto: Frasco x 15 Discos (15 porciones)",
+    invima: "PSA-0005343-2024", // <-- Coloca el Invima real de ORIGEN aquí
     benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
-    usage: "Disolver 1 disco en un vaso de agua o jugo al día.",
-    price: 48000,
-    originalPrice: 60000
+    usage: "Disolver 1 disco en un vaso de agua caliente al día.",
+    price: 17800,
+    originalPrice: 25450
   }
 ];
 let cart = JSON.parse(localStorage.getItem("naturalmedix_cart") || "[]");
