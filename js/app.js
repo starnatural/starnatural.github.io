@@ -117,10 +117,8 @@ function renderProducts() {
           <button class="btn-add-cart" onclick="addToCart('${product.id}')">+ Agregar al Carrito</button>
         </div>
 <div class="product-footer" style="margin-top: 0.8rem;">
-  <button class="btn-add-cart" onclick="addToCart('${product.id}')" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-    <img src="${EMOJIS.cart}" class="animated-emoji" alt="Carrito"> Agregar al Carrito
-  </button>
-</div>
+          <button class="btn-add-cart" onclick="addToCart('${product.id}')">+ Agregar al Carrito</button>
+        </div>
 </div>
       </div>
     `;
