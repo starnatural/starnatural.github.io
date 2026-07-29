@@ -1,33 +1,29 @@
 const PRODUCTS = [
- {
-    id: "vcol-colageno",
-    name: "Chupa Panza",
-    badge: "Estrella",
-    description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 1000,
-    originalPrice: 2250,
-    unit: "Frasco x 100 Capsulas 500mg"
-  },
   {
     id: "vcol-colageno",
-    name: "Chupa Panza",
+    name: "VCOL",
     badge: "Estrella",
-    description: "Colágeno Hidrolizado Premium enriquecido con biotina y vitamina C.",
-    price: 11000,
-    originalPrice: 22000,
-    unit: "Frasco x 100 Capsulas 500mg"
+    brand: "Star Natural",
+    netContent: "Cont. Neto: 360mL (12 porciones)",
+    invima: "RSA-0000000-202X", // <-- Coloca el Invima real de VCOL aquí
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
+    price: 65000,
+    originalPrice: 85000
   },
   {
     id: "origen-disco",
-    name: "Fenogreco",
+    name: "ORIGEN",
     badge: "Línea Nutricional",
-    description: "Alimento funcional prensado a base de fibra natural y extractos botánicos.",
-    price: 11000,
-    originalPrice: 22000,
-    unit: "Frasco x 100 Capsulas 500mg"
+    brand: "Star Natural",
+    netContent: "Cont. Neto: Caja x 30 discos (30 porciones)",
+    invima: "RSA-0000000-202X", // <-- Coloca el Invima real de ORIGEN aquí
+    benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
+    usage: "Disolver 1 disco en un vaso de agua o jugo al día.",
+    price: 48000,
+    originalPrice: 60000
   }
 ];
-
 let cart = JSON.parse(localStorage.getItem("naturalmedix_cart") || "[]");
 let deferredPrompt = null;
 
@@ -54,11 +50,19 @@ function renderProducts() {
         <div class="product-header">
           <div>
             <h4 class="product-title">${product.name}</h4>
-            <span style="font-size:0.8rem; color:#64748b;">${product.unit}</span>
+            <div style="font-size:0.82rem; color:#475569; font-weight: 600; margin-top:2px;">
+              🏭 ${product.brand}
+            </div>
           </div>
           ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
         </div>
-        <p class="product-desc">${product.description}</p>
+
+        <div style="font-size:0.85rem; color:#334155; margin: 0.8rem 0; line-height: 1.4;">
+          <p style="margin-bottom:0.3rem; color:#0f172a; font-weight:600;">📦 ${product.netContent}</p>
+          <p style="margin-bottom:0.3rem;"><strong>• Beneficio:</strong> ${product.benefit}</p>
+          <p style="margin-bottom:0.3rem;"><strong>• Uso:</strong> ${product.usage}</p>
+          ${product.invima ? `<p style="font-size:0.8rem; color:#166534; font-weight:600; margin-top:0.4rem;">🛡️ Invima: ${product.invima}</p>` : ''}
+        </div>
         
         <div class="price-container">
           <div class="prices-row">
@@ -75,7 +79,6 @@ function renderProducts() {
     `;
   }).join("");
 }
-
 function addToCart(productId) {
   const existing = cart.find(item => item.id === productId);
   if (existing) { existing.qty += 1; } 
