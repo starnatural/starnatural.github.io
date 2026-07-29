@@ -62,7 +62,7 @@ function renderProducts() {
           
           <!-- FABRICANTE CON EMOJI ANIMADO -->
           <div style="font-size:0.8rem; color:#475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
-            <img src="${EMOJIS.factory}" class="animated-emoji" alt="Vendido por"> Vendido por ${product.brand}
+            <img src="${EMOJIS.factory}" class="animated-emoji" alt="Vendido por:"> Vendido por ${product.brand}
           </div>
 
           <!-- TÍTULO Y BADGE -->
