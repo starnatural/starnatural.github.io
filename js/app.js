@@ -47,6 +47,7 @@ const EMOJIS = {
   shield: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6e1_fe0f/512.webp", // 🛡️ Escudo
   sparkles: "https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp",  // ✨ Destellos
   calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp"  // 📅 Calendario
+  cart: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6d2/512.webp"      // 🛒 Carrito
 };
 
 function renderProducts() {
