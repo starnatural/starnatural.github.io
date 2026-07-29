@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // URLs de emojis animados en alta calidad (Telegram / Fluent 3D style)
 const EMOJIS = {
   fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",      // 🔥 Fuego animado
-  package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4e6/512.webp",   // 📦 Paquete
+  package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",   // 🍾 Botella
   factory: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f3ed/512.webp",   // 🏭 Fábrica
   shield: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6e1_fe0f/512.webp", // 🛡️ Escudo
   sparkles: "https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp",  // ✨ Destellos
