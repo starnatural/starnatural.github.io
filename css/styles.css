@@ -478,3 +478,11 @@ body {
   transform: scale(1.1);
   background: #f1f5f9;
 }
+.modal-media-wrapper {
+  position: relative; /* Indispensable para que la X se ubique respecto a la imagen/video */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 90%;
+  max-height: 85vh;
+}
