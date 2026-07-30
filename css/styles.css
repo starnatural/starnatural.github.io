@@ -451,3 +451,30 @@ body {
   font-size: 0.85rem; 
   color: var(--text-muted); 
 }
+/* BOTÓN FLOTANTE CERRAR (X) PARA EL MODAL MULTIMEDIA */
+.modal-close-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  color: #0f172a;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  z-index: 310;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.1);
+  background: #f1f5f9;
+}
