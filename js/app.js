@@ -116,7 +116,7 @@ function renderProducts() {
           </p>
           ${product.description ? `<p style="margin-bottom:0.3rem; color:#475569;">${product.description}</p>` : ''}
           ${product.benefit ? `<p style="margin-bottom:0.3rem;"><strong>• Beneficio:</strong> ${product.benefit}</p>` : ''}
-          <p style="margin-bottom:0.3rem;"><strong>• Uso:</strong> ${product.usage}</p>
+          <p style="margin-bottom:0.3rem;"><strong>• Modo de Uso:</strong> ${product.usage}</p>
           
           ${product.keyIngredients ? `
             <div style="display:flex; flex-direction: column; gap: 0.2rem; margin-top: 0.5rem; font-size:0.82rem;">
