@@ -139,6 +139,30 @@
     <p id="modal-img-caption" class="modal-caption"></p>
   </div>
 </div>
+  <!-- Final del contenido de tu index.html -->
+    
+    <script>
+      const imageModal = document.getElementById('imageModal');
+      const closeImageModalBtn = document.getElementById('closeImageModalBtn');
+      const modalVideo = document.getElementById('modalVideo');
+
+      function closeMediaModal() {
+        if (imageModal) imageModal.classList.add('hidden');
+        if (modalVideo) modalVideo.pause();
+      }
+
+      if (closeImageModalBtn) {
+        closeImageModalBtn.addEventListener('click', closeMediaModal);
+      }
+
+      if (imageModal) {
+        imageModal.addEventListener('click', (e) => {
+          if (e.target === imageModal) closeMediaModal();
+        });
+      }
+    </script>
+  </body>
+</html>
 </body>
 </html>
 </body>
