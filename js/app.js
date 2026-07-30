@@ -4,7 +4,7 @@ const PRODUCTS = [
     name: "GAF-PLUS 300mL",
     badge: "Estrella",
     fabricado: "GrenLab",
-    netContent: "Cont. Neto: 300mL (10 porciones)",
+    netContent: "Cont. Neto: 300mL (10 Porciones)",
     invima: "PSA-0690-2025", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
@@ -16,7 +16,7 @@ const PRODUCTS = [
     name: "ORIGEN 15 Discos",
     badge: "Línea ORIGEN 15 Discos",
     fabricado: "Naturalisima",
-    netContent: "Cont. Neto: Frasco x 15 Discos (15 porciones)",
+    netContent: "Cont. Neto: Frasco x 15 Discos (15 Porciones)",
     invima: "PSA-0005343-2024", // <-- Coloca el Invima real de ORIGEN aquí
     benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
     usage: "Disolver 1 disco en un vaso de agua caliente al día.",
@@ -28,7 +28,7 @@ const PRODUCTS = [
     name: "ORIGEN 360mL",
     badge: "Línea ORIGEN 360mL",
     fabricado: "Naturalisima",
-    netContent: "Cont. Neto: 360mL (12 porciones)",
+    netContent: "Cont. Neto: 360mL (12 Porciones)",
     invima: "RSA-0034995-2024", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
@@ -40,7 +40,7 @@ const PRODUCTS = [
     name: "ORIGEN 400mL",
     badge: "Línea ORIGEN 400mL",
     fabricado: "Laboratorios vanier",
-    netContent: "Cont. Neto: 400mL (13 porciones)",
+    netContent: "Cont. Neto: 400mL (13 Porciones)",
     invima: "RSAV12136011", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
@@ -51,8 +51,8 @@ const PRODUCTS = [
     id: "vcol-colageno",
     name: "VCOL 360mL",
     badge: "Estrella",
-    fabricado: "Star Natural",
-    netContent: "Cont. Neto: 360mL (12 porciones)",
+    fabricado: "Naturalisima",
+    netContent: "Cont. Neto: 360mL (12 Porciones)",
     invima: "RSA-0034995-2024", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
