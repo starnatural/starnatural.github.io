@@ -43,7 +43,7 @@ const EMOJIS = {
   fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",      // 🔥 Fuego animado
   package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",   // 🍾 Botella
   factory: "https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp",   // ⭐ Vendido por
-  shield: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6e1_fe0f/512.webp", // 🛡️ Escudo
+  shield: "https://fonts.gstatic.com/s/e/notoemoji/latest/2705/512.webp", // ✅ Invima
   sparkles: "https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.webp",  // ✨ Destellos
   calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp"  // 📅 Calendario
 };
