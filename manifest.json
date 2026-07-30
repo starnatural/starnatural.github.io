@@ -1,7 +1,7 @@
 {
   "name": "Star Natural App",
   "short_name": "StarNatural",
-  "description": "App Tienda Oficial de productos naturales.",
+  "description": "App Tienda Oficial Star Natural.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
