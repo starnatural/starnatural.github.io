@@ -10,7 +10,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/gaf-plus.webp" // <-- Cambia por tu ruta real de imagen
+    image: "assets/images/gaf-plus.mp4" // Archivo MP4
   },
   {
     id: "origen-disco",
@@ -23,7 +23,7 @@ const PRODUCTS = [
     usage: "Disolver 1 disco en un vaso de agua caliente al día.",
     price: 17800,
     originalPrice: 25450,
-    image: "assets/images/origen-disco.webp"
+    image: "assets/images/origen-disco.mp4"
   },
   {
     id: "origen-360ml-colageno",
@@ -36,7 +36,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/origen-360ml.webp"
+    image: "assets/images/origen-360ml.mp4"
   },
   {
     id: "origen-400ml-colageno",
@@ -49,7 +49,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/origen-400ml.webp"
+    image: "assets/images/origen-400ml.mp4"
   },
   {
     id: "vcol-colageno",
@@ -62,7 +62,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/vcol.webp"
+    image: "assets/images/vcol.mp4"
   }
 ];
 
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupBackToTop();
 });
 
-// URLs de emojis animados en alta calidad
+// URLs de emojis animados
 const EMOJIS = {
   fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",
   package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",
@@ -104,19 +104,17 @@ function renderProducts() {
     return `
       <div class="product-card">
         ${product.image ? `
-          <div class="product-image-wrapper" onclick="openImageModal('${product.image}', '${product.name}')">
-            <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy">
+          <div class="product-image-wrapper" onclick="openMediaModal('${product.image}', '${product.name}')">
+            <video src="${product.image}" autoplay loop muted playsinline class="product-img"></video>
           </div>
         ` : ''}
 
         <div class="product-header" style="flex-direction: column; align-items: flex-start; gap: 0.2rem;">
           
-          <!-- FABRICANTE CON EMOJI ANIMADO -->
           <div style="font-size:0.8rem; color:#475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
             <img src="${EMOJIS.factory}" class="animated-emoji" alt="Fabricado por"> Fabricado por: ${product.fabricado}
           </div>
 
-          <!-- TÍTULO Y BADGE -->
           <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 2px;">
             <h4 class="product-title" style="margin: 0;">${product.name}</h4>
             ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
@@ -170,15 +168,21 @@ function renderProducts() {
   }).join("");
 }
 
-// --- MODAL DE IMÁGENES ---
-function openImageModal(src, alt) {
+// --- MODAL DE MULTIMEDIA (Soporta MP4) ---
+function openMediaModal(src, alt) {
   const modal = document.getElementById("image-modal");
-  const modalImg = document.getElementById("modal-img-target");
+  const modalContent = document.querySelector(".image-modal-content");
   const modalCaption = document.getElementById("modal-img-caption");
 
-  if (modal && modalImg) {
-    modalImg.src = src;
-    modalImg.alt = alt || "Imagen del producto";
+  if (modal && modalContent) {
+    // Reemplaza el contenido por un reproductor MP4 en el modal
+    const mediaContainer = modalContent.querySelector(".modal-media-wrapper") || document.createElement("div");
+    mediaContainer.className = "modal-media-wrapper";
+    mediaContainer.innerHTML = `<video src="${src}" autoplay loop muted playsinline style="max-width:100%; max-height:80vh; border-radius:8px;"></video>`;
+    
+    const existingTarget = document.getElementById("modal-img-target");
+    if (existingTarget) existingTarget.replaceWith(mediaContainer);
+
     if (modalCaption) modalCaption.innerText = alt || "";
     modal.classList.remove("hidden");
   }
@@ -249,10 +253,8 @@ function setupEventListeners() {
   document.getElementById("close-cart-btn")?.addEventListener("click", closeCartModal);
   document.getElementById("btn-wompi-pay")?.addEventListener("click", handleWompiCheckout);
 
-  // Cerrar Modal de Imagen
   document.getElementById("close-image-modal")?.addEventListener("click", closeImageModal);
   
-  // Cerrar modal al pulsar fuera del contenido o presionar ESC
   const imageModal = document.getElementById("image-modal");
   if (imageModal) {
     imageModal.addEventListener("click", (e) => {
@@ -268,7 +270,7 @@ function setupEventListeners() {
   });
 }
 
-// Función Criptográfica para calcular la Firma SHA-256 exigida por Wompi
+// Firma SHA-256 para Wompi
 async function generateIntegritySignature(reference, amountInCents, currency, secret) {
   const cadenaConcatenada = `${reference}${amountInCents}${currency}${secret}`;
   const encondedText = new TextEncoder().encode(cadenaConcatenada);
@@ -283,7 +285,6 @@ async function handleWompiCheckout() {
     return;
   }
 
-  // Capturar datos del formulario
   const name = document.getElementById("customer-name")?.value.trim() || "";
   const idNum = document.getElementById("customer-id")?.value.trim() || "";
   const email = document.getElementById("customer-email")?.value.trim() || "";
@@ -292,7 +293,6 @@ async function handleWompiCheckout() {
   const address = document.getElementById("customer-address")?.value.trim() || "";
   const notes = document.getElementById("customer-notes")?.value.trim() || "";
 
-  // Validación de campos obligatorios
   if (!name || !idNum || !email || !phone || !city || !address) {
     alert("Por favor completa todos los datos de envío (Nombre, CC/NIT, Correo, Teléfono, Ciudad y Dirección).");
     return;
@@ -334,7 +334,6 @@ async function handleWompiCheckout() {
       const transaction = result.transaction;
       if (transaction.status === 'APPROVED') {
 
-        // Mensaje detallado para tu WhatsApp con CC y Correo
         const message = 
 `✅ *¡NUEVO PEDIDO PAGADO EN STAR NATURAL!*
 ----------------------------------
