@@ -401,33 +401,3 @@ function setupPWAInstall() {
     navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
   }
 }
-document.addEventListener('DOMContentLoaded', () => {
-  // Elementos del modal multimedia
-  const imageModal = document.getElementById('imageModal');
-  const closeImageModalBtn = document.getElementById('closeImageModalBtn');
-  const modalVideo = document.getElementById('modalVideo');
-
-  // Función para cerrar el modal
-  function closeMediaModal() {
-    if (imageModal) {
-      imageModal.classList.add('hidden');
-    }
-    if (modalVideo) {
-      modalVideo.pause(); // Pausa el video al cerrar
-    }
-  }
-
-  // Evento al hacer clic en el botón X de cerrar
-  if (closeImageModalBtn) {
-    closeImageModalBtn.addEventListener('click', closeMediaModal);
-  }
-
-  // Cerrar al hacer clic fuera del video (en el fondo oscuro)
-  if (imageModal) {
-    imageModal.addEventListener('click', (e) => {
-      if (e.target === imageModal) {
-        closeMediaModal();
-      }
-    });
-  }
-});
