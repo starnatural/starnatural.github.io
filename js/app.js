@@ -1,5 +1,29 @@
 const PRODUCTS = [
   {
+    id: "gaf-plus-colageno",
+    name: "GAF PLUS",
+    badge: "Estrella",
+    brand: "Star Natural",
+    netContent: "Cont. Neto: 300mL (10 porciones)",
+    invima: "RSA-0000000-202X", // <-- Coloca el Invima real de VCOL aquí
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
+    price: 15600,
+    originalPrice: 22300
+  },
+   {
+    id: "origen-360ml-colageno",
+    name: "ORIGEN",
+    badge: "Estrella",
+    brand: "Star Natural",
+    netContent: "Cont. Neto: 360mL (12 porciones)",
+    invima: "RSA-0034995-2024", // <-- Coloca el Invima real de VCOL aquí
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
+    price: 15600,
+    originalPrice: 22300
+  },
+  {
     id: "vcol-colageno",
     name: "VCOL",
     badge: "Estrella",
