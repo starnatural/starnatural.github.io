@@ -1,7 +1,7 @@
 {
   "name": "Star Natural App",
   "short_name": "StarNatural",
-  "description": "Tienda oficial de productos naturales Star Natural y Natural Medix.",
+  "description": "App Tienda Oficial de productos naturales.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
