@@ -10,7 +10,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/1280-720.mp4" // Archivo MP4
+    image: "assets/images/610-343.mp4" // Archivo MP4
   },
   {
     id: "origen-disco",
