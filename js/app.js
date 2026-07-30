@@ -49,7 +49,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/origen-400ml.mp4"
+    image: "assets/images/720-720.mp4"
   },
   {
     id: "vcol-colageno",
