@@ -3,9 +3,9 @@ const PRODUCTS = [
     id: "gaf-plus-colageno",
     name: "GAF PLUS",
     badge: "Estrella",
-    brand: "Star Natural",
+    fabricado: "GrenLab",
     netContent: "Cont. Neto: 300mL (10 porciones)",
-    invima: "RSA-0000000-202X", // <-- Coloca el Invima real de VCOL aquí
+    invima: "PSA-0690-2025", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
@@ -15,7 +15,7 @@ const PRODUCTS = [
     id: "origen-disco",
     name: "ORIGEN",
     badge: "Línea ORIGEN 15 Discos",
-    brand: "Star Natural",
+    fabricado: "Naturalisima",
     netContent: "Cont. Neto: Frasco x 15 Discos (15 porciones)",
     invima: "PSA-0005343-2024", // <-- Coloca el Invima real de ORIGEN aquí
     benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
@@ -27,7 +27,7 @@ const PRODUCTS = [
     id: "origen-360ml-colageno",
     name: "ORIGEN",
     badge: "Línea ORIGEN 360mL",
-    brand: "Star Natural",
+    fabricado: "Naturalisima",
     netContent: "Cont. Neto: 360mL (12 porciones)",
     invima: "RSA-0034995-2024", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
@@ -39,7 +39,7 @@ const PRODUCTS = [
     id: "origen-400ml-colageno",
     name: "ORIGEN",
     badge: "Línea ORIGEN 400mL",
-    brand: "Star Natural",
+    fabricado: "Laboratorios vanier",
     netContent: "Cont. Neto: 400mL (13 porciones)",
     invima: "RSAV12136011", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
@@ -51,9 +51,9 @@ const PRODUCTS = [
     id: "vcol-colageno",
     name: "VCOL",
     badge: "Estrella",
-    brand: "Star Natural",
+    fabricado: "Star Natural",
     netContent: "Cont. Neto: 360mL (12 porciones)",
-    invima: "RSA-0000000-202X", // <-- Coloca el Invima real de VCOL aquí
+    invima: "RSA-0034995-2024", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
@@ -99,7 +99,7 @@ function renderProducts() {
           
           <!-- FABRICANTE CON EMOJI ANIMADO -->
           <div style="font-size:0.8rem; color:#475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
-            <img src="${EMOJIS.factory}" class="animated-emoji" alt="Vendido por"> Vendido por: ${product.brand}
+            <img src="${EMOJIS.factory}" class="animated-emoji" alt="Vendido por"> Vendido por: ${product.fabricado}
           </div>
 
           <!-- TÍTULO Y BADGE -->
