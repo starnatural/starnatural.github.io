@@ -23,7 +23,7 @@ const PRODUCTS = [
     usage: "Disolver 1 disco en un vaso de agua caliente al día.",
     price: 17800,
     originalPrice: 25450,
-    image: "assets/images/origen-disco.mp4"
+    image: "assets/images/800-450.mp4"
   },
   {
     id: "origen-360ml-colageno",
