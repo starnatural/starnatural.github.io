@@ -67,6 +67,19 @@
     </section>
   </main>
 
+<!-- Modal Multimedia / Video Ampliado -->
+<div id="imageModal" class="image-modal-overlay hidden">
+  <div class="image-modal-content">
+    <div class="modal-media-wrapper">
+      <!-- Botón X para cerrar -->
+      <button class="modal-close-btn" id="closeImageModalBtn" aria-label="Cerrar">&times;</button>
+      
+      <!-- Contenido del Video/Imagen -->
+      <video id="modalVideo" controls autoplay loop playsinline src="video.mp4"></video>
+    </div>
+  </div>
+</div>
+  
   <!-- Modal del Carrito -->
   <div id="cart-modal" class="modal-overlay hidden">
     <div class="modal-content">
