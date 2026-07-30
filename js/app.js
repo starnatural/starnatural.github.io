@@ -401,3 +401,62 @@ function setupPWAInstall() {
     navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
   }
 }
+document.addEventListener('DOMContentLoaded', () => {
+  const imageModal = document.getElementById('imageModal');
+  const closeImageModalBtn = document.getElementById('closeImageModalBtn');
+  const modalVideo = document.getElementById('modalVideo');
+  const modalImage = document.getElementById('modalImage');
+
+  // 1. ABRIR EL MODAL AL HACER CLIC EN CUALQUIER MINIATURA
+  const mediaWrappers = document.querySelectorAll('.product-image-wrapper');
+
+  mediaWrappers.forEach(wrapper => {
+    wrapper.addEventListener('click', () => {
+      // Busca si la miniatura contiene un video o una imagen
+      const videoSource = wrapper.querySelector('video');
+      const imageSource = wrapper.querySelector('img');
+
+      if (videoSource) {
+        // Es un video
+        modalImage.classList.add('hidden');
+        modalVideo.classList.remove('hidden');
+        modalVideo.src = videoSource.getAttribute('src') || videoSource.currentSrc;
+        modalVideo.play();
+      } else if (imageSource) {
+        // Es una imagen
+        modalVideo.classList.add('hidden');
+        modalImage.classList.remove('hidden');
+        modalImage.src = imageSource.getAttribute('src');
+      }
+
+      // Muestra el modal
+      imageModal.classList.remove('hidden');
+    });
+  });
+
+  // 2. CERRAR EL MODAL
+  function closeMediaModal() {
+    if (imageModal) imageModal.classList.add('hidden');
+    if (modalVideo) {
+      modalVideo.pause();
+      modalVideo.src = ''; // Limpia el video para liberar memoria
+    }
+  }
+
+  // Clic en la X
+  if (closeImageModalBtn) {
+    closeImageModalBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeMediaModal();
+    });
+  }
+
+  // Clic en el fondo oscuro
+  if (imageModal) {
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal || e.target.classList.contains('image-modal-content')) {
+        closeMediaModal();
+      }
+    });
+  }
+});
