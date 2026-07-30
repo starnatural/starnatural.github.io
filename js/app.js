@@ -1,7 +1,7 @@
 const PRODUCTS = [
   {
     id: "gaf-plus-colageno",
-    name: "GAF PLUS",
+    name: "GAF-PLUS 300mL",
     badge: "Estrella",
     fabricado: "GrenLab",
     netContent: "Cont. Neto: 300mL (10 porciones)",
@@ -13,7 +13,7 @@ const PRODUCTS = [
   },
    {
     id: "origen-disco",
-    name: "ORIGEN",
+    name: "ORIGEN 15 Discos",
     badge: "Línea ORIGEN 15 Discos",
     fabricado: "Naturalisima",
     netContent: "Cont. Neto: Frasco x 15 Discos (15 porciones)",
@@ -25,7 +25,7 @@ const PRODUCTS = [
   },
    {
     id: "origen-360ml-colageno",
-    name: "ORIGEN",
+    name: "ORIGEN 360mL",
     badge: "Línea ORIGEN 360mL",
     fabricado: "Naturalisima",
     netContent: "Cont. Neto: 360mL (12 porciones)",
@@ -37,7 +37,7 @@ const PRODUCTS = [
   },
 {
     id: "origen-400ml-colageno",
-    name: "ORIGEN",
+    name: "ORIGEN 400mL",
     badge: "Línea ORIGEN 400mL",
     fabricado: "Laboratorios vanier",
     netContent: "Cont. Neto: 400mL (13 porciones)",
@@ -49,7 +49,7 @@ const PRODUCTS = [
   },
 {
     id: "vcol-colageno",
-    name: "VCOL",
+    name: "VCOL 360mL",
     badge: "Estrella",
     fabricado: "Star Natural",
     netContent: "Cont. Neto: 360mL (12 porciones)",
