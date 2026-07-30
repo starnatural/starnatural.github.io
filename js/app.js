@@ -47,7 +47,7 @@ const PRODUCTS = [
     price: 15600,
     originalPrice: 22300
   },
-    {
+{
     id: "vcol-colageno",
     name: "VCOL",
     badge: "Estrella",
@@ -59,6 +59,7 @@ const PRODUCTS = [
     price: 15600,
     originalPrice: 22300
   },
+  
 ];
 let cart = JSON.parse(localStorage.getItem("naturalmedix_cart") || "[]");
 let deferredPrompt = null;
