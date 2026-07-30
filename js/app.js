@@ -12,9 +12,21 @@ const PRODUCTS = [
     originalPrice: 22300
   },
    {
+    id: "origen-disco",
+    name: "ORIGEN",
+    badge: "Línea ORIGEN 15 Discos",
+    brand: "Star Natural",
+    netContent: "Cont. Neto: Frasco x 15 Discos (15 porciones)",
+    invima: "PSA-0005343-2024", // <-- Coloca el Invima real de ORIGEN aquí
+    benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
+    usage: "Disolver 1 disco en un vaso de agua caliente al día.",
+    price: 17800,
+    originalPrice: 25450
+  },
+   {
     id: "origen-360ml-colageno",
     name: "ORIGEN",
-    badge: "Estrella",
+    badge: "Línea ORIGEN 360mL",
     brand: "Star Natural",
     netContent: "Cont. Neto: 360mL (12 porciones)",
     invima: "RSA-0034995-2024", // <-- Coloca el Invima real de VCOL aquí
@@ -26,7 +38,7 @@ const PRODUCTS = [
 {
     id: "origen-400ml-colageno",
     name: "ORIGEN",
-    badge: "Estrella",
+    badge: "Línea ORIGEN 400mL",
     brand: "Star Natural",
     netContent: "Cont. Neto: 400mL (13 porciones)",
     invima: "RSAV12136011", // <-- Coloca el Invima real de VCOL aquí
@@ -35,18 +47,6 @@ const PRODUCTS = [
     price: 15600,
     originalPrice: 22300
   },
-  {
-    id: "origen-disco",
-    name: "ORIGEN",
-    badge: "Línea ORIGEN",
-    brand: "Star Natural",
-    netContent: "Cont. Neto: Frasco x 15 Discos (15 porciones)",
-    invima: "PSA-0005343-2024", // <-- Coloca el Invima real de ORIGEN aquí
-    benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
-    usage: "Disolver 1 disco en un vaso de agua caliente al día.",
-    price: 17800,
-    originalPrice: 25450
-  }
     {
     id: "vcol-colageno",
     name: "VCOL",
