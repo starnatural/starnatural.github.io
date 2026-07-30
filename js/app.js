@@ -23,13 +23,13 @@ const PRODUCTS = [
     price: 15600,
     originalPrice: 22300
   },
-  {
-    id: "vcol-colageno",
-    name: "VCOL",
+{
+    id: "origen-400ml-colageno",
+    name: "ORIGEN",
     badge: "Estrella",
     brand: "Star Natural",
-    netContent: "Cont. Neto: 360mL (12 porciones)",
-    invima: "RSA-0000000-202X", // <-- Coloca el Invima real de VCOL aquí
+    netContent: "Cont. Neto: 400mL (13 porciones)",
+    invima: "RSAV12136011", // <-- Coloca el Invima real de VCOL aquí
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
@@ -47,6 +47,18 @@ const PRODUCTS = [
     price: 17800,
     originalPrice: 25450
   }
+    {
+    id: "vcol-colageno",
+    name: "VCOL",
+    badge: "Estrella",
+    brand: "Star Natural",
+    netContent: "Cont. Neto: 360mL (12 porciones)",
+    invima: "RSA-0000000-202X", // <-- Coloca el Invima real de VCOL aquí
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
+    price: 15600,
+    originalPrice: 22300
+  },
 ];
 let cart = JSON.parse(localStorage.getItem("naturalmedix_cart") || "[]");
 let deferredPrompt = null;
