@@ -1,5 +1,5 @@
 const PRODUCTS = [
-  {
+ {
     id: "gaf-plus-colageno",
     name: "GAF-PLUS 300mL",
     badge: "Estrella",
