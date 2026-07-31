@@ -430,3 +430,32 @@ self.addEventListener('activate', (event) => {
   );
   self.clients.claim();
 });
+// Lógica de búsqueda en tiempo real
+  const searchInput = document.getElementById("product-search-input");
+  const clearBtn = document.getElementById("clear-search-btn");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const value = e.target.value;
+      renderProducts(value);
+
+      if (clearBtn) {
+        if (value.trim().length > 0) {
+          clearBtn.classList.remove("hidden");
+        } else {
+          clearBtn.classList.add("hidden");
+        }
+      }
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      if (searchInput) {
+        searchInput.value = "";
+        renderProducts("");
+        searchInput.focus();
+      }
+      clearBtn.classList.add("hidden");
+    });
+  }
