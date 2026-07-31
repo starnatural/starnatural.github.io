@@ -465,3 +465,14 @@ function setupPWAInstall() {
     navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
   }
 }
+// ❌ ANTES (Se bloquea o se cierra fácil):
+// alert(`¡Pago Aprobado con éxito!...`);
+// window.open(whatsappUrl, '_blank');
+
+// ✅ AHORA (Redirección directa y segura):
+cart = [];
+saveAndRefreshCart();
+closeCartModal();
+
+// Redirige directamente a WhatsApp en la misma ventana
+window.location.href = whatsappUrl;
