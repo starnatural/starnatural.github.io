@@ -153,19 +153,21 @@ body {
     border: 1px solid #f1f5f9;
 }
 
-/* MINIATURA 3:4 (MÁS ANCHA Y VISIBLE) */
+/* MINIATURA VERTICAL 9:16 COMPACTA */
 .product-image-wrapper {
-  position: relative;
-  width: 100%;            /* Toma el ancho disponible de la tarjeta */
-  max-width: 220px;       /* Ancho cómodo para que no se vea delgada */
-  aspect-ratio: 3 / 4;    /* Proporción 3:4 */
-  margin: 0 auto 0.8rem;   /* Centrado */
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  background-color: #000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    width: 140px;
+    /* Ancho compacto para miniatura */
+    height: 248px;
+    /* Proporción exacta 9:16 (140 * 16 / 9) */
+    margin: 0 auto 0.8rem;
+    /* Centrado en la tarjeta */
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .product-image-wrapper:hover {
@@ -180,31 +182,19 @@ body {
     display: block;
 }
 
-/* BADGE VISTA RÁPIDA (OJO) */
 .expand-badge {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.85); /* Fondo oscuro semitransparente */
-  color: #ffffff;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
-  white-space: nowrap;
-  pointer-events: none; /* Permite que el clic pase a la miniatura */
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  transition: background-color 0.2s ease;
-}
-
-/* Efecto al pasar el cursor por la tarjeta */
-.product-image-wrapper:hover .expand-badge {
-  background: var(--primary); /* Cambia al color verde de tu marca */
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+    pointer-events: none;
 }
 
 .product-header {
@@ -345,57 +335,23 @@ body {
     cursor: pointer;
 }
 
-/* Contenedor del Modal de Imagen/Video */
-.modal-media-wrapper {
-  position: relative;
-  width: 90vw;
-  max-width: 420px;
-  max-height: 80vh;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  background: #000;
+/* MODAL VIDEO EN PANTALLA COMPLETA 9:16 */
+.image-modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
-/* Botón de cierre X rediseñado */
-.modal-close-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 50;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: rgba(15, 23, 42, 0.75); /* Fondo oscuro semitransparente */
-  color: #ffffff;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  font-size: 22px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  backdrop-filter: blur(4px); /* Efecto cristalino */
-  transition: all 0.2s ease;
-  padding: 0;
-  line-height: 1;
-}
-
-/* Efecto al presionar o pasar el mouse */
-.modal-close-btn:active,
-.modal-close-btn:hover {
-  background: rgba(220, 38, 38, 0.9); /* Cambia a rojo al interactuar */
-  transform: scale(1.08);
-}
-
-/* Animación limpia para el video */
-.modal-animated-video {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  pointer-events: none; /* Bloquea barra nativa de video */
-  user-select: none;
+.modal-media-wrapper video {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    max-height: 80vh;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* ELEMENTOS DEL CARRITO */
@@ -499,20 +455,4 @@ body {
     margin-top: 2rem;
     font-size: 0.85rem;
     color: var(--text-muted);
-}
-/* Deshabilita la interacción con el video para que actúe como GIF/Animación pura */
-.modal-animated-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none; /* Bloquea clics y toques para que no salgan controles nativos */
-  user-select: none;
-}
-
-/* Oculta controles nativos residuales en navegadores WebKit/Safari/Chrome */
-.modal-animated-video::-webkit-media-controls {
-  display: none !important;
-}
-.modal-animated-video::-webkit-media-controls-enclosure {
-  display: none !important;
 }
