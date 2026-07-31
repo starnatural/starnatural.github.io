@@ -97,23 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupBackToTop();
 });
 
-// --- RENDERIZADO CON BUSCADOR ---
-function renderProducts(filterText = "") {
-  const container = document.getElementById("product-grid");
-  if (!container) return;
-
-  const query = (filterText || "").toLowerCase().trim();
-
-  // Filtrar por nombre, beneficio, fabricante, contenido o invima
-  const filteredProducts = PRODUCTS.filter(p => {
-    if (!query) return true;
-    return (p.name && p.name.toLowerCase().includes(query)) ||
-           (p.benefit && p.benefit.toLowerCase().includes(query)) ||
-           (p.fabricado && p.fabricado.toLowerCase().includes(query)) ||
-           (p.netContent && p.netContent.toLowerCase().includes(query)) ||
-           (p.invima && p.invima.toLowerCase().includes(query));
-  });
-  
 function renderProducts() {
   const container = document.getElementById("product-grid");
   if (!container) return;
