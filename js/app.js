@@ -379,44 +379,57 @@ async function handleWompiCheckout() {
       }
     });
 
-    checkout.open(function ( result ) {
-      const transaction = result.transaction;
-      if (transaction.status === 'APPROVED') {
-        const message = 
-`✅ *¡NUEVO PEDIDO PAGADO EN STAR NATURAL!*
+checkout.open(function ( result ) {
+  const transaction = result.transaction;
+
+  if (transaction.status === 'APPROVED') {
+    const referenceId = transaction.id || reference;
+    
+    // 1. Construir resumen para WhatsApp
+    const orderSummary = cart.map(i => 
+      `• *${i.name}* (x${i.qty}) - $${(i.price * i.qty).toLocaleString("es-CO")}\n` +
+      `   - Fabricado por: ${i.fabricado || 'N/A'}\n` +
+      `   - Contenido: ${i.netContent || 'N/A'}\n` +
+      `   - Invima: ${i.invima || 'N/A'}`
+    ).join("\n\n");
+
+    const message = 
+`✅ *¡NUEVO PEDIDO PAGADO EN NATURAL MEDIX!*
 ----------------------------------
-📌 *Referencia Wompi:* ${transaction.id || reference}
+📌 *Referencia Wompi:* ${referenceId}
 💰 *Monto Pagado:* $${totalPrice.toLocaleString("es-CO")} COP
 
-🛒 *PRODUCTOS:*
+🛒 *DETALLE DE PRODUCTOS:*
 ${orderSummary}
 
-👤 *DATOS DE ENVÍO Y FACTURACIÓN:*
-• *Nombre/Razón Social:* ${name}
-• *CC / NIT:* ${idNum}
-• *Correo:* ${email}
+👤 *DATOS DE ENVÍO:*
+• *Nombre:* ${name}
+• *CC/NIT:* ${idNum}
 • *Teléfono:* ${phone}
 • *Ciudad:* ${city}
 • *Dirección:* ${address}
-${notes ? `• *Notas:* ${notes}` : ''}
+${notes ? `• *Notas:* ${notes}` : ''}`;
 
-----------------------------------
-_Pago verificado exitosamente vía Wompi._`;
+    const whatsappUrl = `https://wa.me/573027109685?text=${encodeURIComponent(message)}`;
 
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/573027109685?text=${encodedMessage}`;
-
-        cart = [];
-        saveAndRefreshCart();
-        closeCartModal();
-
-        // REDIRECCIÓN DIRECTA A WHATSAPP (Abre directo en la app de WhatsApp)
-        window.location.href = whatsappUrl;
-
-      } else if (transaction.status === 'DECLINED') {
-        alert("La transacción fue rechazada por la entidad financiera.");
-      }
+    // 2. Desplegar la pantalla interna de respaldo
+    showOrderReceipt({
+      ref: referenceId,
+      total: totalPrice,
+      cart: [...cart],
+      customer: { name, idNum, email, phone, city, address, notes },
+      whatsappUrl: whatsappUrl
     });
+
+    // 3. Limpiar carrito y cerrar modal del checkout
+    cart = [];
+    saveAndRefreshCart();
+    closeCartModal();
+
+  } else if (transaction.status === 'DECLINED') {
+    alert("La transacción fue rechazada por la entidad financiera.");
+  }
+});
 
   } catch (error) {
     console.error("Error al generar la firma de Wompi:", error);
@@ -463,4 +476,53 @@ function setupPWAInstall() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
   }
+}
+// --- FUNCIONES DEL MODAL DE CONFIRMACIÓN / RECIBO ---
+function showOrderReceipt(data) {
+  const container = document.getElementById("receipt-details-container");
+  const modal = document.getElementById("receipt-modal");
+  
+  if (!container || !modal) return;
+
+  const itemsHtml = data.cart.map(i => `
+    <div style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+      <div style="font-weight: 700; color: #0f172a;">${i.name} (x${i.qty})</div>
+      <div style="color: #475569; font-size: 0.8rem;">
+        • Fabricado: ${i.fabricado || 'N/A'}<br>
+        • Contenido: ${i.netContent || 'N/A'}<br>
+        • Invima: ${i.invima || 'N/A'}<br>
+        • Subtotal: $${(i.price * i.qty).toLocaleString("es-CO")} COP
+      </div>
+    </div>
+  `).join("");
+
+  container.innerHTML = `
+    <div style="margin-bottom: 0.8rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+      <p style="margin: 2px 0;"><strong>Referencia Wompi:</strong> ${data.ref}</p>
+      <p style="margin: 2px 0;"><strong>Fecha:</strong> ${new Date().toLocaleString("es-CO")}</p>
+      <p style="margin: 2px 0; font-size: 1rem; color: #166534;"><strong>Total Pagado:</strong> $${data.total.toLocaleString("es-CO")} COP</p>
+    </div>
+
+    <h4 style="margin: 0.5rem 0; color: #0f172a;">Detalle del Pedido:</h4>
+    ${itemsHtml}
+
+    <h4 style="margin: 0.8rem 0 0.4rem; color: #0f172a;">Datos de Envío:</h4>
+    <p style="margin: 2px 0;"><strong>Cliente:</strong> ${data.customer.name} (CC/NIT: ${data.customer.idNum})</p>
+    <p style="margin: 2px 0;"><strong>Teléfono:</strong> ${data.customer.phone}</p>
+    <p style="margin: 2px 0;"><strong>Correo:</strong> ${data.customer.email}</p>
+    <p style="margin: 2px 0;"><strong>Dirección:</strong> ${data.customer.address}, ${data.customer.city}</p>
+    ${data.customer.notes ? `<p style="margin: 2px 0;"><strong>Notas:</strong> ${data.customer.notes}</p>` : ''}
+  `;
+
+  // Asignar enlace directo de WhatsApp al botón opcional
+  const btnWa = document.getElementById("btn-whatsapp-copy");
+  if (btnWa) {
+    btnWa.href = data.whatsappUrl;
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeReceiptModal() {
+  document.getElementById("receipt-modal")?.classList.add("hidden");
 }
