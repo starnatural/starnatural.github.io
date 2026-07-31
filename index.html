@@ -1,458 +1,127 @@
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Star Natural</title>
 
-:root {
---primary: #0d9488;
-/* Verde Esmeralda fresco */
---dark: #0f172a;
-/* Pizarra oscuro */
---light-bg: #f8fafc;
---card-bg: #ffffff;
---text-muted: #64748b;
---border-radius: 16px;
-}
+  <!-- Control de Caché para Navegadores -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 
-body {
-font-family: 'Urbanist', sans-serif;
-background-color: var(--light-bg);
-color: var(--dark);
-line-height: 1.5;
-padding-bottom: 30px;
-}
+  <!-- Tipografía Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;0,800;1,800&display=swap" rel="stylesheet" />
 
-/* --- NAVEGACIÓN --- */
-.navbar {
-background: #ffffff;
-position: sticky;
-top: 0;
-z-index: 100;
-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-padding: 0.8rem 1.2rem;
-}
+  <!-- Manifiesto PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0d9488" />
 
-.nav-container {
-max-width: 600px;
-margin: 0 auto;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-.brand-name {
-font-size: 1.6rem;
-font-weight: 800;
-font-style: italic;
-letter-spacing: -0.03em;
-color: var(--dark);
-}
+  <!-- NAVEGACIÓN PRINCIPAL -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <h1 class="brand-name">Star Natural<span class="dot">.</span></h1>
+      <button id="cart-btn" class="cart-btn" onclick="openCartModal()">
+        🛒 <span id="cart-badge" class="cart-badge">0</span>
+      </button>
+    </div>
+  </nav>
 
-.brand-name .dot {
-color: var(--primary);
-font-style: normal;
-}
+  <!-- BANNER PWA (INSTALACIÓN) -->
+  <div id="pwa-banner" class="pwa-banner hidden">
+    <div class="pwa-content">
+      <span>Instala la app de Star Natural para comprar más rápido</span>
+      <button id="install-btn" class="btn-install">Instalar</button>
+    </div>
+  </div>
 
-.cart-btn {
-background: var(--light-bg);
-border: 1px solid #e2e8f0;
-padding: 0.5rem 0.9rem;
-border-radius: 20px;
-font-size: 1.1rem;
-cursor: pointer;
-}
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-container">
+    
+    <!-- TARJETA DESTACADA HERO -->
+    <section class="hero-card">
+      <span class="hero-tag">Naturista Premium</span>
+      <h2>Salud y Bienestar Natural</h2>
+      <p>Descubre nuestros productos naturales de alta pureza con envíos a todo el país.</p>
+    </section>
 
-.cart-badge {
-background: var(--primary);
-color: #fff;
-font-weight: 700;
-font-size: 0.75rem;
-padding: 2px 6px;
-border-radius: 10px;
-}
+    <!-- LISTADO DE PRODUCTOS -->
+    <section class="products-section">
+      <h3 class="section-title">Productos Destacados</h3>
+      <div id="product-grid" class="product-grid">
+        <!-- Los productos se cargan dinámicamente desde app.js -->
+      </div>
+    </section>
 
-/* --- BANNER PWA --- */
-.pwa-banner {
-background: var(--dark);
-color: white;
-padding: 0.8rem 1.2rem;
-}
+  </main>
 
-.pwa-banner.hidden {
-display: none;
-}
+  <!-- MODAL VISTA RÁPIDA MULTIMEDIA (IMAGEN / VIDEO ANIMADO) -->
+  <div id="image-modal" class="modal-overlay hidden" onclick="closeImageModal()">
+    <div class="modal-media-wrapper" onclick="event.stopPropagation()">
+      <button id="close-image-modal" class="modal-close-btn" aria-label="Cerrar modal" onclick="closeImageModal()">&times;</button>
+      <div class="image-modal-content">
+        <!-- El contenido (video o imagen) se inyecta desde JS -->
+      </div>
+    </div>
+  </div>
 
-.pwa-content {
-max-width: 600px;
-margin: 0 auto;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
+  <!-- MODAL CARRITO DE COMPRAS & CHECKOUT -->
+  <div id="cart-modal" class="modal-overlay hidden">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Tu Carrito de Compras</h3>
+        <button class="close-btn" onclick="closeCartModal()">&times;</button>
+      </div>
+      
+      <!-- Ítems del carrito -->
+      <div id="cart-items"></div>
 
-.btn-install {
-background: var(--primary);
-color: white;
-border: none;
-padding: 0.5rem 1rem;
-border-radius: 8px;
-font-family: 'Urbanist', sans-serif;
-font-weight: 700;
-cursor: pointer;
-}
+      <!-- Total -->
+      <div class="summary-line">
+        <span>Total a Pagar:</span>
+        <span id="cart-total">$0</span>
+      </div>
 
-/* --- LAYOUT PRINCIPAL --- */
-.main-container {
-max-width: 600px;
-margin: 0 auto;
-padding: 1.2rem;
-}
+      <!-- Formulario de Envío -->
+      <form id="shipping-form" class="shipping-form" onsubmit="handleCheckout(event)">
+        <input type="text" id="cust-name" placeholder="Nombre completo" required />
+        <input type="tel" id="cust-phone" placeholder="Teléfono / WhatsApp" required />
+        <input type="text" id="cust-address" placeholder="Dirección de entrega y ciudad" required />
+        <button type="submit" class="btn-checkout">Finalizar Compra</button>
+      </form>
+    </div>
+  </div>
 
-.hero-card {
-background: linear-gradient(135deg, #0d9488 0%, #115e59 100%);
-color: white;
-padding: 1.5rem;
-border-radius: var(--border-radius);
-margin-bottom: 1.5rem;
-}
+  <!-- BOTÓN VOLVER ARRIBA -->
+  <button id="back-to-top" class="back-to-top hidden" onclick="scrollToTop()" aria-label="Volver arriba">
+    ↑
+  </button>
 
-.hero-tag {
-background: rgba(255, 255, 255, 0.2);
-padding: 0.25rem 0.75rem;
-border-radius: 20px;
-font-size: 0.75rem;
-font-weight: 600;
-text-transform: uppercase;
-}
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2026 Star Natural. Todos los derechos reservados.</p>
+  </footer>
 
-.hero-card h2 {
-font-size: 1.5rem;
-font-weight: 800;
-margin: 0.6rem 0 0.4rem 0;
-}
+  <!-- SCRIPT PRINCIPAL DE LA APLICACIÓN -->
+  <script src="app.js"></script>
 
-.section-title {
-font-size: 1.3rem;
-font-weight: 700;
-margin-bottom: 1rem;
-}
+  <!-- REGISTRO DEL SERVICE WORKER (PWA) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker registrado:', reg.scope))
+          .catch(err => console.warn('Error al registrar Service Worker:', err));
+      });
+    }
+  </script>
 
-.product-grid {
-display: flex;
-flex-direction: column;
-gap: 1.2rem;
-}
-
-/* --- TARJETAS DE PRODUCTO --- */
-.product-card {
-background: var(--card-bg);
-border-radius: var(--border-radius);
-padding: 1.2rem;
-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-border: 1px solid #f1f5f9;
-}
-
-/* MINIATURA VERTICAL 9:16 COMPACTA */
-.product-image-wrapper {
-position: relative;
-width: 140px;
-/* Ancho compacto para miniatura */
-height: 248px;
-/* Proporción exacta 9:16 (140 * 16 / 9) */
-margin: 0 auto 0.8rem;
-/* Centrado en la tarjeta */
-border-radius: 12px;
-overflow: hidden;
-cursor: pointer;
-background-color: #000;
-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.product-image-wrapper:hover {
-transform: scale(1.04);
-box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-}
-
-.product-img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-}
-
-.expand-badge {
-position: absolute;
-bottom: 8px;
-left: 50%;
-transform: translateX(-50%);
-background: rgba(0, 0, 0, 0.75);
-color: #fff;
-font-size: 0.68rem;
-font-weight: 600;
-padding: 3px 8px;
-border-radius: 10px;
-white-space: nowrap;
-pointer-events: none;
-}
-
-.product-header {
-display: flex;
-justify-content: space-between;
-align-items: flex-start;
-}
-
-.product-title {
-font-size: 1.4rem;
-font-weight: 800;
-}
-
-.product-badge {
-background: #fef3c7;
-color: #b45309;
-font-weight: 700;
-font-size: 0.7rem;
-padding: 0.2rem 0.6rem;
-border-radius: 6px;
-}
-
-.product-desc {
-font-size: 0.9rem;
-color: var(--text-muted);
-margin: 0.5rem 0;
-}
-
-.product-footer {
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.btn-add-cart {
-width: 100%;
-background: var(--dark);
-color: white;
-border: none;
-padding: 0.6rem 1.2rem;
-border-radius: 10px;
-font-family: 'Urbanist', sans-serif;
-font-weight: 700;
-cursor: pointer;
-}
-
-/* PRECIOS Y AHORRO */
-.price-container {
-display: flex;
-flex-direction: column;
-gap: 0.2rem;
-margin-top: 0.6rem;
-}
-
-.prices-row {
-display: flex;
-align-items: baseline;
-gap: 0.8rem;
-}
-
-.product-price {
-font-size: 1.4rem;
-font-weight: 800;
-color: var(--primary);
-}
-
-.original-price {
-font-size: 1rem;
-font-weight: 600;
-color: #94a3b8;
-text-decoration: line-through;
-}
-
-.savings-tag {
-display: inline-flex;
-align-items: center;
-gap: 6px;
-background: #ecfdf5;
-color: #d97706;
-font-size: 0.8rem;
-font-weight: 700;
-padding: 0.15rem 0.5rem;
-border-radius: 6px;
-width: fit-content;
-}
-
-.animated-emoji {
-width: 22px;
-height: 22px;
-vertical-align: sub;
-display: inline-block;
-object-fit: contain;
-}
-
-/* --- MODAL CARRITO Y MULTIMEDIA --- */
-.modal-overlay {
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background: rgba(15, 23, 42, 0.75);
-backdrop-filter: blur(4px);
-z-index: 200;
-display: flex;
-align-items: flex-end;
-justify-content: center;
-}
-
-.modal-overlay.hidden {
-display: none;
-}
-
-.modal-content {
-background: white;
-width: 100%;
-max-width: 600px;
-margin: 0 auto;
-border-top-left-radius: 24px;
-border-top-right-radius: 24px;
-padding: 1.5rem;
-max-height: 85vh;
-overflow-y: auto;
-}
-
-.modal-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 1rem;
-}
-
-.close-btn {
-background: none;
-border: none;
-font-size: 1.8rem;
-color: var(--text-muted);
-cursor: pointer;
-}
-
-/* MODAL VIDEO EN PANTALLA COMPLETA 9:16 */
-.image-modal-content {
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-}
-
-.modal-media-wrapper video {
-width: 100%;
-max-width: 380px;
-height: auto;
-max-height: 80vh;
-aspect-ratio: 9 / 16;
-object-fit: cover;
-border-radius: 16px;
-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-/* ELEMENTOS DEL CARRITO */
-.cart-item {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0.8rem;
-background: var(--light-bg);
-border-radius: 10px;
-margin-bottom: 0.5rem;
-}
-
-.qty-controls {
-display: flex;
-align-items: center;
-gap: 0.5rem;
-}
-
-.qty-btn {
-width: 28px;
-height: 28px;
-border-radius: 6px;
-border: 1px solid #cbd5e1;
-background: white;
-font-weight: 700;
-cursor: pointer;
-}
-
-.summary-line {
-display: flex;
-justify-content: space-between;
-font-size: 1.2rem;
-font-weight: 800;
-margin: 1rem 0;
-border-top: 1px solid #e2e8f0;
-padding-top: 0.8rem;
-}
-
-.shipping-form {
-display: flex;
-flex-direction: column;
-gap: 0.6rem;
-margin-bottom: 1rem;
-}
-
-.shipping-form input {
-padding: 0.7rem;
-border: 1px solid #cbd5e1;
-border-radius: 8px;
-font-family: 'Urbanist', sans-serif;
-}
-
-.btn-checkout {
-width: 100%;
-background: var(--primary);
-color: white;
-border: none;
-padding: 1rem;
-border-radius: 12px;
-font-family: 'Urbanist', sans-serif;
-font-weight: 800;
-font-size: 1rem;
-cursor: pointer;
-}
-
-/* BOTÓN VOLVER ARRIBA */
-.back-to-top {
-position: fixed;
-bottom: 20px;
-right: 20px;
-width: 46px;
-height: 46px;
-background-color: var(--dark);
-color: #ffffff;
-border: 2px solid var(--primary);
-border-radius: 50%;
-font-size: 1.4rem;
-font-weight: 800;
-cursor: pointer;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-z-index: 150;
-transition: opacity 0.3s ease, transform 0.3s ease;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-.back-to-top.hidden {
-opacity: 0;
-pointer-events: none;
-transform: translateY(10px);
-}
-
-.back-to-top:active {
-transform: scale(0.92);
-}
-
-.footer {
-text-align: center;
-margin-top: 2rem;
-font-size: 0.85rem;
-color: var(--text-muted);
-}
+</body>
+</html>
