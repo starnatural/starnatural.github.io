@@ -1,79 +1,65 @@
 const PRODUCTS = [
   {
-    id: "gaf-plus-colageno",
-    name: "GAF-PLUS 300mL",
+    id: "aguaje-pawer",
+    name: "AGUAJE pawer",
     badge: "Estrella",
-    fabricado: "GrenLab",
-    netContent: "Cont. Neto: 300mL (10 Porciones)",
-    invima: "PSA-0690-2025",
+    fabricado: "Star Natural",
+    netContent: "Cont. Neto: 100 Capsulas | Capsula 500mg.",
+    invima: "Producto sin registro",
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
-    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
-    price: 15600,
-    originalPrice: 22300,
-    image: "assets/images/gaf-plus.mp4"
+    usage: "Tomar 3 capsulas diarias, una cada media hora antes de las comidas.",
+    price: 11000,
+    originalPrice: 22000,
+    image: "assets/images/star-natural.mp4"
   },
   {
-    id: "origen-disco",
-    name: "ORIGEN 15 Discos",
-    badge: "Línea ORIGEN",
-    fabricado: "Naturalisima",
-    netContent: "Cont. Neto: Frasco x 15 Discos (15 Porciones)",
-    invima: "PSA-0005343-2024",
-    benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
-    usage: "Disolver 1 disco en un vaso de agua caliente al día.",
-    price: 17800,
-    originalPrice: 25450,
-    image: "assets/images/origen-disco.mp4"
-  },
-  {
-    id: "origen-360ml-colageno",
-    name: "ORIGEN 360mL",
-    badge: "Línea ORIGEN",
-    fabricado: "Naturalisima",
-    netContent: "Cont. Neto: 360mL (12 Porciones)",
-    invima: "RSA-0034995-2024",
-    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
-    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
-    price: 15600,
-    originalPrice: 22300,
-    image: "assets/images/origen-360ml.mp4"
-  },
-  {
-    id: "origen-400ml-colageno",
-    name: "ORIGEN 400mL",
-    badge: "Línea ORIGEN",
-    fabricado: "Laboratorios vanier",
-    netContent: "Cont. Neto: 400mL (13 Porciones)",
-    invima: "RSAV12136011",
-    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
-    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
-    price: 15600,
-    originalPrice: 22300,
-    image: "assets/images/origen-400ml.mp4"
-  },
-  {
-    id: "vcol-colageno",
-    name: "VCOL 360mL",
+    id: "aguaje-plus",
+    name: "Aguaje Plus",
     badge: "Estrella",
-    fabricado: "Naturalisima",
-    netContent: "Cont. Neto: 360mL (12 Porciones)",
-    invima: "RSA-0034995-2024",
+    fabricado: "Star Natural",
+    netContent: "Cont. Neto: 100 Capsulas | Capsula 500mg.",
+    invima: "Producto sin registro",
     benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
-    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
-    price: 15600,
-    originalPrice: 22300,
-    image: "assets/images/vcol.mp4"
+    usage: "Tomar 3 capsulas diarias, una cada media hora antes de las comidas.",
+    price: 11000,
+    originalPrice: 22000,
+    image: "assets/images/star-natural.mp4"
+  },
+  {
+    id: "aguaje-hinojo",
+    name: "Aguaje Hinojo",
+    badge: "Estrella",
+    fabricado: "Star Natural",
+    netContent: "Cont. Neto: 100 Capsulas | Capsula 500mg.",
+    invima: "Producto sin registro",
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 3 capsulas diarias, una cada media hora antes de las comidas.",
+    price: 11000,
+    originalPrice: 22000,
+    image: "assets/images/star-natural.mp4"
+  },
+  {
+    id: "aguaje-siempre-bella",
+    name: "Aguaje Siempre Bella",
+    badge: "Estrella",
+    fabricado: "Star Natural",
+    netContent: "Cont. Neto: 100 Capsulas | Capsula 500mg.",
+    invima: "Producto sin registro",
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 3 capsulas diarias, una cada media hora antes de las comidas.",
+    price: 11000,
+    originalPrice: 22000,
+    image: "assets/images/star-natural.mp4"
   }
 ];
 
 const APP_VERSION = "1.1.4";
 if (localStorage.getItem("app_version") !== APP_VERSION) {
   localStorage.setItem("app_version", APP_VERSION);
-  // Fuerza la recarga omitiendo la memoria caché
   window.location.reload(true); 
 }
 
-let cart = JSON.parse(localStorage.getItem("naturalmedix_cart") || "[]");
+let cart = JSON.parse(localStorage.getItem("starnatural_cart") || "[]");
 let deferredPrompt = null;
 
 // Configuración de Wompi
@@ -97,24 +83,27 @@ document.addEventListener("DOMContentLoaded", () => {
   setupBackToTop();
 });
 
+// --- RENDERIZADO CON BUSCADOR ---
 function renderProducts(filterText = "") {
   const container = document.getElementById("product-grid");
   if (!container) return;
 
-  const query = filterText.toLowerCase().trim();
+  const query = (filterText || "").toLowerCase().trim();
 
-  // Filtrar por nombre, beneficio, fabricante o contenido
+  // Filtrar por nombre, beneficio, fabricante, contenido o invima
   const filteredProducts = PRODUCTS.filter(p => {
-    return p.name.toLowerCase().includes(query) ||
+    if (!query) return true;
+    return (p.name && p.name.toLowerCase().includes(query)) ||
            (p.benefit && p.benefit.toLowerCase().includes(query)) ||
            (p.fabricado && p.fabricado.toLowerCase().includes(query)) ||
-           (p.netContent && p.netContent.toLowerCase().includes(query));
+           (p.netContent && p.netContent.toLowerCase().includes(query)) ||
+           (p.invima && p.invima.toLowerCase().includes(query));
   });
 
   if (filteredProducts.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #64748b;">
-        <p style="font-size: 1.1rem; font-weight: 600;">No se encontraron productos para "${filterText}"</p>
+        <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">No se encontraron productos para "${filterText}"</p>
         <p style="font-size: 0.9rem;">Intenta con otros términos como "capsulas", "aguaje" o "articulaciones".</p>
       </div>
     `;
@@ -175,7 +164,7 @@ function renderProducts(filterText = "") {
   }).join("");
 }
 
-// --- MODAL DE REPRODUCCIÓN VISTA RÁPIDA (ANIMACIÓN LIMPIA) ---
+// --- MODAL VISTA RÁPIDA ---
 function openMediaModal(src, title) {
   const modal = document.getElementById("image-modal") || document.getElementById("imageModal");
   const modalContent = modal?.querySelector(".image-modal-content");
@@ -229,7 +218,7 @@ function updateQty(productId, delta) {
 }
 
 function saveAndRefreshCart() {
-  localStorage.setItem("naturalmedix_cart", JSON.stringify(cart));
+  localStorage.setItem("starnatural_cart", JSON.stringify(cart));
   updateCartUI();
 }
 
@@ -267,6 +256,7 @@ function updateCartUI() {
 function openCartModal() { document.getElementById("cart-modal")?.classList.remove("hidden"); }
 function closeCartModal() { document.getElementById("cart-modal")?.classList.add("hidden"); }
 
+// --- ESCUCHADORES DE EVENTOS Y BUSCADOR (ESTRUCTURA CORREGIDA) ---
 function setupEventListeners() {
   document.getElementById("cart-icon-btn")?.addEventListener("click", openCartModal);
   document.getElementById("close-cart-btn")?.addEventListener("click", closeCartModal);
@@ -278,6 +268,36 @@ function setupEventListeners() {
       if (e.target === imageModal || e.target.classList.contains("image-modal-content")) {
         closeImageModal();
       }
+    });
+  }
+
+  // Escuchadores del buscador corregidos
+  const searchInput = document.getElementById("product-search-input");
+  const clearBtn = document.getElementById("clear-search-btn");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const value = e.target.value;
+      renderProducts(value);
+
+      if (clearBtn) {
+        if (value.trim().length > 0) {
+          clearBtn.classList.remove("hidden");
+        } else {
+          clearBtn.classList.add("hidden");
+        }
+      }
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      if (searchInput) {
+        searchInput.value = "";
+        renderProducts("");
+        searchInput.focus();
+      }
+      clearBtn.classList.add("hidden");
     });
   }
 
@@ -344,8 +364,7 @@ async function handleWompiCheckout() {
         phoneNumberPrefix: '+57',
         legalId: idNum,
         legalIdType: 'CC'
-      },
-      redirectUrl: 'https://naturalmedix.app/'
+      }
     });
 
     checkout.open(function ( result ) {
@@ -433,49 +452,3 @@ function setupPWAInstall() {
     navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
   }
 }
-// Antes: const CACHE_NAME = 'naturalmedix-cache-v1';
-const CACHE_NAME = 'naturalmedix-cache-v1.1.4'; // 👈 Cambia esto
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            console.log('Eliminando caché antiguo:', cache);
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
-});
-// Lógica de búsqueda en tiempo real
-  const searchInput = document.getElementById("product-search-input");
-  const clearBtn = document.getElementById("clear-search-btn");
-
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      const value = e.target.value;
-      renderProducts(value);
-
-      if (clearBtn) {
-        if (value.trim().length > 0) {
-          clearBtn.classList.remove("hidden");
-        } else {
-          clearBtn.classList.add("hidden");
-        }
-      }
-    });
-  }
-
-  if (clearBtn) {
-    clearBtn.addEventListener("click", () => {
-      if (searchInput) {
-        searchInput.value = "";
-        renderProducts("");
-        searchInput.focus();
-      }
-      clearBtn.classList.add("hidden");
-    });
-  }
