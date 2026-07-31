@@ -361,10 +361,7 @@ _Pago verificado exitosamente vía Wompi._`;
         saveAndRefreshCart();
         closeCartModal();
 
-        const newWindow = window.open(whatsappUrl, '_blank');
-        if (!newWindow) {
-          window.location.href = whatsappUrl;
-        }
+        window.open(whatsappUrl, '_blank');
       } else if (transaction.status === 'DECLINED') {
         alert("La transacción fue rechazada por la entidad financiera.");
       }
@@ -416,3 +413,20 @@ function setupPWAInstall() {
     navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
   }
 }
+// Antes: const CACHE_NAME = 'naturalmedix-cache-v1';
+const CACHE_NAME = 'naturalmedix-cache-v1.1.4'; // 👈 Cambia esto
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log('Eliminando caché antiguo:', cache);
+            return caches.delete(cache);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
+});
