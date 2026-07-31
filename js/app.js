@@ -73,7 +73,7 @@ let deferredPrompt = null;
 const WOMPI_PUBLIC_KEY = "pub_prod_hTKZ7t71m1Xue0eFgOc3vSvKTvcUl1gZ"; 
 const WOMPI_INTEGRITY_SECRET = "prod_integrity_DcxdEMXNcfNVP0vLgE2RDmIK61d3ldNU";
 
-// URLs de emojis animados
+// Emojis animados
 const EMOJIS = {
   fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",
   package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",
@@ -148,29 +148,34 @@ function renderProducts() {
   }).join("");
 }
 
-// --- MODAL DE REPRODUCCIÓN EN PANTALLA COMPLETA 9:16 ---
+// --- MODAL DE VISTA RÁPIDA (3:4) ---
 function openMediaModal(src, title) {
-  const modal = document.getElementById("image-modal");
-  const modalContent = document.querySelector(".image-modal-content");
-  const modalCaption = document.getElementById("modal-img-caption");
-
-  if (modal && modalContent) {
+  const modal = document.getElementById("image-modal") || document.getElementById("imageModal");
+  if (!modal) return;
+  
+  const modalContent = modal.querySelector(".image-modal-content");
+  if (modalContent) {
+    const isVideo = src.endsWith(".mp4") || src.endsWith(".webm");
+    
     modalContent.innerHTML = `
       <div class="modal-media-wrapper">
-        <video src="${src}" autoplay loop muted playsinline></video>
+        <button class="modal-close-btn" onclick="closeImageModal()" aria-label="Cerrar">&times;</button>
+        ${isVideo 
+          ? `<video src="${src}" controls autoplay loop playsinline></video>`
+          : `<img src="${src}" alt="${title || 'Producto'}" />`
+        }
       </div>
     `;
-    if (modalCaption) modalCaption.innerText = title || "";
     modal.classList.remove("hidden");
   }
 }
 
 function closeImageModal() {
-  const modal = document.getElementById("image-modal");
+  const modal = document.getElementById("image-modal") || document.getElementById("imageModal");
   if (modal) {
     modal.classList.add("hidden");
-    const modalContent = document.querySelector(".image-modal-content");
-    if (modalContent) modalContent.innerHTML = ""; // Limpia el video al cerrar para ahorrar consumo de memoria
+    const modalContent = modal.querySelector(".image-modal-content");
+    if (modalContent) modalContent.innerHTML = "";
   }
 }
 
@@ -240,12 +245,13 @@ function setupEventListeners() {
   document.getElementById("cart-icon-btn")?.addEventListener("click", openCartModal);
   document.getElementById("close-cart-btn")?.addEventListener("click", closeCartModal);
   document.getElementById("btn-wompi-pay")?.addEventListener("click", handleWompiCheckout);
-  document.getElementById("close-image-modal")?.addEventListener("click", closeImageModal);
   
-  const imageModal = document.getElementById("image-modal");
-  if (imageModal) {
-    imageModal.addEventListener("click", (e) => {
-      if (e.target === imageModal) closeImageModal();
+  const modal = document.getElementById("image-modal") || document.getElementById("imageModal");
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal || e.target.classList.contains("image-modal-content")) {
+        closeImageModal();
+      }
     });
   }
 
@@ -349,7 +355,10 @@ _Pago verificado exitosamente vía Wompi._`;
         saveAndRefreshCart();
         closeCartModal();
 
-        window.open(whatsappUrl, '_blank');
+        const newWindow = window.open(whatsappUrl, '_blank');
+        if (!newWindow) {
+          window.location.href = whatsappUrl;
+        }
       } else if (transaction.status === 'DECLINED') {
         alert("La transacción fue rechazada por la entidad financiera.");
       }
