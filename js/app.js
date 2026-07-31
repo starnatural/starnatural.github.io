@@ -26,7 +26,7 @@ const PRODUCTS = [
     image: "assets/images/origen-disco.mp4"
   },
   {
-    id: "origen-360ml-colageno",
+    id: "origen_360ml",
     name: "ORIGEN 360mL",
     badge: "Línea ORIGEN",
     fabricado: "Naturalisima",
@@ -36,7 +36,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/origen-360ml.mp4"
+    image: "assets/images/origen_360ml.mp4"
   },
   {
     id: "origen-400ml-colageno",
