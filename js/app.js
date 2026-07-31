@@ -117,7 +117,7 @@ function renderProducts(filterText = "") {
     container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #64748b;">
         <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">No se encontraron productos para "${filterText}"</p>
-        <p style="font-size: 0.9rem;">Intenta con otros términos como "capsulas", "aguaje" o "articulaciones".</p>
+        <p style="font-size: 0.9rem;">Intenta con otros términos como "origen", "vcol" o "colageno".</p>
       </div>
     `;
     return;
@@ -269,7 +269,7 @@ function updateCartUI() {
 function openCartModal() { document.getElementById("cart-modal")?.classList.remove("hidden"); }
 function closeCartModal() { document.getElementById("cart-modal")?.classList.add("hidden"); }
 
-// --- ESCUCHADORES DE EVENTOS Y BUSCADOR (ESTRUCTURA CORREGIDA) ---
+// --- ESCUCHADORES DE EVENTOS Y BUSCADOR ---
 function setupEventListeners() {
   document.getElementById("cart-icon-btn")?.addEventListener("click", openCartModal);
   document.getElementById("close-cart-btn")?.addEventListener("click", closeCartModal);
@@ -284,7 +284,6 @@ function setupEventListeners() {
     });
   }
 
-  // Escuchadores del buscador corregidos
   const searchInput = document.getElementById("product-search-input");
   const clearBtn = document.getElementById("clear-search-btn");
 
@@ -407,13 +406,13 @@ _Pago verificado exitosamente vía Wompi._`;
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/573027109685?text=${encodedMessage}`;
 
-        alert(`¡Pago Aprobado con éxito! Presiona Aceptar para enviar la confirmación de envío por WhatsApp.`);
-        
         cart = [];
         saveAndRefreshCart();
         closeCartModal();
 
-        window.open(whatsappUrl, '_blank');
+        // REDIRECCIÓN DIRECTA A WHATSAPP (Abre directo en la app de WhatsApp)
+        window.location.href = whatsappUrl;
+
       } else if (transaction.status === 'DECLINED') {
         alert("La transacción fue rechazada por la entidad financiera.");
       }
@@ -465,14 +464,3 @@ function setupPWAInstall() {
     navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
   }
 }
-// ❌ ANTES (Se bloquea o se cierra fácil):
-// alert(`¡Pago Aprobado con éxito!...`);
-// window.open(whatsappUrl, '_blank');
-
-// ✅ AHORA (Redirección directa y segura):
-cart = [];
-saveAndRefreshCart();
-closeCartModal();
-
-// Redirige directamente a WhatsApp en la misma ventana
-window.location.href = whatsappUrl;
