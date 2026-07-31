@@ -52,7 +52,7 @@ const PRODUCTS = [
     image: "assets/images/origen-400ml.mp4"
   },
   {
-    id: "vcol-colageno",
+    id: "vcol-360ml",
     name: "VCOL 360mL",
     badge: "Estrella",
     fabricado: "Naturalisima",
@@ -62,7 +62,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/vcol.mp4"
+    image: "assets/images/vcol-360ml.mp4"
   }
 ];
 
