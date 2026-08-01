@@ -3,34 +3,37 @@
   -webkit-tap-highlight-color: transparent !important;
   -webkit-touch-callout: none;
 }
+
 /* ==========================================
-   LOGO Y ANIMACIÓN DE LA ESTRELLA WEBP
+   LOGO ÚNICO Y ESTRELLA ANIMADA
    ========================================== */
 
-/* Contenedor del logo */
 .brand-logo {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: var(--primary-color, #0d9488);
+  gap: 6px;
   text-decoration: none;
   user-select: none;
 }
 
-/* Imagen de la estrella animada */
+/* Texto del nombre */
+.brand-name {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--primary-color, #0d9488);
+}
+
+/* Imagen de la estrella de Google */
 .star-logo-img {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
   display: block;
   transform-origin: center;
-  /* Animación suave de 3 segundos */
   animation: starBounceGlow 3s ease-in-out infinite;
 }
 
-/* Fotogramas clave de la animación */
+/* Animación sutil */
 @keyframes starBounceGlow {
   0%, 100% {
     transform: scale(1) rotate(0deg);
@@ -38,7 +41,7 @@
   }
   25% {
     transform: scale(1.15) rotate(12deg);
-    filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.8));
+    filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.8));
   }
   50% {
     transform: scale(1) rotate(0deg);
@@ -46,6 +49,6 @@
   }
   75% {
     transform: scale(1.15) rotate(-12deg);
-    filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.8));
+    filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.8));
   }
 }
