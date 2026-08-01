@@ -16,6 +16,10 @@
   justify-content: center;
 }
 
+.modal-overlay.hidden {
+  display: none;
+}
+
 .modal-content {
   background: white;
   width: 100%;
@@ -48,7 +52,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.8rem;
-  background: var(--bg-body);
+  background: var(--light-bg);
   border-radius: 10px;
   margin-bottom: 0.5rem;
 }
@@ -75,6 +79,6 @@
   font-size: 1.2rem;
   font-weight: 800;
   margin: 1rem 0;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid #e2e8f0;
   padding-top: 0.8rem;
 }
