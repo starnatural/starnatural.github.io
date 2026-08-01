@@ -58,6 +58,7 @@ function closeImageModal() {
     }
   }
 }
+
 // --- MODAL DE RECIBO / CONFIRMACIÓN ---
 function showOrderReceipt(data) {
   const container = document.getElementById("receipt-details-container");
