@@ -52,3 +52,41 @@
     filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.8));
   }
 }
+/* ==========================================
+   CORRECCIÓN DEFINITIVA DE TIPOGRAFÍA Y COLOR
+   ========================================== */
+
+/* Forzar que ningún texto dentro del logo sea cursiva */
+header.navbar .brand-logo,
+footer.footer .brand-logo,
+.brand-name,
+.brand-ext {
+  font-family: 'Urbanist', system-ui, -apple-system, sans-serif !important;
+  font-style: normal !important; /* Anula cualquier regla italic */
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+/* Texto principal "StarNatural" en tono oscuro plano */
+header.navbar .brand-name,
+footer.footer .brand-name {
+  color: #0f172a !important;
+  font-size: 1.2rem !important;
+}
+
+/* Extensión ".app" obligatoriamente VERDE */
+header.navbar .brand-ext,
+footer.footer .brand-ext {
+  color: #0d9488 !important; /* Verde primario */
+  font-weight: 800 !important;
+}
+
+/* Asegurar que la estrella esté alineada y animada */
+.star-logo-img {
+  width: 26px !important;
+  height: 26px !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+  transform-origin: center;
+  animation: starBounceGlow 3s ease-in-out infinite;
+}
