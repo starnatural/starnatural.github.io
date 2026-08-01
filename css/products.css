@@ -45,7 +45,7 @@
 
 /* Tarjeta de Producto */
 .product-card {
-  background: var(--bg-card);
+  background: var(--card-bg);
   border-radius: var(--border-radius);
   padding: 1.2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
@@ -79,6 +79,7 @@
   display: block;
 }
 
+/* Badge Vista Rápida (Ojo) */
 .expand-badge {
   position: absolute;
   bottom: 10px;
@@ -101,7 +102,7 @@
 }
 
 .product-image-wrapper:hover .expand-badge {
-  background: var(--primary-color);
+  background: var(--primary);
 }
 
 .product-header {
@@ -115,10 +116,9 @@
   font-weight: 800;
 }
 
-.header-bar,
 .product-badge {
-  background-color: var(--primary-color);
-  color: #ffffff;
+  background: #fef3c7;
+  color: #b45309;
   font-weight: 700;
   font-size: 0.7rem;
   padding: 0.2rem 0.6rem;
@@ -137,7 +137,7 @@
   align-items: center;
 }
 
-/* Precios y Descuento */
+/* Precios y Ahorro */
 .price-container {
   display: flex;
   flex-direction: column;
@@ -152,9 +152,9 @@
 }
 
 .product-price {
-  color: var(--primary-color);
   font-size: 1.4rem;
   font-weight: 800;
+  color: var(--primary);
 }
 
 .original-price {
@@ -177,7 +177,7 @@
   width: fit-content;
 }
 
-/* Modal Multimedia (Vista Previa de Imagen / Video) */
+/* Modal Multimedia (Video / Imagen Ampliada) */
 .modal-media-wrapper {
   position: relative;
   width: 90vw;
