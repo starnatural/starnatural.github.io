@@ -1,28 +1,19 @@
 /* ==========================================
-   FORMULARIO DE ENVÍO Y PASARELA DE PAGO
+   FORMULARIO DE ENVÍO Y PASARELA
    ========================================== */
 
-/* Botón principal CTA (Rojo Medix) */
-.btn-add-cart,
-#btn-wompi-pay {
-  background-color: var(--accent-color) !important;
-  color: #ffffff !important;
-  border: none;
-  font-weight: 700;
-  transition: background-color 0.2s ease;
+.btn-add-cart {
   width: 100%;
-  padding: 0.8rem 1.2rem;
+  background: var(--dark);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
   border-radius: 10px;
   font-family: 'Urbanist', sans-serif;
+  font-weight: 700;
   cursor: pointer;
 }
 
-.btn-add-cart:hover,
-#btn-wompi-pay:hover {
-  background-color: var(--accent-hover) !important;
-}
-
-/* Formulario de Envío */
 .shipping-form {
   display: flex;
   flex-direction: column;
@@ -39,7 +30,7 @@
 
 .btn-checkout {
   width: 100%;
-  background: var(--primary-color);
+  background: var(--primary);
   color: white;
   border: none;
   padding: 1rem;
