@@ -1,1 +1,23 @@
+/* Encabezado, Buscador y Banners */
+header {
+  background: #ffffff;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
+.search-container {
+  max-width: 600px;
+  margin: 0.5rem auto 0;
+  position: relative;
+}
+
+#product-search-input {
+  width: 100%;
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
