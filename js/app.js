@@ -1,6 +1,6 @@
 const PRODUCTS = [
   {
-    id: "gaf-plus-colageno",
+    id: "gaf_plus_300ml",
     name: "GAF-PLUS 300mL",
     badge: "Estrella",
     fabricado: "GrenLab",
@@ -10,10 +10,10 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/gaf-plus.mp4"
+    image: "assets/images/gaf_plus_300ml.mp4"
   },
   {
-    id: "origen-disco",
+    id: "origen_disco",
     name: "ORIGEN 15 Discos",
     badge: "Línea ORIGEN",
     fabricado: "Naturalisima",
@@ -39,7 +39,7 @@ const PRODUCTS = [
     image: "assets/images/origen_360ml.mp4"
   },
   {
-    id: "origen-400ml-colageno",
+    id: "origen_400ml",
     name: "ORIGEN 400mL",
     badge: "Línea ORIGEN",
     fabricado: "Laboratorios vanier",
@@ -49,10 +49,10 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "assets/images/origen-400ml.mp4"
+    image: "assets/images/origen_400ml.mp4"
   },
   {
-    id: "vcol-360ml",
+    id: "vcol_360ml",
     name: "VCOL 360mL",
     badge: "Estrella",
     fabricado: "Naturalisima",
