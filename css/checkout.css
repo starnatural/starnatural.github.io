@@ -1,1 +1,20 @@
+/* Formularios de Envío y Recibo de Confirmación */
+#receipt-modal.cart-modal {
+  z-index: 1000;
+}
 
+.btn-add-cart {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-add-cart:hover {
+  background-color: var(--primary-dark);
+}
