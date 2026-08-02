@@ -27,7 +27,7 @@ const PRODUCTS = [
     usage: "Disolver 1 disco en un vaso de agua caliente al día.",
     price: 17800,
     originalPrice: 25450,
-    image: "public/assets/images/origen-disco.mp4"
+    image: "public/assets/images/origen_disco.mp4"
   },
   {
     id: "origen_360ml",
@@ -66,7 +66,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "public/assets/images/vcol-360ml.mp4"
+    image: "public/assets/images/vcol_360ml.mp4"
   }
 ];
 
