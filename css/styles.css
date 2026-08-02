@@ -1,1 +1,129 @@
+/* Desactivar el recuadro azul nativo al hacer tap en pantallas táctiles */
+* {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+}
 
+/* ==========================================
+   LOGO ÚNICO Y ESTRELLA ANIMADA
+   ========================================== */
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  user-select: none;
+}
+
+/* Texto del nombre */
+.brand-name {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--primary-color, #0d9488);
+}
+
+/* Imagen de la estrella de Google */
+.star-logo-img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display: block;
+  transform-origin: center;
+  animation: starBounceGlow 3s ease-in-out infinite;
+}
+
+/* Animación sutil */
+@keyframes starBounceGlow {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 2px rgba(234, 179, 8, 0.4));
+  }
+  25% {
+    transform: scale(1.15) rotate(12deg);
+    filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.8));
+  }
+  50% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 2px rgba(234, 179, 8, 0.4));
+  }
+  75% {
+    transform: scale(1.15) rotate(-12deg);
+    filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.8));
+  }
+}
+/* ==========================================
+   CORRECCIÓN DEFINITIVA DE TIPOGRAFÍA Y COLOR
+   ========================================== */
+
+/* Forzar que ningún texto dentro del logo sea cursiva */
+header.navbar .brand-logo,
+footer.footer .brand-logo,
+.brand-name,
+.brand-ext {
+  font-family: 'Urbanist', system-ui, -apple-system, sans-serif !important;
+  font-style: normal !important; /* Anula cualquier regla italic */
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+/* Texto principal "StarNatural" en tono oscuro plano */
+header.navbar .brand-name,
+footer.footer .brand-name {
+  color: #0f172a !important;
+  font-size: 1.2rem !important;
+}
+
+/* Extensión ".app" obligatoriamente VERDE */
+header.navbar .brand-ext,
+footer.footer .brand-ext {
+  color: #0d9488 !important; /* Verde primario */
+  font-weight: 800 !important;
+}
+
+/* Asegurar que la estrella esté alineada y animada */
+.star-logo-img {
+  width: 26px !important;
+  height: 26px !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+  transform-origin: center;
+  animation: starBounceGlow 3s ease-in-out infinite;
+}
+/* ==========================================
+   ESTILOS LUPA ANIMADA EN BUSCADOR
+   ========================================== */
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-animated-icon {
+  width: 22px !important;
+  height: 22px !important;
+  object-fit: contain !important;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Permite hacer clic en el input a través de la imagen */
+  animation: searchIconPulse 2.5s ease-in-out infinite;
+}
+
+/* Espaciado interno del input para que el texto no tape la lupa */
+.search-input-wrapper input {
+  padding-left: 46px !important;
+}
+
+/* Animación sutil de zoom/movimiento para la lupa */
+@keyframes searchIconPulse {
+  0%, 100% {
+    transform: translateY(-50%) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.15) rotate(-10deg);
+  }
+}
