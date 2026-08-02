@@ -169,16 +169,9 @@ const container = document.getElementById("product-grid");
     </div>
   </div>
 
-<!-- MODAL DE VISTA RÁPIDA (IMAGEN Y VIDEO) -->
-<div id="image-modal" class="modal-overlay hidden" onclick="closeMediaModal(event)">
-  <div class="modal-media-wrapper" onclick="event.stopPropagation()">
-    <button class="modal-close-btn" onclick="closeMediaModal()">&times;</button>
-    <div id="modal-media-content">
-      <!-- El script inyectará aquí la imagen o el video de alta resolución -->
-    </div>
-  </div>
-</div>
-  
+ <!-- MODAL DE VISTA RÁPIDA (IMAGEN Y VIDEO) -->
+<div id="image-modal"></div>
+
   <footer class="footer">
   <div class="footer-logo-container">
     <a href="#" class="brand-logo footer-brand">
