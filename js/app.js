@@ -1,4 +1,86 @@
+/* ==========================================
+   CATÁLOGO DE PRODUCTOS Y RENDERIZADO
+   ========================================== */
 
+const PRODUCTS = [
+  {
+    id: "gaf_plus_300ml",
+    name: "GAF-PLUS 300mL",
+    badge: "Estrella",
+    fabricado: "GrenLab",
+    netContent: "Cont. Neto: 300mL (10 Porciones)",
+    invima: "PSA-0690-2025",
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
+    price: 15600,
+    originalPrice: 22300,
+    image: "assets/images/gaf_plus_300ml.mp4"
+  },
+  {
+    id: "origen_disco",
+    name: "ORIGEN 15 Discos",
+    badge: "Línea ORIGEN",
+    fabricado: "Naturalisima",
+    netContent: "Cont. Neto: Frasco x 15 Discos (15 Porciones)",
+    invima: "PSA-0005343-2024",
+    benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
+    usage: "Disolver 1 disco en un vaso de agua caliente al día.",
+    price: 17800,
+    originalPrice: 25450,
+    image: "assets/images/origen-disco.mp4"
+  },
+  {
+    id: "origen_360ml",
+    name: "ORIGEN 360mL",
+    badge: "Línea ORIGEN",
+    fabricado: "Naturalisima",
+    netContent: "Cont. Neto: 360mL (12 Porciones)",
+    invima: "RSA-0034995-2024",
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
+    price: 15600,
+    originalPrice: 22300,
+    image: "assets/images/origen_360ml.mp4"
+  },
+  {
+    id: "origen_400ml",
+    name: "ORIGEN 400mL",
+    badge: "Línea ORIGEN",
+    fabricado: "Laboratorios vanier",
+    netContent: "Cont. Neto: 400mL (13 Porciones)",
+    invima: "RSAV12136011",
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
+    price: 15600,
+    originalPrice: 22300,
+    image: "assets/images/origen_400ml.mp4"
+  },
+  {
+    id: "vcol_360ml",
+    name: "VCOL 360mL",
+    badge: "Estrella",
+    fabricado: "Naturalisima",
+    netContent: "Cont. Neto: 360mL (12 Porciones)",
+    invima: "RSA-0034995-2024",
+    benefit: "Regenera articulaciones, fortalece cabello, uñas y elasticidad de la piel.",
+    usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
+    price: 15600,
+    originalPrice: 22300,
+    image: "assets/images/vcol-360ml.mp4"
+  }
+];
+
+// URLs de emojis animados
+if (typeof EMOJIS === 'undefined') {
+  var EMOJIS = {
+    fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",
+    package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",
+    factory: "https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp",
+    shield: "https://fonts.gstatic.com/s/e/notoemoji/latest/2705/512.webp",
+    calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp",
+    cart: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6d2/512.webp"
+  };
+}
 
 /* ==========================================
    FUNCIÓN PARA RENDERIZAR PRODUCTOS
