@@ -1,4 +1,3 @@
-
 /* ==========================================
    CATÁLOGO DE PRODUCTOS Y RENDERIZADO
    ========================================== */
@@ -71,7 +70,7 @@ const PRODUCTS = [
   }
 ];
 
-// URLs de emojis animados
+// URLs de emojis animados Noto
 const EMOJIS = {
   fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",
   package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",
@@ -114,12 +113,14 @@ function renderProducts(filterText = "") {
 
     return `
       <div class="product-card">
-        ${product.image ? `
-          <div class="product-image-wrapper" onclick="openMediaModal('${product.image}', '${product.name}')">
-            <video src="${product.image}" autoplay loop muted playsinline class="product-img"></video>
-            <span class="expand-badge">👁️ Vista rápida</span>
-          </div>
-        ` : ''}
+        <div class="product-image-wrapper">
+          <img src="${product.image}" alt="${product.name}" class="product-img" />
+          
+          <!-- BOTÓN DE VISTA RÁPIDA CIRCULAR CON OJO ANIMADO -->
+          <button class="btn-quick-view-circular" onclick="openQuickView('${product.id}')" aria-label="Vista Rápida">
+            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f441/512.webp" alt="Ojo" class="quick-view-eye-icon" />
+          </button>
+        </div>
 
         <div class="product-header" style="flex-direction: column; align-items: flex-start; gap: 0.2rem;">
           <div style="font-size:0.8rem; color:#475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
