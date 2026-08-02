@@ -1,71 +1,39 @@
-/* ==========================================
-   INTERFACES MÓVILES Y ACCESIBILIDAD
-   ========================================== */
-
-/* Desactivar el recuadro azul nativo en pantallas táctiles */
+/* Desactivar el recuadro azul nativo al hacer tap en pantallas táctiles */
 * {
   -webkit-tap-highlight-color: transparent !important;
-}
-
-/* Evitar el menú contextual de mantener presionado solo en botones e imágenes */
-button, 
-img, 
-.product-image-wrapper, 
-.brand-logo {
   -webkit-touch-callout: none;
 }
 
 /* ==========================================
-   LOGO Y ESTRELLA ANIMADA
+   LOGO ÚNICO Y ESTRELLA ANIMADA
    ========================================== */
 
 .brand-logo {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  text-decoration: none !important;
+  text-decoration: none;
   user-select: none;
-  vertical-align: middle;
 }
 
-/* Forzar tipografía limpia y sin cursivas */
-header.navbar .brand-logo,
-footer.footer .brand-logo,
-.brand-name,
-.brand-ext {
-  font-family: 'Urbanist', system-ui, -apple-system, sans-serif !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  text-decoration: none !important;
-  line-height: 1;
+/* Texto del nombre */
+.brand-name {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--primary-color, #0d9488);
 }
 
-/* Texto principal "StarNatural" en tono oscuro plano */
-header.navbar .brand-name,
-footer.footer .brand-name {
-  color: #0f172a !important;
-  font-size: 1.2rem !important;
-}
-
-/* Extensión ".app" obligatoriamente VERDE */
-header.navbar .brand-ext,
-footer.footer .brand-ext {
-  color: #0d9488 !important; /* Verde primario esmeralda */
-  font-weight: 800 !important;
-}
-
-/* Imagen de la estrella animada */
+/* Imagen de la estrella de Google */
 .star-logo-img {
-  width: 26px !important;
-  height: 26px !important;
-  object-fit: contain !important;
-  display: inline-block !important;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display: block;
   transform-origin: center;
   animation: starBounceGlow 3s ease-in-out infinite;
-  will-change: transform, filter; /* Optimización de renderizado GPU */
 }
 
-/* Animación sutil con resplandor */
+/* Animación sutil */
 @keyframes starBounceGlow {
   0%, 100% {
     transform: scale(1) rotate(0deg);
@@ -84,9 +52,46 @@ footer.footer .brand-ext {
     filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.8));
   }
 }
-
 /* ==========================================
-   LUPA ANIMADA EN BUSCADOR
+   CORRECCIÓN DEFINITIVA DE TIPOGRAFÍA Y COLOR
+   ========================================== */
+
+/* Forzar que ningún texto dentro del logo sea cursiva */
+header.navbar .brand-logo,
+footer.footer .brand-logo,
+.brand-name,
+.brand-ext {
+  font-family: 'Urbanist', system-ui, -apple-system, sans-serif !important;
+  font-style: normal !important; /* Anula cualquier regla italic */
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+/* Texto principal "StarNatural" en tono oscuro plano */
+header.navbar .brand-name,
+footer.footer .brand-name {
+  color: #0f172a !important;
+  font-size: 1.2rem !important;
+}
+
+/* Extensión ".app" obligatoriamente VERDE */
+header.navbar .brand-ext,
+footer.footer .brand-ext {
+  color: #0d9488 !important; /* Verde primario */
+  font-weight: 800 !important;
+}
+
+/* Asegurar que la estrella esté alineada y animada */
+.star-logo-img {
+  width: 26px !important;
+  height: 26px !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+  transform-origin: center;
+  animation: starBounceGlow 3s ease-in-out infinite;
+}
+/* ==========================================
+   ESTILOS LUPA ANIMADA EN BUSCADOR
    ========================================== */
 
 .search-input-wrapper {
@@ -104,9 +109,8 @@ footer.footer .brand-ext {
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none; /* Permite hacer clic en el input a través del icono */
+  pointer-events: none; /* Permite hacer clic en el input a través de la imagen */
   animation: searchIconPulse 2.5s ease-in-out infinite;
-  will-change: transform;
 }
 
 /* Espaciado interno del input para que el texto no tape la lupa */
@@ -122,617 +126,4 @@ footer.footer .brand-ext {
   50% {
     transform: translateY(-50%) scale(1.15) rotate(-10deg);
   }
-}
-/* ==========================================
-   VARIABLES GLOBALES Y RESETS
-   ========================================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --primary: #0d9488;       /* Verde Esmeralda fresco */
-  --dark: #0f172a;          /* Pizarra oscuro */
-  --light-bg: #f8fafc;
-  --card-bg: #ffffff;
-  --text-muted: #64748b;
-  --border-radius: 16px;
-}
-
-body {
-  font-family: 'Urbanist', sans-serif;
-  background-color: var(--light-bg);
-  color: var(--dark);
-  line-height: 1.5;
-  padding-bottom: 30px;
-}
-
-/* Ocultar elementos */
-.hidden {
-  display: none !important;
-}
-
-/* Emojis animados */
-.animated-emoji {
-  width: 22px;
-  height: 22px;
-  vertical-align: sub;
-  display: inline-block;
-  object-fit: contain;
-}
-
-/* Footer general */
-.footer {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-/* ==========================================
-   MODAL Y ELEMENTOS DEL CARRITO
-   ========================================== */
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(4px);
-  z-index: 200;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.modal-overlay.hidden {
-  display: none;
-}
-
-.modal-content {
-  background: white;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  padding: 1.5rem;
-  max-height: 85vh;
-  overflow-y: auto;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  color: var(--text-muted);
-  cursor: pointer;
-}
-
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem;
-  background: var(--light-bg);
-  border-radius: 10px;
-  margin-bottom: 0.5rem;
-}
-
-.qty-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.qty-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  border: 1px solid #cbd5e1;
-  background: white;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.summary-line {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.2rem;
-  font-weight: 800;
-  margin: 1rem 0;
-  border-top: 1px solid #e2e8f0;
-  padding-top: 0.8rem;
-}
-/* ==========================================
-   FORMULARIO DE ENVÍO Y PASARELA
-   ========================================== */
-
-.btn-add-cart {
-  width: 100%;
-  background: var(--dark);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 10px;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.shipping-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
-}
-
-.shipping-form input {
-  padding: 0.7rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-family: 'Urbanist', sans-serif;
-}
-
-.btn-checkout {
-  width: 100%;
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 1rem;
-  border-radius: 12px;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  cursor: pointer;
-}
-/* ==========================================
-   NAVEGACIÓN, BUSCADOR Y BANNER PWA
-   ========================================== */
-
-/* Navbar Principal */
-.navbar {
-  background: #ffffff;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  padding: 0.8rem 1.2rem;
-}
-
-.nav-container {
-  max-width: 600px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.brand-name {
-  font-size: 1.6rem;
-  font-weight: 800;
-  font-style: normal;
-  letter-spacing: -0.03em;
-  color: var(--dark);
-}
-
-.brand-name .dot {
-  color: var(--primary);
-  font-style: normal;
-}
-
-.cart-btn {
-  background: var(--light-bg);
-  border: 1px solid #e2e8f0;
-  padding: 0.5rem 0.9rem;
-  border-radius: 20px;
-  font-size: 1.1rem;
-  cursor: pointer;
-}
-
-.cart-badge {
-  background: var(--primary);
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.75rem;
-  padding: 2px 6px;
-  border-radius: 10px;
-}
-
-/* Banner PWA */
-.pwa-banner {
-  background: var(--dark);
-  color: white;
-  padding: 0.8rem 1.2rem;
-}
-
-.pwa-banner.hidden {
-  display: none;
-}
-
-.pwa-content {
-  max-width: 600px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.btn-install {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* Buscador de Productos */
-.search-container {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  box-sizing: border-box;
-}
-
-.search-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  background-color: #ffffff;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 0.4rem 0.8rem;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.search-input-wrapper:focus-within {
-  border-color: #0e7c3a;
-  box-shadow: 0 0 0 3px rgba(14, 124, 58, 0.15);
-}
-
-.search-icon {
-  font-size: 1rem;
-  margin-right: 0.5rem;
-  color: #64748b;
-}
-
-.search-input-wrapper input {
-  width: 100%;
-  border: none;
-  outline: none;
-  font-size: 0.95rem;
-  color: #111827;
-  background: transparent;
-}
-
-.search-input-wrapper input::placeholder {
-  color: #94a3b8;
-}
-
-.clear-search-btn {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: #64748b;
-  cursor: pointer;
-  padding: 0 0.3rem;
-  line-height: 1;
-}
-
-.clear-search-btn:hover {
-  color: #d91424;
-}
-
-/* Botón Volver Arriba */
-.back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 46px;
-  height: 46px;
-  background-color: var(--dark);
-  color: #ffffff;
-  border: 2px solid var(--primary);
-  border-radius: 50%;
-  font-size: 1.4rem;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 150;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.back-to-top.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(10px);
-}
-
-.back-to-top:active {
-  transform: scale(0.92);
-}
-/* ==========================================
-   CATÁLOGO DE PRODUCTOS Y VISTA PREVIA (CSS)
-   ========================================== */
-
-.main-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 1.2rem;
-}
-
-.hero-card {
-  background: linear-gradient(135deg, #0d9488 0%, #115e59 100%);
-  color: white;
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  margin-bottom: 1.5rem;
-}
-
-.hero-tag {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.hero-card h2 {
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin: 0.6rem 0 0.4rem 0;
-}
-
-.section-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.product-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-/* --- TARJETA DE PRODUCTO --- */
-.product-card {
-  background: var(--card-bg, #ffffff);
-  border-radius: var(--border-radius, 16px);
-  padding: 1.2rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f1f5f9;
-}
-
-/* Miniatura 3:4 */
-.product-image-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 220px;
-  aspect-ratio: 3 / 4;
-  margin: 0 auto 0.8rem;
-  border-radius: 12px;
-  overflow: hidden; /* Mantiene la miniatura limpia */
-  cursor: pointer;
-  background-color: #000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.product-image-wrapper:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-}
-
-.product-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Badge Vista Rápida Inferior (Etiqueta Flotante) */
-.expand-badge {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.85);
-  color: #ffffff;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
-  white-space: nowrap;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  transition: background-color 0.2s ease;
-}
-
-.product-image-wrapper:hover .expand-badge {
-  background: var(--primary, #0d9488);
-}
-
-/* Botón Circular Flotante del Ojo */
-.btn-quick-view-circular {
-  position: absolute;
-  top: 10px;
-  right: 10px; /* Ajustado para que permanezca dentro de la tarjeta y no se recorte */
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: rgba(13, 148, 136, 0.85); /* Color esmeralda (#0d9488) */
-  border: 2px solid #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-  z-index: 5;
-}
-
-.btn-quick-view-circular:hover {
-  transform: scale(1.1);
-  background-color: rgba(13, 148, 136, 1);
-}
-
-.quick-view-eye-icon {
-  width: 24px !important;
-  height: 24px !important;
-  object-fit: contain;
-}
-
-/* --- DETALLES Y TEXTOS DE TARJETA --- */
-.product-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.product-title {
-  font-size: 1.4rem;
-  font-weight: 800;
-}
-
-.product-badge {
-  background: #fef3c7;
-  color: #b45309;
-  font-weight: 700;
-  font-size: 0.7rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 6px;
-}
-
-.product-desc {
-  font-size: 0.9rem;
-  color: var(--text-muted, #64748b);
-  margin: 0.5rem 0;
-}
-
-.product-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* --- PRECIOS Y AHORRO --- */
-.price-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 0.6rem;
-}
-
-.prices-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.product-price {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--primary, #0d9488);
-}
-
-.original-price {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #94a3b8;
-  text-decoration: line-through;
-}
-
-.savings-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #ecfdf5;
-  color: #d97706;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 0.15rem 0.5rem;
-  border-radius: 6px;
-  width: fit-content;
-}
-
-/* --- MODAL MULTIMEDIA (POP-UP) --- */
-.modal-media-wrapper {
-  position: relative;
-  width: 90vw;
-  max-width: 420px;
-  max-height: 80vh;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  background: #000;
-}
-
-.modal-close-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 50;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: rgba(15, 23, 42, 0.75);
-  color: #ffffff;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  font-size: 22px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-  transition: all 0.2s ease;
-  padding: 0;
-  line-height: 1;
-}
-
-.modal-close-btn:active,
-.modal-close-btn:hover {
-  background: rgba(220, 38, 38, 0.9);
-  transform: scale(1.08);
-}
-
-.modal-animated-video {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  pointer-events: none;
-  user-select: none;
-}
-
-.modal-animated-video::-webkit-media-controls,
-.modal-animated-video::-webkit-media-controls-enclosure {
-  display: none !important;
 }
