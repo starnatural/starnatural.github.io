@@ -145,3 +145,16 @@ function closeMediaModal() {
 const mediaHTML = isVideo 
   ? `<video src="${product.image}" class="product-img" autoplay loop muted playsinline preload="metadata"></video>`
   : `<img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" />`;
+
+// Añade 'controlsList', 'disablePictureInPicture' y quita 'controls'
+const videoHTML = `
+  <video 
+    src="${mediaUrl}" 
+    autoplay 
+    loop 
+    muted 
+    playsinline 
+    disablePictureInPicture
+    style="width: 100%; max-height: 80vh; border-radius: 12px; object-fit: contain;">
+  </video>
+`;
