@@ -11,20 +11,17 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <!-- PWA Metadata -->
+  <!-- PWA Metadata (Estándar Moderno + iOS) -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0d9488">
-<!-- PWA Web App Capable (Estándar Moderno + iOS) -->
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <!-- Google Fonts: Urbanist -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700;1,800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,600;0,700;1,700;1,800&display=swap" rel="stylesheet">
 
   <!-- Módulos CSS Independientes -->
   <link rel="stylesheet" href="css/styles.css">
@@ -36,8 +33,9 @@
 
   <!-- SDK oficial del Widget de Wompi -->
   <script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
+  
   <!-- Favicon Animado de Estrella -->
-<link rel="icon" type="image/webp" href="https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp" />
+  <link rel="icon" type="image/webp" href="https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp" />
 </head>
 
 <body>
@@ -45,15 +43,13 @@
   <!-- Header principal -->
   <header class="navbar">
     <div class="nav-container">
-      <!-- En el Header y Footer debe lucir exactamente así: -->
       <a href="#" class="brand-logo">
         <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp" alt="Estrella" class="star-logo-img" />
         <span class="brand-name">StarNatural<span class="brand-ext">.app</span></span>
       </a>
 
       <button id="cart-icon-btn" class="cart-btn" style="display: flex; align-items: center; gap: 6px;">
-        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f6d2/512.webp" class="animated-emoji" alt="Carrito"
-          style="width: 24px; height: 24px;">
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f6d2/512.webp" class="animated-emoji" alt="Carrito" style="width: 24px; height: 24px;">
         <span>Carrito (<span id="cart-count">0</span>)</span>
       </button>
     </div>
@@ -81,11 +77,8 @@
     <!-- Buscador de Ancho Completo con Lupa Animada -->
     <div class="search-container">
       <div class="search-input-wrapper">
-        <!-- LUPA ANIMADA (Noto Emoji WebP) -->
-        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f50e/512.webp" alt="Lupa de Búsqueda"
-          class="search-animated-icon" />
-        <input type="text" id="product-search-input" placeholder="Buscar producto, beneficio o ingrediente..."
-          aria-label="Buscar productos" />
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f50e/512.webp" alt="Lupa de Búsqueda" class="search-animated-icon" />
+        <input type="text" id="product-search-input" placeholder="Buscar producto, beneficio o ingrediente..." aria-label="Buscar productos" />
         <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Limpiar búsqueda">&times;</button>
       </div>
     </div>
@@ -127,8 +120,7 @@
             <input type="tel" id="customer-phone" placeholder="Teléfono / WhatsApp" required />
             <input type="text" id="customer-city" placeholder="Ciudad / Municipio" required />
             <input type="text" id="customer-address" placeholder="Dirección completa y barrio" required />
-            <textarea id="customer-notes" placeholder="Notas adicionales (ej: Apto 302, dejar en portería)"
-              rows="2"></textarea>
+            <textarea id="customer-notes" placeholder="Notas adicionales (ej: Apto 302, dejar en portería)" rows="2"></textarea>
           </div>
         </div>
 
@@ -146,34 +138,37 @@
 
   <!-- Modal de Confirmación / Recibo -->
   <div id="receipt-modal" class="cart-modal hidden">
-    <div class="cart-modal-content"
-      style="background: #ffffff; width: 100%; max-width: 500px; border-radius: 12px; padding: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+    <div class="cart-modal-content" style="background: #ffffff; width: 100%; max-width: 500px; border-radius: 12px; padding: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
       <div style="text-align: center; margin-bottom: 1rem;">
         <span style="font-size: 3rem;">🎉</span>
         <h3 style="margin: 0.5rem 0 0; color: #166534;">¡Pago Confirmado!</h3>
         <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Tu pedido ha sido procesado con éxito</p>
       </div>
 
-      <div id="receipt-details-container"
-        style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; font-size: 0.85rem; max-height: 350px; overflow-y: auto;">
+      <div id="receipt-details-container" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; font-size: 0.85rem; max-height: 350px; overflow-y: auto;">
         <!-- Se llena dinámicamente -->
       </div>
 
       <div style="margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem;">
-        <a id="btn-whatsapp-copy" href="#" target="_blank" class="btn-add-cart"
-          style="background-color: #25D366; text-decoration: none; text-align: center; display: block; padding: 0.8rem; border-radius: 6px; color: #fff; font-weight: bold;">
+        <a id="btn-whatsapp-copy" href="#" target="_blank" class="btn-add-cart" style="background-color: #25D366; text-decoration: none; text-align: center; display: block; padding: 0.8rem; border-radius: 6px; color: #fff; font-weight: bold;">
           📲 Enviar copia por WhatsApp (Opcional)
         </a>
-        <button onclick="closeReceiptModal()" class="qty-btn"
-          style="width: 100%; padding: 0.8rem; background: #e2e8f0; color: #334155; font-weight: 600; border: none; border-radius: 6px; cursor: pointer;">
+        <button onclick="closeReceiptModal()" class="qty-btn" style="width: 100%; padding: 0.8rem; background: #e2e8f0; color: #334155; font-weight: 600; border: none; border-radius: 6px; cursor: pointer;">
           Cerrar y volver a la tienda
         </button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL DE VISTA RÁPIDA (IMAGEN Y VIDEO) -->
-  <div id="image-modal"></div>
+  <!-- ÚNICO MODAL DE VISTA RÁPIDA (MULTIMEDIA) -->
+  <div id="image-modal" class="modal-overlay hidden" onclick="closeMediaModal()">
+    <div class="modal-media-wrapper" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeMediaModal()">&times;</button>
+      <div id="modal-media-content">
+        <!-- El JavaScript inyecta aquí la imagen o el video -->
+      </div>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="footer-logo-container">
@@ -192,24 +187,6 @@
   <script src="js/checkout.js"></script>
   <script src="js/app.js"></script>
   <script src="js/script.js"></script>
-
-  <!-- MODAL MULTIMEDIA (VISTA RÁPIDA) -->
-<div id="image-modal" class="modal-overlay hidden" onclick="closeMediaModal()">
-  <div class="modal-media-wrapper" onclick="event.stopPropagation()">
-    <button class="modal-close-btn" onclick="closeMediaModal()">&times;</button>
-    <div id="modal-media-content">
-      <!-- El JavaScript inyecta aquí la imagen o el video -->
-    </div>
-  </div>
-</div>
-
-  <!-- MODAL DE VISTA RÁPIDA -->
-<div id="image-modal" class="modal-overlay hidden" onclick="closeMediaModal()">
-  <div class="modal-media-wrapper" onclick="event.stopPropagation()">
-    <button class="modal-close-btn" onclick="closeMediaModal()">&times;</button>
-    <div id="modal-media-content"></div>
-  </div>
-</div>
 </body>
 
 </html>
