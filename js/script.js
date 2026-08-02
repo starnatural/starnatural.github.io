@@ -145,3 +145,18 @@ function closeMediaModal() {
 const mediaHTML = isVideo 
   ? `<video src="${product.image}" class="product-img" autoplay loop muted playsinline preload="metadata"></video>`
   : `<img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" />`;
+
+// Dentro de la función que renderiza el contenido del modal:
+if (isVideo) {
+  contentContainer.innerHTML = `
+    <video 
+      src="${product.image}" 
+      controls 
+      autoplay 
+      loop 
+      playsinline 
+      style="width: 100%; max-height: 75vh; border-radius: 10px; display: block; background: #fff;">
+      Tu navegador no soporta la reproducción de video.
+    </video>
+  `;
+}
