@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -69,19 +70,24 @@
       <p>Productos con registro sanitario, envío seguro a toda Colombia y pago protegido.</p>
     </section>
 
-    <!-- Buscador de Ancho Completo -->
-    <div class="search-container">
-      <div class="search-input-wrapper">
-        <span class="search-icon">🔍</span>
-        <input 
-          type="text" 
-          id="product-search-input" 
-          placeholder="Buscar producto, beneficio o ingrediente..." 
-          aria-label="Buscar productos"
-        />
-        <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Limpiar búsqueda">&times;</button>
-      </div>
-    </div>
+  <!-- Buscador de Ancho Completo con Lupa Animada -->
+<div class="search-container">
+  <div class="search-input-wrapper">
+    <!-- LUPA ANIMADA (Noto Emoji WebP) -->
+    <img 
+      src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f50e/512.webp" 
+      alt="Lupa de Búsqueda" 
+      class="search-animated-icon" 
+    />
+    <input 
+      type="text" 
+      id="product-search-input" 
+      placeholder="Buscar producto, beneficio o ingrediente..." 
+      aria-label="Buscar productos"
+    />
+    <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Limpiar búsqueda">&times;</button>
+  </div>
+</div>
     
     <!-- Catálogo de Productos -->
     <section class="catalog-section">
