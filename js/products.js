@@ -112,22 +112,50 @@ function renderProducts(filterText = "") {
       ? `<span class="savings-tag"><img src="${EMOJIS.fire}" class="animated-emoji" alt="Fuego"> ¡Ahorras $${ahorro.toLocaleString("es-CO")}!</span>` 
       : '';
 
- // Dentro de tu función de renderizado en js/ui.js, asegúrate de que el botón de Vista Rápida se vea así:
+    return `
+      <div class="product-card">
+        ${product.image ? `
+          <div class="product-image-wrapper" onclick="openMediaModal('${product.image}', '${product.name}')">
+            <video src="${product.image}" autoplay loop muted playsinline class="product-img"></video>
+            <span class="expand-badge">👁️ Vista rápida</span>
+          </div>
+        ` : ''}
 
-return `
-    <div class="product-card">
-        <!-- ... resto de la tarjeta ... -->
-        
-        <div class="product-image-wrapper">
-            <img src="${product.image}" alt="${product.name}" class="product-img" />
-            
-            <!-- NUEVO BOTÓN DE VISTA RÁPIDA CIRCULAR CON OJO ANIMADO -->
-            <button class="btn-quick-view-circular" onclick="openQuickView('${product.id}')" aria-label="Vista Rápida">
-                <!-- OJO ANIMADO (Noto Emoji WebP) -->
-                <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f441/512.webp" alt="Ojo" class="quick-view-eye-icon" />
-            </button>
+        <div class="product-header" style="flex-direction: column; align-items: flex-start; gap: 0.2rem;">
+          <div style="font-size:0.8rem; color:#475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
+            <img src="${EMOJIS.factory}" class="animated-emoji" alt="Fabricado por"> Fabricado por: ${product.fabricado}
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 2px;">
+            <h4 class="product-title" style="margin: 0;">${product.name}</h4>
+            ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+          </div>
         </div>
 
-        <!-- ... resto de la tarjeta ... -->
-    </div>
-`;
+        <div style="font-size:0.85rem; color:#334155; margin: 0.8rem 0; line-height: 1.4;">
+          <p style="margin-bottom:0.3rem; color:#0f172a; font-weight:600; display: flex; align-items: center; gap: 4px;">
+            <img src="${EMOJIS.package}" class="animated-emoji" alt="Contenido"> ${product.netContent}
+          </p>
+          ${product.benefit ? `<p style="margin-bottom:0.3rem;"><strong>• Beneficio:</strong> ${product.benefit}</p>` : ''}
+          <p style="margin-bottom:0.3rem;"><strong>• Modo de Uso:</strong> ${product.usage}</p>
+
+          <div style="display:flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 0.6rem; font-size:0.8rem; align-items: center;">
+            ${product.invima ? `<span style="color:#166534; font-weight:600; display: flex; align-items: center; gap: 4px;"><img src="${EMOJIS.shield}" class="animated-emoji" alt="Escudo"> Invima: ${product.invima}</span>` : ''}
+          </div>
+        </div>
+        
+        <div class="price-container">
+          <div class="prices-row">
+            <span class="product-price">$${product.price.toLocaleString("es-CO")} COP</span>
+            <span class="original-price">$${product.originalPrice.toLocaleString("es-CO")}</span>
+          </div>
+          ${ahorroFormateado}
+        </div>
+
+        <div class="product-footer" style="margin-top: 0.8rem;">
+          <button class="btn-add-cart" onclick="addToCart('${product.id}')">+ Agregar al Carrito</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
