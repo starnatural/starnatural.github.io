@@ -90,16 +90,3 @@ function closeMediaModal() {
     if (contentContainer) contentContainer.innerHTML = "";
   }
 }
-
-// Añade 'controlsList', 'disablePictureInPicture' y quita 'controls'
-const videoHTML = `
-  <video 
-    src="${mediaUrl}" 
-    autoplay 
-    loop 
-    muted 
-    playsinline 
-    disablePictureInPicture
-    style="width: 100%; max-height: 80vh; border-radius: 12px; object-fit: contain;">
-  </video>
-`;
