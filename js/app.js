@@ -25,51 +25,36 @@ const EMOJIS = {
   calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp"
 };
 
-// js/app.js
+// --- PUNTO DE ENTRADA ---
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🚀 StarNatural.app cargada con éxito");
 
-  if (typeof products !== 'undefined' && typeof displayProducts === 'function') {
-    displayProducts(products);
+  // Usa PRODUCTS o products según lo definido globalmente
+  const sourceProducts = (typeof PRODUCTS !== 'undefined') ? PRODUCTS : ((typeof products !== 'undefined') ? products : []);
+
+  if (sourceProducts.length > 0) {
+    renderProducts("");
   } else {
-    console.error("❌ Faltan scripts por cargar.");
+    console.error("❌ Faltan scripts por cargar o no hay productos definidos.");
   }
+
+  // Inicialización de escuchadores de eventos y PWA
+  setupEventListeners();
+  setupBackToTop();
+  setupPWAInstall();
+  updateCartUI(); // Sincroniza el carrito al abrir la app
 });
-
-function openQuickView(productId) {
-  const product = products.find(p => p.id === productId);
-  if (!product) return;
-
-  const modal = document.getElementById('image-modal');
-  if (modal) {
-    modal.innerHTML = `
-      <div class="modal-overlay" onclick="closeQuickView()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-          <button class="close-btn" onclick="closeQuickView()">&times;</button>
-          <h3>${product.name}</h3>
-          <p>${product.description}</p>
-          <p><strong>Modo de uso:</strong> ${product.dosage}</p>
-        </div>
-      </div>
-    `;
-    modal.classList.remove('hidden');
-  }
-}
-
-function closeQuickView() {
-  const modal = document.getElementById('image-modal');
-  if (modal) modal.classList.add('hidden');
-}
 
 // --- RENDERIZADO CON BUSCADOR ---
 function renderProducts(filterText = "") {
   const container = document.getElementById("product-grid");
   if (!container) return;
 
+  const sourceProducts = (typeof PRODUCTS !== 'undefined') ? PRODUCTS : ((typeof products !== 'undefined') ? products : []);
   const query = (filterText || "").toLowerCase().trim();
 
   // Filtrar por nombre, beneficio, fabricante, contenido o invima
-  const filteredProducts = PRODUCTS.filter(p => {
+  const filteredProducts = sourceProducts.filter(p => {
     if (!query) return true;
     return (p.name && p.name.toLowerCase().includes(query)) ||
            (p.benefit && p.benefit.toLowerCase().includes(query)) ||
@@ -89,24 +74,32 @@ function renderProducts(filterText = "") {
   }
 
   container.innerHTML = filteredProducts.map(product => {
-    const ahorro = product.originalPrice - product.price;
+    const originalPrice = product.originalPrice || product.price;
+    const ahorro = originalPrice - product.price;
     const ahorroFormateado = ahorro > 0 
       ? `<span class="savings-tag"><img src="${EMOJIS.fire}" class="animated-emoji" alt="Fuego"> ¡Ahorras $${ahorro.toLocaleString("es-CO")}!</span>` 
       : '';
+
+    const isVideo = product.image && (product.image.endsWith('.mp4') || product.image.endsWith('.webm'));
 
     return `
       <div class="product-card">
         ${product.image ? `
           <div class="product-image-wrapper" onclick="openMediaModal('${product.image}', '${product.name}')">
-            <video src="${product.image}" autoplay loop muted playsinline class="product-img"></video>
+            ${isVideo 
+              ? `<video src="${product.image}" autoplay loop muted playsinline class="product-img"></video>`
+              : `<img src="${product.image}" alt="${product.name}" class="product-img" />`
+            }
             <span class="expand-badge">👁️ Vista rápida</span>
           </div>
         ` : ''}
 
         <div class="product-header" style="flex-direction: column; align-items: flex-start; gap: 0.2rem;">
-          <div style="font-size:0.8rem; color:#475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
-            <img src="${EMOJIS.factory}" class="animated-emoji" alt="Fabricado por"> Fabricado por: ${product.fabricado}
-          </div>
+          ${product.fabricado ? `
+            <div style="font-size:0.8rem; color:#475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
+              <img src="${EMOJIS.factory}" class="animated-emoji" alt="Fabricado por"> Fabricado por: ${product.fabricado}
+            </div>
+          ` : ''}
 
           <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 2px;">
             <h4 class="product-title" style="margin: 0;">${product.name}</h4>
@@ -115,11 +108,13 @@ function renderProducts(filterText = "") {
         </div>
 
         <div style="font-size:0.85rem; color:#334155; margin: 0.8rem 0; line-height: 1.4;">
-          <p style="margin-bottom:0.3rem; color:#0f172a; font-weight:600; display: flex; align-items: center; gap: 4px;">
-            <img src="${EMOJIS.package}" class="animated-emoji" alt="Contenido"> ${product.netContent}
-          </p>
+          ${product.netContent ? `
+            <p style="margin-bottom:0.3rem; color:#0f172a; font-weight:600; display: flex; align-items: center; gap: 4px;">
+              <img src="${EMOJIS.package}" class="animated-emoji" alt="Contenido"> ${product.netContent}
+            </p>
+          ` : ''}
           ${product.benefit ? `<p style="margin-bottom:0.3rem;"><strong>• Beneficio:</strong> ${product.benefit}</p>` : ''}
-          <p style="margin-bottom:0.3rem;"><strong>• Modo de Uso:</strong> ${product.usage}</p>
+          ${product.usage ? `<p style="margin-bottom:0.3rem;"><strong>• Modo de Uso:</strong> ${product.usage}</p>` : ''}
 
           <div style="display:flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 0.6rem; font-size:0.8rem; align-items: center;">
             ${product.invima ? `<span style="color:#166534; font-weight:600; display: flex; align-items: center; gap: 4px;"><img src="${EMOJIS.shield}" class="animated-emoji" alt="Escudo"> Invima: ${product.invima}</span>` : ''}
@@ -129,7 +124,7 @@ function renderProducts(filterText = "") {
         <div class="price-container">
           <div class="prices-row">
             <span class="product-price">$${product.price.toLocaleString("es-CO")} COP</span>
-            <span class="original-price">$${product.originalPrice.toLocaleString("es-CO")}</span>
+            ${product.originalPrice ? `<span class="original-price">$${product.originalPrice.toLocaleString("es-CO")}</span>` : ''}
           </div>
           ${ahorroFormateado}
         </div>
@@ -142,43 +137,52 @@ function renderProducts(filterText = "") {
   }).join("");
 }
 
-// --- MODAL VISTA RÁPIDA ---
+// Alias para mantener compatibilidad si ui.js llama a displayProducts
+function displayProducts(productsArray) {
+  renderProducts();
+}
+
+// --- MODAL VISTA RÁPIDA MULTIMEDIA ---
 function openMediaModal(src, title) {
   const modal = document.getElementById("image-modal") || document.getElementById("imageModal");
-  const modalContent = modal?.querySelector(".image-modal-content");
+  if (!modal) return;
 
-  if (modal && modalContent) {
-    const isVideo = src.endsWith(".mp4") || src.endsWith(".webm");
-    
-    modalContent.innerHTML = `
-      <div class="modal-media-wrapper">
-        <button id="close-image-modal" class="modal-close-btn" onclick="closeImageModal()">&times;</button>
+  const isVideo = src.endsWith(".mp4") || src.endsWith(".webm");
+  
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="closeImageModal()">
+      <div class="modal-media-wrapper" onclick="event.stopPropagation()" style="background:#fff; padding:1.5rem; border-radius:12px; max-width:90%; width:400px; text-align:center; position:relative;">
+        <button id="close-image-modal" class="modal-close-btn" onclick="closeImageModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; border:none; background:none; cursor:pointer;">&times;</button>
         ${isVideo 
-          ? `<video src="${src}" autoplay loop muted playsinline class="modal-animated-video"></video>`
-          : `<img src="${src}" alt="${title || 'Producto'}" />`
+          ? `<video src="${src}" autoplay loop muted playsinline style="max-width:100%; border-radius:8px;"></video>`
+          : `<img src="${src}" alt="${title || 'Producto'}" style="max-width:100%; border-radius:8px;" />`
         }
+        <h3 style="margin-top:10px; color:#0f172a;">${title || ''}</h3>
       </div>
-    `;
-    modal.classList.remove("hidden");
-  }
+    </div>
+  `;
+  modal.classList.remove("hidden");
+  modal.style.display = "flex";
 }
 
 function closeImageModal() {
   const modal = document.getElementById("image-modal") || document.getElementById("imageModal");
   if (modal) {
     modal.classList.add("hidden");
-    const modalContent = modal.querySelector(".image-modal-content");
-    if (modalContent) modalContent.innerHTML = "";
+    modal.style.display = "none";
+    modal.innerHTML = "";
   }
 }
 
 // --- LÓGICA DEL CARRITO ---
 function addToCart(productId) {
+  const sourceProducts = (typeof PRODUCTS !== 'undefined') ? PRODUCTS : ((typeof products !== 'undefined') ? products : []);
   const existing = cart.find(item => item.id === productId);
+  
   if (existing) { 
     existing.qty += 1; 
   } else { 
-    const itemToAdd = PRODUCTS.find(p => p.id === productId);
+    const itemToAdd = sourceProducts.find(p => p.id === productId);
     if (itemToAdd) cart.push({ ...itemToAdd, qty: 1 }); 
   }
   saveAndRefreshCart();
@@ -215,12 +219,12 @@ function updateCartUI() {
       itemsContainer.innerHTML = `<p style="text-align:center; color:#64748b; padding:1rem;">Tu carrito está vacío</p>`;
     } else {
       itemsContainer.innerHTML = cart.map(item => `
-        <div class="cart-item">
+        <div class="cart-item" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
           <div>
             <div style="font-weight:700;">${item.name}</div>
             <div style="font-size:0.85rem; color:#64748b;">$${(item.price * item.qty).toLocaleString("es-CO")} COP</div>
           </div>
-          <div class="qty-controls">
+          <div class="qty-controls" style="display:flex; gap:0.5rem; align-items:center;">
             <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
             <span>${item.qty}</span>
             <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
@@ -240,15 +244,6 @@ function setupEventListeners() {
   document.getElementById("close-cart-btn")?.addEventListener("click", closeCartModal);
   document.getElementById("btn-wompi-pay")?.addEventListener("click", handleWompiCheckout);
   
-  const imageModal = document.getElementById("image-modal") || document.getElementById("imageModal");
-  if (imageModal) {
-    imageModal.addEventListener("click", (e) => {
-      if (e.target === imageModal || e.target.classList.contains("image-modal-content")) {
-        closeImageModal();
-      }
-    });
-  }
-
   const searchInput = document.getElementById("product-search-input");
   const clearBtn = document.getElementById("clear-search-btn");
 
@@ -375,7 +370,7 @@ _Pago verificado exitosamente vía Wompi._`;
         saveAndRefreshCart();
         closeCartModal();
 
-        // REDIRECCIÓN DIRECTA A WHATSAPP (Abre directo en la app de WhatsApp)
+        // Redirección directa a WhatsApp
         window.location.href = whatsappUrl;
 
       } else if (transaction.status === 'DECLINED') {
@@ -389,6 +384,7 @@ _Pago verificado exitosamente vía Wompi._`;
   }
 }
 
+// --- SCROLL Y PWA ---
 function setupBackToTop() {
   const btnTop = document.getElementById("btn-back-to-top");
   if (!btnTop) return;
