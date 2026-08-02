@@ -85,3 +85,7 @@ function renderProducts(filterText = "") {
     `;
   }).join("");
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderProducts();
+});
