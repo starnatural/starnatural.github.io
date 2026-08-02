@@ -175,3 +175,29 @@ footer.footer .brand-ext {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   z-index: 10000;
 }
+/* Contenedor blanco para el modal multimedia */
+.modal-media-wrapper {
+  position: relative;
+  background-color: #ffffff; /* Fondo blanco en lugar de negro */
+  padding: 8px; /* Padding fino */
+  border-radius: 16px;
+  max-width: 90vw;
+  max-height: 85vh;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Forzar que el video o imagen llene el espacio sin bordes sobrantes */
+#modal-media-content video,
+#modal-media-content img {
+  display: block;
+  width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: #ffffff; /* Elimina franjas negras en videos verticales */
+}
