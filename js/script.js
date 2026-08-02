@@ -136,3 +136,12 @@ function closeMediaModal() {
     contentContainer.innerHTML = "";
   }
 }
+
+// ❌ ANTES (causaba el 404):
+// const mediaHTML = isVideo 
+//   ? `<video src="${product.image}" class="product-img" autoplay loop muted playsinline poster="assets/images/placeholder.webp"></video>`
+
+// ✅ AHORA (Sin poster, elimina el error 404 de inmediato):
+const mediaHTML = isVideo 
+  ? `<video src="${product.image}" class="product-img" autoplay loop muted playsinline preload="metadata"></video>`
+  : `<img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" />`;
