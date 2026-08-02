@@ -197,6 +197,14 @@
     </div>
   </div>
 </div>
+
+  <!-- MODAL DE VISTA RÁPIDA -->
+<div id="image-modal" class="modal-overlay hidden" onclick="closeMediaModal()">
+  <div class="modal-media-wrapper" onclick="event.stopPropagation()">
+    <button class="modal-close-btn" onclick="closeMediaModal()">&times;</button>
+    <div id="modal-media-content"></div>
+  </div>
+</div>
 </body>
 
 </html>
