@@ -1,3 +1,134 @@
+
+
+/* ==========================================
+   FUNCIÓN PARA RENDERIZAR PRODUCTOS
+   ========================================== */
+function renderProducts(filterText = "") {
+  const container = document.getElementById("product-grid");
+  if (!container) {
+    console.error("No se encontró el contenedor #product-grid en el HTML.");
+    return;
+  }
+
+  const query = filterText.toLowerCase().trim();
+
+  const filtered = PRODUCTS.filter(prod => {
+    if (!query) return true;
+    const matchName = prod.name.toLowerCase().includes(query);
+    const matchDesc = prod.desc.toLowerCase().includes(query);
+    const matchKw = prod.keywords && prod.keywords.some(k => k.toLowerCase().includes(query));
+    return matchName || matchDesc || matchKw;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 2rem; color: #64748b; grid-column: 1 / -1;">
+        <p>No se encontraron productos para "${filterText}".</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(prod => `
+    <div class="product-card">
+      <div class="product-image-wrapper">
+        <img src="${prod.image}" alt="${prod.name}" class="product-img" loading="lazy" />
+        <button class="btn-quick-view-circular" onclick="openMediaModal('${prod.image}', '${prod.video || ''}', '${prod.name}')" title="Vista Rápida">
+          <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f441_fe0f/512.webp" alt="Ojo" class="quick-view-eye-icon" />
+        </button>
+        <span class="expand-badge" onclick="openMediaModal('${prod.image}', '${prod.video || ''}', '${prod.name}')">
+          👁️ Vista rápida
+        </span>
+      </div>
+
+      <div class="product-header">
+        <h4 class="product-title">${prod.name}</h4>
+        ${prod.badge ? `<span class="product-badge">${prod.badge}</span>` : ''}
+      </div>
+
+      <p class="product-desc">${prod.desc}</p>
+
+      <div class="price-container">
+        <div class="prices-row">
+          <span class="product-price">$${prod.price.toLocaleString('es-CO')}</span>
+          ${prod.originalPrice ? `<span class="original-price">$${prod.originalPrice.toLocaleString('es-CO')}</span>` : ''}
+        </div>
+        ${prod.savings ? `<span class="savings-tag">${prod.savings}</span>` : ''}
+      </div>
+
+      <div class="product-footer" style="margin-top: 1rem;">
+        <button class="btn-add-cart" onclick="addToCart('${prod.id}')" style="width: 100%; padding: 0.75rem; background: #0d9488; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+          🛒 Agregar al Carrito
+        </button>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ==========================================
+   INICIALIZACIÓN Y EVENTOS DE BÚSQUEDA
+   ========================================== */
+function initApp() {
+  // 1. Renderizar productos de inmediato
+  renderProducts("");
+
+  // 2. Conectar eventos del buscador
+  const searchInput = document.getElementById("product-search-input");
+  const clearBtn = document.getElementById("clear-search-btn");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const val = e.target.value;
+      if (clearBtn) {
+        clearBtn.classList.toggle("hidden", val.length === 0);
+      }
+      renderProducts(val);
+    });
+  }
+
+  if (clearBtn && searchInput) {
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      clearBtn.classList.add("hidden");
+      renderProducts("");
+    });
+  }
+}
+
+// Ejecución segura sin importar el estado de carga del navegador
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}
+
+/* ==========================================
+   MODAL MULTIMEDIA
+   ========================================== */
+function openMediaModal(imageSrc, videoSrc, title) {
+  const modal = document.getElementById("image-modal");
+  const contentContainer = document.getElementById("modal-media-content");
+  if (!modal || !contentContainer) return;
+
+  if (videoSrc) {
+    contentContainer.innerHTML = `
+      <video class="modal-animated-video" autoplay loop muted playsinline controls>
+        <source src="${videoSrc}" type="video/mp4">
+      </video>
+    `;
+  } else {
+    contentContainer.innerHTML = `
+      <img src="${imageSrc}" alt="${title}" style="width: 100%; height: auto; max-height: 80vh; object-fit: contain; display: block;" />
+    `;
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeMediaModal(e) {
+  const modal = document.getElementById("image-modal");
+  if (modal) modal.classList.add("hidden");
+}
 /* ==========================================
    INICIALIZACIÓN DE LA APLICACIÓN (ENTRYPOINT)
    ========================================== */
