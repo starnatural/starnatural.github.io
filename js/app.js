@@ -25,9 +25,12 @@ const EMOJIS = {
   calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp"
 };
 
-// --- PUNTO DE ENTRADA ---
+// Asegurar que la función se ejecute una vez que el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("🚀 StarNatural.app cargada con éxito");
+  if (typeof renderProducts === "function") {
+    renderProducts("");
+  }
+});
 
   // Usa PRODUCTS o products según lo definido globalmente
   const sourceProducts = (typeof PRODUCTS !== 'undefined') ? PRODUCTS : ((typeof products !== 'undefined') ? products : []);
