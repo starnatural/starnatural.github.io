@@ -71,14 +71,16 @@ const PRODUCTS = [
 ];
 
 // URLs de emojis animados
-const EMOJIS = {
-  fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",
-  package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",
-  factory: "https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp",
-  shield: "https://fonts.gstatic.com/s/e/notoemoji/latest/2705/512.webp",
-  calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp",
-  cart: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6d2/512.webp"
-};
+if (typeof EMOJIS === 'undefined') {
+  var EMOJIS = {
+    fire: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp",
+    package: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f37e/512.webp",
+    factory: "https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp",
+    shield: "https://fonts.gstatic.com/s/e/notoemoji/latest/2705/512.webp",
+    calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp",
+    cart: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f6d2/512.webp"
+  };
+}
 
 function renderProducts(filterText = "") {
   const container = document.getElementById("product-grid");
@@ -111,11 +113,17 @@ function renderProducts(filterText = "") {
       ? `<span class="savings-tag"><img src="${EMOJIS.fire}" class="animated-emoji" alt="Fuego"> ¡Ahorras $${ahorro.toLocaleString("es-CO")}!</span>` 
       : '';
 
+    // Validación flexible para imagen o video
+    const isVideo = product.image && (product.image.endsWith('.mp4') || product.image.endsWith('.webm'));
+
     return `
       <div class="product-card">
         ${product.image ? `
           <div class="product-image-wrapper" onclick="openMediaModal('${product.image}', '${product.name}')">
-            <video src="${product.image}" autoplay loop muted playsinline class="product-img"></video>
+            ${isVideo 
+              ? `<video src="${product.image}" autoplay loop muted playsinline class="product-img"></video>`
+              : `<img src="${product.image}" alt="${product.name}" class="product-img" />`
+            }
             <span class="expand-badge">👁️ Vista rápida</span>
           </div>
         ` : ''}
