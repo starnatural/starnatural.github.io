@@ -25,13 +25,41 @@ const EMOJIS = {
   calendar: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f4c5/512.webp"
 };
 
+// js/app.js
 document.addEventListener("DOMContentLoaded", () => {
-  renderProducts();
-  updateCartUI();
-  setupPWAInstall();
-  setupEventListeners();
-  setupBackToTop();
+  console.log("🚀 StarNatural.app cargada con éxito");
+
+  if (typeof products !== 'undefined' && typeof displayProducts === 'function') {
+    displayProducts(products);
+  } else {
+    console.error("❌ Faltan scripts por cargar.");
+  }
 });
+
+function openQuickView(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+
+  const modal = document.getElementById('image-modal');
+  if (modal) {
+    modal.innerHTML = `
+      <div class="modal-overlay" onclick="closeQuickView()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+          <button class="close-btn" onclick="closeQuickView()">&times;</button>
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <p><strong>Modo de uso:</strong> ${product.dosage}</p>
+        </div>
+      </div>
+    `;
+    modal.classList.remove('hidden');
+  }
+}
+
+function closeQuickView() {
+  const modal = document.getElementById('image-modal');
+  if (modal) modal.classList.add('hidden');
+}
 
 // --- RENDERIZADO CON BUSCADOR ---
 function renderProducts(filterText = "") {
