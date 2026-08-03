@@ -38,8 +38,8 @@ const PRODUCTS = [
     invima: "PSA-0005343-2024",
     benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
     usage: "Disolver 1 disco en un vaso de agua caliente al día.",
-    price: 17800,
-    originalPrice: 25450,
+    price: 143000,
+    originalPrice: 204300,
     image: "public/assets/images/origen_120_discos.mp4"
   },
    {
