@@ -17,6 +17,19 @@ const PRODUCTS = [
     image: "public/assets/images/gaf_plus_300ml.mp4"
   },
   {
+    id: "origen_60_discos",
+    name: "ORIGEN 60 Discos",
+    badge: "Línea ORIGEN",
+    fabricado: "Star Natural",
+    netContent: "Cont. Neto: Frasco x 60 Discos (30 Porciones)",
+    invima: "PSA-0005343-2024",
+    benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
+    usage: "Disolver 1 disco en un vaso de agua caliente al día.",
+    price: 17800,
+    originalPrice: 25450,
+    image: "public/assets/images/origen_60_discos.mp4"
+  },
+   {
     id: "origen_disco",
     name: "ORIGEN 15 Discos",
     badge: "Línea ORIGEN",
