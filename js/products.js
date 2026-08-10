@@ -29,7 +29,7 @@ const PRODUCTS = [
     originalPrice: 25450,
     image: "images/origen-disco.mp4"
   },
-   {
+  {
     id: "origen_30_comprimidos",
     name: "ORIGEN Natural 30 Comprimidos",
     badge: "Línea ORIGEN Natural",
@@ -124,10 +124,16 @@ function renderProducts(filterText = "") {
       ? `<span class="savings-tag"><img src="${EMOJIS.fire}" class="animated-emoji" alt="Fuego"> ¡Ahorras $${ahorro.toLocaleString("es-CO")}!</span>` 
       : '';
 
+    const isVideo = product.image && product.image.toLowerCase().endsWith('.mp4');
+
     return `
       <div class="product-card">
         <div class="product-image-wrapper">
-          <img src="${product.image}" alt="${product.name}" class="product-img" />
+          ${
+            isVideo
+              ? `<video src="${product.image}" class="product-img" autoplay muted loop playsinline></video>`
+              : `<img src="${product.image}" alt="${product.name}" class="product-img" />`
+          }
           
           <!-- BOTÓN DE VISTA RÁPIDA CIRCULAR CON OJO ANIMADO -->
           <button class="btn-quick-view-circular" onclick="openQuickView('${product.id}')" aria-label="Vista Rápida">
