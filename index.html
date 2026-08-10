@@ -17,22 +17,20 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    rel="stylesheet">
+  <!-- Carga de la fuente Google Sans Flex -->
+  <link rel="stylesheet" href="css/GoogleSansFlex.css">
 
-  <!-- Módulos CSS Independientes -->
+  <!-- Módulos CSS -->
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/base.css">
   <link rel="stylesheet" href="./css/navbar.css">
   <link rel="stylesheet" href="./css/products.css">
   <link rel="stylesheet" href="./css/cart.css">
   <link rel="stylesheet" href="./css/checkout.css">
+  <link rel="stylesheet" href="css/estilos-catalogo.css">
 
   <!-- SDK oficial del Widget de Wompi -->
   <script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
-  
-  <!-- Carga del archivo CSS de la fuente -->
-  <link rel="stylesheet" href="css/GoogleSansFlex.css">
-  <link rel="stylesheet" href="css/estilos-catalogo.css">
 </head>
 
 <body>
@@ -40,7 +38,6 @@
   <!-- Header principal -->
   <header class="navbar">
     <div class="nav-container">
-      <!-- En el Header y Footer debe lucir exactamente así: -->
       <a href="#" class="brand-logo">
         <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp" alt="Estrella" class="star-logo-img" />
         <span class="brand-name">StarNatural<span class="brand-ext">.app</span></span>
@@ -76,7 +73,6 @@
     <!-- Buscador de Ancho Completo con Lupa Animada -->
     <div class="search-container">
       <div class="search-input-wrapper">
-        <!-- LUPA ANIMADA (Noto Emoji WebP) -->
         <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f50e/512.webp" alt="Lupa de Búsqueda"
           class="search-animated-icon" />
         <input type="text" id="product-search-input" placeholder="Buscar producto, beneficio o ingrediente..."
