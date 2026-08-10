@@ -112,15 +112,30 @@ function openMediaModal(src, title) {
 function closeImageModal() {
   const modal = document.getElementById("image-modal");
   if (modal) {
+    // 1. Ocultar con opacidad y clases
     modal.style.opacity = "0";
     modal.style.pointerEvents = "none";
-    document.body.style.overflow = "";
+    modal.style.display = "none"; // Asegurar que no intercepte clics
+    modal.classList.add("hidden");
 
+    // 2. Devolver el scroll al documento
+    document.body.style.overflow = "auto";
+
+    // 3. Pausar o limpiar videos para liberar memoria
+    const video = modal.querySelector("video");
+    if (video) {
+      video.pause();
+      video.src = "";
+    }
+
+    // 4. Limpiar el contenido interno
     setTimeout(() => {
-      modal.innerHTML = "";
+      const mediaContent = document.getElementById("modal-media-content");
+      if (mediaContent) mediaContent.innerHTML = "";
     }, 200);
   }
 }
+window.closeImageModal = closeImageModal;
 
 // --- MODAL DE RECIBO / CONFIRMACIÓN ---
 function showOrderReceipt(data) {
