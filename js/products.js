@@ -14,7 +14,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "public/assets/images/gaf_plus_300ml.mp4"
+    image: "images/gaf_plus_300ml.mp4"
   },
   {
     id: "origen_disco",
@@ -27,7 +27,20 @@ const PRODUCTS = [
     usage: "Disolver 1 disco en un vaso de agua caliente al día.",
     price: 17800,
     originalPrice: 25450,
-    image: "public/assets/images/origen-disco.mp4"
+    image: "images/origen-disco.mp4"
+  },
+   {
+    id: "origen_disco",
+    name: "ORIGEN 30 Comprimidos",
+    badge: "Línea ORIGEN",
+    fabricado: "Star Natural",
+    netContent: "Cont. Neto: Frasco x 30 Comprimidos (30 Porciones)",
+    invima: "PSA-0005343-2024",
+    benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
+    usage: "Disolver 1 comprimido en un vaso de agua caliente al día.",
+    price: 30000,
+    originalPrice: 42900,
+    image: "images/origen_30_comprimidos.mp4"
   },
   {
     id: "origen_360ml",
@@ -40,7 +53,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "public/assets/images/origen_360ml.mp4"
+    image: "images/origen_360ml.mp4"
   },
   {
     id: "origen_400ml",
@@ -53,7 +66,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "public/assets/images/origen_400ml.mp4"
+    image: "images/origen_400ml.mp4"
   },
   {
     id: "vcol_360ml",
@@ -66,7 +79,7 @@ const PRODUCTS = [
     usage: "Tomar 1 copa (30ml) al día, preferiblemente en la mañana.",
     price: 15600,
     originalPrice: 22300,
-    image: "public/assets/images/vcol-360ml.mp4"
+    image: "images/vcol-360ml.mp4"
   }
 ];
 
