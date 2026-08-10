@@ -1,0 +1,34 @@
+/* ==========================================================================
+   FUENTE VARIABLE: Google Sans Flex
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Google Sans Flex';
+  font-style: normal;
+  /* Rango de pesos variables disponibles (100 a 1000) */
+  font-weight: 100 1000;
+  font-display: swap;
+  src: url('../fonts/GoogleSansFlex.woff2') format('woff2-variations'),
+       url('../fonts/GoogleSansFlex.woff2') format('woff2'),
+       url('../fonts/GoogleSansFlex.ttf') format('truetype-variations'),
+       url('../fonts/GoogleSansFlex.ttf') format('truetype');
+}
+
+/* Aplicación Global */
+:root {
+  --font-family: 'Google Sans Flex', -apple-system, system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: 400; /* Peso normal */
+}
+
+/* Aplicación en títulos y destacados */
+h1, h2, h3 {
+  font-weight: 700; /* Negrita */
+}
+
+strong {
+  font-weight: 600; /* Seminegrita */
+}
