@@ -2,8 +2,13 @@
    INTERFAZ DE USUARIO, MODALES Y EVENTOS
    ========================================== */
 
-function openCartModal() { document.getElementById("cart-modal")?.classList.remove("hidden"); }
-function closeCartModal() { document.getElementById("cart-modal")?.classList.add("hidden"); }
+function openCartModal() { 
+  document.getElementById("cart-modal")?.classList.remove("hidden"); 
+}
+
+function closeCartModal() { 
+  document.getElementById("cart-modal")?.classList.add("hidden"); 
+}
 
 /* ==========================================
    PUENTE DE VISTA RÁPIDA (CONECTA ID CON EL MODAL)
@@ -37,9 +42,8 @@ function openMediaModal(src, title) {
     document.body.appendChild(modal);
   }
 
-  // Normalizar ruta sin romper rutas relativas existentes
-  const cleanSrc = src.trim().replace(/^\/+/, '');
-  const isVideo = cleanSrc.endsWith(".mp4") || cleanSrc.endsWith(".webm");
+  const cleanSrc = src.trim();
+  const isVideo = cleanSrc.toLowerCase().endsWith(".mp4") || cleanSrc.toLowerCase().endsWith(".webm");
 
   modal.style.cssText = `
     position: fixed !important;
@@ -85,8 +89,6 @@ function openMediaModal(src, title) {
         "></video>
       </div>
     `;
-    
-    // Forzar apertura inmediata sin esperar eventos si el video tarda en precargar
     revealModal();
   } else {
     modal.innerHTML = `
@@ -191,7 +193,10 @@ function setupBackToTop() {
 function setupEventListeners() {
   document.getElementById("cart-icon-btn")?.addEventListener("click", openCartModal);
   document.getElementById("close-cart-btn")?.addEventListener("click", closeCartModal);
-  document.getElementById("btn-wompi-pay")?.addEventListener("click", handleWompiCheckout);
+  
+  if (typeof handleWompiCheckout === "function") {
+    document.getElementById("btn-wompi-pay")?.addEventListener("click", handleWompiCheckout);
+  }
   
   document.body.addEventListener("click", (e) => {
     const modal = document.getElementById("image-modal");
@@ -206,7 +211,9 @@ function setupEventListeners() {
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       const value = e.target.value;
-      renderProducts(value);
+      if (typeof renderProducts === "function") {
+        renderProducts(value);
+      }
 
       if (clearBtn) {
         if (value.trim().length > 0) {
@@ -222,7 +229,9 @@ function setupEventListeners() {
     clearBtn.addEventListener("click", () => {
       if (searchInput) {
         searchInput.value = "";
-        renderProducts("");
+        if (typeof renderProducts === "function") {
+          renderProducts("");
+        }
         searchInput.focus();
       }
       clearBtn.classList.add("hidden");
@@ -235,4 +244,21 @@ function setupEventListeners() {
       closeCartModal();
     }
   });
+
+  setupBackToTop();
+}
+
+// --- EXPONER EN WINDOW PARA EVITAR PERDIDA DE ALCANCE ---
+window.openQuickView = openQuickView;
+window.openMediaModal = openMediaModal;
+window.closeImageModal = closeImageModal;
+window.openCartModal = openCartModal;
+window.closeCartModal = closeCartModal;
+window.closeReceiptModal = closeReceiptModal;
+
+// Inicialización automática cuando el DOM esté listo
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", setupEventListeners);
+} else {
+  setupEventListeners();
 }
