@@ -1,15 +1,15 @@
 {
-  "name": "StarNatural App",
+  "name": "Star Natural App",
   "short_name": "StarNatural",
-  "description": "Tienda Oficial StarNatural - Salud y Bienestar.",
-  "start_url": "./",
+  "description": "App Tienda Oficial Star Natural.",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#0d9488",
   "categories": ["shopping", "health"],
-  "icons": [
+ "icons": [
     {
       "src": "./public/assets/icons/icon-192.png",
       "sizes": "192x192",
@@ -29,4 +29,3 @@
       "purpose": "maskable"
     }
   ]
-}
