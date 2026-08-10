@@ -30,10 +30,10 @@ const PRODUCTS = [
     image: "images/origen-disco.mp4"
   },
    {
-    id: "origen_disco",
-    name: "ORIGEN 30 Comprimidos",
-    badge: "Línea ORIGEN",
-    fabricado: "Star Natural",
+    id: "origen_30_comprimidos",
+    name: "ORIGEN Natural 30 Comprimidos",
+    badge: "Línea ORIGEN Natural",
+    fabricado: "ORIGEN Natural",
     netContent: "Cont. Neto: Frasco x 30 Comprimidos (30 Porciones)",
     invima: "PSA-0005343-2024",
     benefit: "Alimento funcional con fibra natural que mejora la digestión y el tránsito intestinal.",
