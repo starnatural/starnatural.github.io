@@ -201,3 +201,29 @@ footer.footer .brand-ext {
   border-radius: 10px;
   background-color: #ffffff; /* Elimina franjas negras en videos verticales */
 }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+}
+
+.modal-content {
+  position: relative;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow: auto;
+}
