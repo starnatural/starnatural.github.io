@@ -179,3 +179,63 @@ function renderProducts(filterText = "") {
     `;
   }).join("");
 }
+/* ==========================================
+   LÓGICA DEL MODAL DE VISTA RÁPIDA (QUICK VIEW)
+   ========================================== */
+
+function openQuickView(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  const modal = document.getElementById("image-modal");
+  if (!modal) return;
+
+  const isVideo = product.image && product.image.toLowerCase().endsWith('.mp4');
+
+  modal.innerHTML = `
+    <div class="modal-content product-detail-modal" style="position: relative; max-width: 500px; width: 90%; background: #fff; border-radius: 12px; padding: 1.5rem; margin: auto;">
+      <button class="close-btn" onclick="closeQuickView()" style="position: absolute; top: 10px; right: 15px; font-size: 1.5rem; background: none; border: none; cursor: pointer;">&times;</button>
+      
+      <div class="modal-media-container" style="text-align: center; margin-bottom: 1rem;">
+        ${
+          isVideo
+            ? `<video src="${product.image}" controls autoplay loop muted style="width: 100%; max-height: 250px; border-radius: 8px; object-fit: cover;"></video>`
+            : `<img src="${product.image}" alt="${product.name}" style="width: 100%; max-height: 250px; border-radius: 8px; object-fit: cover;" />`
+        }
+      </div>
+
+      <div class="modal-product-info">
+        <span class="product-badge" style="background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${product.badge || 'Producto'}</span>
+        <h3 style="margin: 0.5rem 0; color: #0f172a;">${product.name}</h3>
+        <p style="font-size: 0.85rem; color: #475569; margin-bottom: 0.4rem;"><strong>Fabricado por:</strong> ${product.fabricado}</p>
+        <p style="font-size: 0.85rem; color: #475569; margin-bottom: 0.4rem;"><strong>Contenido:</strong> ${product.netContent}</p>
+        <p style="font-size: 0.85rem; color: #334155; margin-bottom: 0.4rem;"><strong>Beneficio:</strong> ${product.benefit}</p>
+        <p style="font-size: 0.85rem; color: #334155; margin-bottom: 0.8rem;"><strong>Modo de Uso:</strong> ${product.usage}</p>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+          <span style="font-size: 1.2rem; font-weight: bold; color: #0d9488;">$${product.price.toLocaleString("es-CO")} COP</span>
+          <button class="btn-add-cart" onclick="addToCart('${product.id}'); closeQuickView();" style="padding: 0.6rem 1rem; background: #0d9488; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+            + Agregar al Carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Muestra el modal quitando la clase hidden o agregando active
+  modal.classList.remove("hidden");
+  modal.classList.add("active");
+  modal.style.display = "flex";
+}
+
+function closeQuickView() {
+  const modal = document.getElementById("image-modal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.classList.remove("active");
+  modal.style.display = "none";
+}
+
+// Exponer las funciones globalmente para el handler onclick en el HTML
+window.openQuickView = openQuickView;
+window.closeQuickView = closeQuickView;
