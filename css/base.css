@@ -1,0 +1,47 @@
+/* ==========================================
+   VARIABLES GLOBALES Y RESETS
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #0d9488;       /* Verde Esmeralda fresco */
+  --dark: #0f172a;          /* Pizarra oscuro */
+  --light-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text-muted: #64748b;
+  --border-radius: 16px;
+}
+
+body {
+  font-family: 'Urbanist', sans-serif;
+  background-color: var(--light-bg);
+  color: var(--dark);
+  line-height: 1.5;
+  padding-bottom: 30px;
+}
+
+/* Ocultar elementos */
+.hidden {
+  display: none !important;
+}
+
+/* Emojis animados */
+.animated-emoji {
+  width: 22px;
+  height: 22px;
+  vertical-align: sub;
+  display: inline-block;
+  object-fit: contain;
+}
+
+/* Footer general */
+.footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
