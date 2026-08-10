@@ -10,6 +10,8 @@ function closeCartModal() { document.getElementById("cart-modal")?.classList.add
    ========================================== */
 
 function openMediaModal(src, title) {
+  if (!src) return;
+
   let modal = document.getElementById("image-modal");
   if (!modal) {
     modal = document.createElement("div");
@@ -17,10 +19,11 @@ function openMediaModal(src, title) {
     document.body.appendChild(modal);
   }
 
-  const cleanSrc = src.startsWith("./") ? src : `./${src.replace(/^\/+/, '')}`;
+  const cleanSrc = src.trim().startsWith("./") ? src.trim() : `./${src.trim().replace(/^\/+/, '')}`;
   const isVideo = cleanSrc.endsWith(".mp4") || cleanSrc.endsWith(".webm");
 
-modal.style.cssText = `
+  // Re-establecemos la visibilidad por si fue cerrado previamente
+  modal.style.cssText = `
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
@@ -38,9 +41,10 @@ modal.style.cssText = `
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     pointer-events: none;
-    -webkit-tap-highlight-color: transparent !important; /* <--- AQUÍ: Elimina la sombra azul en celulares */
+    -webkit-tap-highlight-color: transparent !important;
   `;
-  // Function helper para hacer visible el modal suavemente sin destello
+
+  // Helper para hacer visible el modal suavemente sin destellos
   const revealModal = () => {
     document.body.style.overflow = "hidden";
     modal.style.pointerEvents = "auto";
@@ -50,37 +54,38 @@ modal.style.cssText = `
   };
 
   if (isVideo) {
-    // Si es video, inyectamos y mostramos cuando esté listo para reproducir
+    // Incluye disablePictureInPicture para evitar menús emergentes en móviles
     modal.innerHTML = `
-      <div style="position: relative; max-width: 90vw; max-height: 70dvh; display: flex; align-items: center; justify-content: center;">
+      <div class="modal-content-wrapper" style="position: relative; max-width: 90vw; max-height: 70dvh; display: flex; align-items: center; justify-content: center;">
         <button onclick="closeImageModal()" style="
           position: absolute; top: -15px; right: -15px; width: 40px; height: 40px;
           background: #ef4444; color: #ffffff; border: 2px solid #ffffff; border-radius: 50%;
           font-size: 22px; font-weight: bold; line-height: 1; cursor: pointer; z-index: 10000000;
           box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         ">&times;</button>
-        <video src="${cleanSrc}" autoplay loop muted playsinline style="
+        <video src="${cleanSrc}" autoplay loop muted playsinline disablepictureinpicture style="
           max-width: 85vw; max-height: 65dvh; width: auto; height: auto;
           object-fit: contain; border-radius: 12px; background: #000;
         "></video>
       </div>
     `;
+    
     const videoEl = modal.querySelector("video");
     if (videoEl) {
       videoEl.onloadeddata = revealModal;
-      // Fallback por si el evento de carga tarda en dispararse
+      // Fallback por si tarda en cargar
       setTimeout(revealModal, 150);
     } else {
       revealModal();
     }
   } else {
-    // Si es imagen, la precargamos en memoria en JS antes de dibujarla en pantalla
+    // Precarga de imagen en memoria
     const imgLoader = new Image();
     imgLoader.src = cleanSrc;
 
     const renderImageModal = () => {
       modal.innerHTML = `
-        <div style="position: relative; max-width: 90vw; max-height: 70dvh; display: flex; align-items: center; justify-content: center;">
+        <div class="modal-content-wrapper" style="position: relative; max-width: 90vw; max-height: 70dvh; display: flex; align-items: center; justify-content: center;">
           <button onclick="closeImageModal()" style="
             position: absolute; top: -15px; right: -15px; width: 40px; height: 40px;
             background: #ef4444; color: #ffffff; border: 2px solid #ffffff; border-radius: 50%;
@@ -100,7 +105,7 @@ modal.style.cssText = `
       renderImageModal();
     } else {
       imgLoader.onload = renderImageModal;
-      imgLoader.onerror = renderImageModal; // Si falla la carga, igual abre para mostrar error
+      imgLoader.onerror = renderImageModal;
     }
   }
 }
@@ -114,7 +119,6 @@ function closeImageModal() {
 
     setTimeout(() => {
       modal.innerHTML = "";
-      modal.style.display = "none";
     }, 200);
   }
 }
@@ -192,14 +196,13 @@ function setupEventListeners() {
   document.getElementById("close-cart-btn")?.addEventListener("click", closeCartModal);
   document.getElementById("btn-wompi-pay")?.addEventListener("click", handleWompiCheckout);
   
-  const imageModal = document.getElementById("image-modal") || document.getElementById("imageModal");
-  if (imageModal) {
-    imageModal.addEventListener("click", (e) => {
-      if (e.target === imageModal || e.target.classList.contains("image-modal-content")) {
-        closeImageModal();
-      }
-    });
-  }
+  // Delegación de eventos para cerrar el modal de medios al hacer clic afuera
+  document.body.addEventListener("click", (e) => {
+    const modal = document.getElementById("image-modal");
+    if (modal && e.target === modal) {
+      closeImageModal();
+    }
+  });
 
   const searchInput = document.getElementById("product-search-input");
   const clearBtn = document.getElementById("clear-search-btn");
@@ -236,60 +239,4 @@ function setupEventListeners() {
       closeCartModal();
     }
   });
-}
-
-// Añade 'controlsList', 'disablePictureInPicture' y quita 'controls'
-const videoHTML = `
-  <video 
-    src="${mediaUrl}" 
-    autoplay 
-    loop 
-    muted 
-    playsinline 
-    disablePictureInPicture
-    style="width: 100%; max-height: 80vh; border-radius: 12px; object-fit: contain;">
-  </video>
-`;
-/* ==========================================
-   SISTEMA DE VISTA RÁPIDA (MODAL MULTIMEDIA)
-   ========================================== */
-
-function openQuickView(productId) {
-  // Buscar el producto en la lista PRODUCTS
-  const product = PRODUCTS.find(p => p.id === productId);
-  if (!product) return;
-
-  const modalContainer = document.getElementById("image-modal");
-  if (!modalContainer) return;
-
-  const isVideo = product.image && product.image.toLowerCase().endsWith('.mp4');
-
-  // Construir el HTML de la ventana modal
-  modalContainer.innerHTML = `
-    <div class="modal-overlay" id="quickview-overlay" onclick="closeQuickView(event)">
-      <div class="modal-media-wrapper" onclick="event.stopPropagation()">
-        <!-- Botón para cerrar -->
-        <button class="modal-close-btn" onclick="closeQuickView()" aria-label="Cerrar modal">&times;</button>
-        
-        <!-- Elemento Multimedia (Video o Imagen) -->
-        ${
-          isVideo
-            ? `<video src="${product.image}" class="modal-animated-video" autoplay loop muted playsinline></video>`
-            : `<img src="${product.image}" alt="${product.name}" class="modal-animated-video" />`
-        }
-      </div>
-    </div>
-  `;
-}
-
-function closeQuickView(event) {
-  // Si se pasa evento, verificar que el clic fue en el fondo oscuro
-  if (event && event.target.id !== "quickview-overlay" && !event.target.classList.contains("modal-close-btn")) {
-    return;
-  }
-  
-  const modalContainer = document.getElementById("image-modal");
-  if (modalContainer) {
-    modalContainer.innerHTML = ""; // Limpiar contenido para detener la reproducción del video
-  }
 }
