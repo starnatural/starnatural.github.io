@@ -250,3 +250,46 @@ const videoHTML = `
     style="width: 100%; max-height: 80vh; border-radius: 12px; object-fit: contain;">
   </video>
 `;
+/* ==========================================
+   SISTEMA DE VISTA RÁPIDA (MODAL MULTIMEDIA)
+   ========================================== */
+
+function openQuickView(productId) {
+  // Buscar el producto en la lista PRODUCTS
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+
+  const modalContainer = document.getElementById("image-modal");
+  if (!modalContainer) return;
+
+  const isVideo = product.image && product.image.toLowerCase().endsWith('.mp4');
+
+  // Construir el HTML de la ventana modal
+  modalContainer.innerHTML = `
+    <div class="modal-overlay" id="quickview-overlay" onclick="closeQuickView(event)">
+      <div class="modal-media-wrapper" onclick="event.stopPropagation()">
+        <!-- Botón para cerrar -->
+        <button class="modal-close-btn" onclick="closeQuickView()" aria-label="Cerrar modal">&times;</button>
+        
+        <!-- Elemento Multimedia (Video o Imagen) -->
+        ${
+          isVideo
+            ? `<video src="${product.image}" class="modal-animated-video" autoplay loop muted playsinline></video>`
+            : `<img src="${product.image}" alt="${product.name}" class="modal-animated-video" />`
+        }
+      </div>
+    </div>
+  `;
+}
+
+function closeQuickView(event) {
+  // Si se pasa evento, verificar que el clic fue en el fondo oscuro
+  if (event && event.target.id !== "quickview-overlay" && !event.target.classList.contains("modal-close-btn")) {
+    return;
+  }
+  
+  const modalContainer = document.getElementById("image-modal");
+  if (modalContainer) {
+    modalContainer.innerHTML = ""; // Limpiar contenido para detener la reproducción del video
+  }
+}
