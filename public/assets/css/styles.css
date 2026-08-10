@@ -51,21 +51,6 @@
     transform: scale(1.15) rotate(-12deg);
     filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.8));
   }
-}
-/* ==========================================
-   CORRECCIÓN DEFINITIVA DE TIPOGRAFÍA Y COLOR
-   ========================================== */
-
-/* Forzar que ningún texto dentro del logo sea cursiva */
-header.navbar .brand-logo,
-footer.footer .brand-logo,
-.brand-name,
-.brand-ext {
-  font-family: 'Urbanist', system-ui, -apple-system, sans-serif !important;
-  font-style: normal !important; /* Anula cualquier regla italic */
-  font-weight: 700 !important;
-  text-decoration: none !important;
-}
 
 /* Texto principal "StarNatural" en tono oscuro plano */
 header.navbar .brand-name,
