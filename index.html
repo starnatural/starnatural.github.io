@@ -163,25 +163,12 @@
     </div>
   </div>
 
-  <!-- MODAL DE VISTA RÁPIDA DE PRODUCTO (DETALLE / IMAGEN / VIDEO) -->
+ <!-- MODAL DE VISTA RÁPIDA (IMAGEN Y VIDEO) -->
 <div id="image-modal" class="modal-overlay hidden">
-  <div class="modal-content product-detail-modal">
-    <div class="modal-header">
-      <h3 id="modal-product-title">Detalle del Producto</h3>
-      <button id="close-image-modal-btn" class="close-btn">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div id="modal-media-container" class="modal-media">
-        <img id="modal-product-img" src="" alt="Producto" class="modal-img hidden">
-        <video id="modal-product-video" controls class="modal-video hidden"></video>
-      </div>
-      <div class="modal-product-info">
-        <p id="modal-product-description" class="product-desc"></p>
-        <span id="modal-product-price" class="product-price"></span>
-        <button id="modal-add-to-cart-btn" class="btn-add-cart">
-          Añadir al Carrito
-        </button>
-      </div>
+  <div class="modal-content">
+    <button id="close-media-modal-btn" class="close-btn" onclick="closeImageModal()">&times;</button>
+    <div id="modal-media-content">
+      <!-- Aquí app.js inyectará dinámicamente la imagen o el video del producto -->
     </div>
   </div>
 </div>
