@@ -6,6 +6,24 @@ function openCartModal() { document.getElementById("cart-modal")?.classList.remo
 function closeCartModal() { document.getElementById("cart-modal")?.classList.add("hidden"); }
 
 /* ==========================================
+   PUENTE DE VISTA RÁPIDA (CONECTA ID CON EL MODAL)
+   ========================================== */
+
+function openQuickView(productId) {
+  if (typeof PRODUCTS === "undefined") {
+    console.error("La constante PRODUCTS no está definida.");
+    return;
+  }
+  
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (product && product.image) {
+    openMediaModal(product.image, product.name);
+  } else {
+    console.warn("No se encontró el producto o no tiene imagen:", productId);
+  }
+}
+
+/* ==========================================
    MODAL VISTA RÁPIDA - CENTRADO Y SIN DESTELLOS
    ========================================== */
 
@@ -19,10 +37,10 @@ function openMediaModal(src, title) {
     document.body.appendChild(modal);
   }
 
-  const cleanSrc = src.trim().startsWith("./") ? src.trim() : `./${src.trim().replace(/^\/+/, '')}`;
+  // Normalizar ruta sin romper rutas relativas existentes
+  const cleanSrc = src.trim().replace(/^\/+/, '');
   const isVideo = cleanSrc.endsWith(".mp4") || cleanSrc.endsWith(".webm");
 
-  // Re-establecemos la visibilidad por si fue cerrado previamente
   modal.style.cssText = `
     position: fixed !important;
     top: 0 !important;
@@ -44,7 +62,6 @@ function openMediaModal(src, title) {
     -webkit-tap-highlight-color: transparent !important;
   `;
 
-  // Helper para hacer visible el modal suavemente sin destellos
   const revealModal = () => {
     document.body.style.overflow = "hidden";
     modal.style.pointerEvents = "auto";
@@ -54,7 +71,6 @@ function openMediaModal(src, title) {
   };
 
   if (isVideo) {
-    // Incluye disablePictureInPicture para evitar menús emergentes en móviles
     modal.innerHTML = `
       <div class="modal-content-wrapper" style="position: relative; max-width: 90vw; max-height: 70dvh; display: flex; align-items: center; justify-content: center;">
         <button onclick="closeImageModal()" style="
@@ -70,43 +86,24 @@ function openMediaModal(src, title) {
       </div>
     `;
     
-    const videoEl = modal.querySelector("video");
-    if (videoEl) {
-      videoEl.onloadeddata = revealModal;
-      // Fallback por si tarda en cargar
-      setTimeout(revealModal, 150);
-    } else {
-      revealModal();
-    }
+    // Forzar apertura inmediata sin esperar eventos si el video tarda en precargar
+    revealModal();
   } else {
-    // Precarga de imagen en memoria
-    const imgLoader = new Image();
-    imgLoader.src = cleanSrc;
-
-    const renderImageModal = () => {
-      modal.innerHTML = `
-        <div class="modal-content-wrapper" style="position: relative; max-width: 90vw; max-height: 70dvh; display: flex; align-items: center; justify-content: center;">
-          <button onclick="closeImageModal()" style="
-            position: absolute; top: -15px; right: -15px; width: 40px; height: 40px;
-            background: #ef4444; color: #ffffff; border: 2px solid #ffffff; border-radius: 50%;
-            font-size: 22px; font-weight: bold; line-height: 1; cursor: pointer; z-index: 10000000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-          ">&times;</button>
-          <img src="${cleanSrc}" alt="${title || 'Producto'}" style="
-            max-width: 85vw; max-height: 65dvh; width: auto; height: auto;
-            object-fit: contain; border-radius: 12px; background: #000; display: block !important;
-          " />
-        </div>
-      `;
-      revealModal();
-    };
-
-    if (imgLoader.complete) {
-      renderImageModal();
-    } else {
-      imgLoader.onload = renderImageModal;
-      imgLoader.onerror = renderImageModal;
-    }
+    modal.innerHTML = `
+      <div class="modal-content-wrapper" style="position: relative; max-width: 90vw; max-height: 70dvh; display: flex; align-items: center; justify-content: center;">
+        <button onclick="closeImageModal()" style="
+          position: absolute; top: -15px; right: -15px; width: 40px; height: 40px;
+          background: #ef4444; color: #ffffff; border: 2px solid #ffffff; border-radius: 50%;
+          font-size: 22px; font-weight: bold; line-height: 1; cursor: pointer; z-index: 10000000;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        ">&times;</button>
+        <img src="${cleanSrc}" alt="${title || 'Producto'}" style="
+          max-width: 85vw; max-height: 65dvh; width: auto; height: auto;
+          object-fit: contain; border-radius: 12px; background: #000; display: block !important;
+        " />
+      </div>
+    `;
+    revealModal();
   }
 }
 
@@ -196,7 +193,6 @@ function setupEventListeners() {
   document.getElementById("close-cart-btn")?.addEventListener("click", closeCartModal);
   document.getElementById("btn-wompi-pay")?.addEventListener("click", handleWompiCheckout);
   
-  // Delegación de eventos para cerrar el modal de medios al hacer clic afuera
   document.body.addEventListener("click", (e) => {
     const modal = document.getElementById("image-modal");
     if (modal && e.target === modal) {
