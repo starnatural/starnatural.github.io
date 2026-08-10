@@ -1,31 +1,17 @@
 {
-  "name": "Star Natural • App",
-  "short_name": "Star Natural • App",
-  "description": "Star Natural • App.",
+  "short_name": "StarNatural",
+  "name": "Star Natural App Tienda Oficial",
+  "icons": [
+    {
+      "src": "https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp",
+      "type": "image/webp",
+      "sizes": "512x512"
+    }
+  ],
   "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#0d9488",
-  "categories": ["shopping", "health"],
- "icons": [
-    {
-      "src": "./icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "./"
+}
