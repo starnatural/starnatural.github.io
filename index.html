@@ -74,7 +74,7 @@
   <link rel="stylesheet" href="./public/assets/css/checkout.css">
 
   <!-- SDK Wompi -->
-  <script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
+  <script src="https://checkout.wompi.co/widget.js"></script>
 </head>
 <body>
 
@@ -86,7 +86,7 @@
         <span class="brand-name">StarNatural<span class="brand-ext">.app</span></span>
       </a>
 
-      <button id="cart-icon-btn" class="cart-btn" style="display: flex; align-items: center; gap: 6px;">
+      <button id="cart-icon-btn" type="button" class="cart-btn" style="display: flex; align-items: center; gap: 6px;">
         <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f6d2/512.webp" class="animated-emoji" alt="Carrito" style="width: 24px; height: 24px;">
         <span>Carrito (<span id="cart-count">0</span>)</span>
       </button>
@@ -100,7 +100,7 @@
         <strong>Instala StarNatural.app</strong>
         <span>Accede más rápido desde tu pantalla de inicio</span>
       </div>
-      <button id="btn-install-app" class="btn-install">Instalar</button>
+      <button id="btn-install-app" type="button" class="btn-install">Instalar</button>
     </div>
   </div>
 
@@ -112,12 +112,12 @@
       <p>Productos con registro sanitario, envío seguro a toda Colombia y pago protegido.</p>
     </section>
 
-    <!-- Buscador de Ancho Completo con Lupa Animada -->
+    <!-- Buscador de Ancho Completo -->
     <div class="search-container">
       <div class="search-input-wrapper">
         <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f50e/512.webp" alt="Lupa de Búsqueda" class="search-animated-icon" />
         <input type="text" id="product-search-input" placeholder="Buscar producto, beneficio o ingrediente..." aria-label="Buscar productos" />
-        <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Limpiar búsqueda">&times;</button>
+        <button id="clear-search-btn" type="button" class="clear-search-btn hidden" aria-label="Limpiar búsqueda">&times;</button>
       </div>
     </div>
 
@@ -135,7 +135,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3>Tu Carrito de Compras</h3>
-        <button id="close-cart-btn" class="close-btn">&times;</button>
+        <button id="close-cart-btn" type="button" class="close-btn">&times;</button>
       </div>
 
       <div id="cart-items-container" class="cart-items">
@@ -148,11 +148,11 @@
           <strong id="cart-total">$0 COP</strong>
         </div>
 
-        <!-- Datos de Envío -->
-        <div class="shipping-form">
+        <!-- Formulario de Envío Corregido -->
+        <form id="shipping-form" class="shipping-form" onsubmit="event.preventDefault();">
           <div class="checkout-form">
             <h3>Datos de Envío y Facturación</h3>
-            <input type="text" id="customer-name" placeholder="Nombre completo o Razon Social" required />
+            <input type="text" id="customer-name" placeholder="Nombre completo o Razón Social" required />
             <input type="text" id="customer-id" placeholder="Cédula (CC) o NIT" required />
             <input type="email" id="customer-email" placeholder="Correo electrónico" required />
             <input type="tel" id="customer-phone" placeholder="Teléfono / WhatsApp" required />
@@ -160,23 +160,23 @@
             <input type="text" id="customer-address" placeholder="Dirección completa y barrio" required />
             <textarea id="customer-notes" placeholder="Notas adicionales (ej: Apto 302, dejar en portería)" rows="2"></textarea>
           </div>
-        </div>
 
-        <button id="btn-wompi-pay" class="btn-checkout">
-          🔒 Pagar con Wompi (Nequi / PSE / Tarjeta)
-        </button>
+          <button id="btn-wompi-pay" type="submit" class="btn-checkout">
+            🔒 Pagar con Wompi (Nequi / PSE / Tarjeta)
+          </button>
+        </form>
       </div>
     </div>
   </div>
 
   <!-- Botón Volver Arriba -->
-  <button id="btn-back-to-top" class="back-to-top hidden" aria-label="Volver arriba">
+  <button id="btn-back-to-top" type="button" class="back-to-top hidden" aria-label="Volver arriba">
     ↑
   </button>
 
   <!-- Modal de Confirmación / Recibo -->
-  <div id="receipt-modal" class="cart-modal hidden">
-    <div class="cart-modal-content" style="background: #ffffff; width: 100%; max-width: 500px; border-radius: 12px; padding: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+  <div id="receipt-modal" class="modal-overlay hidden">
+    <div class="modal-content" style="background: #ffffff; width: 100%; max-width: 500px; border-radius: 12px; padding: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
       <div style="text-align: center; margin-bottom: 1rem;">
         <span style="font-size: 3rem;">🎉</span>
         <h3 style="margin: 0.5rem 0 0; color: #166534;">¡Pago Confirmado!</h3>
@@ -188,22 +188,22 @@
       </div>
 
       <div style="margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem;">
-        <a id="btn-whatsapp-copy" href="#" target="_blank" class="btn-add-cart" style="background-color: #25D366; text-decoration: none; text-align: center; display: block; padding: 0.8rem; border-radius: 6px; color: #fff; font-weight: bold;">
+        <a id="btn-whatsapp-copy" href="#" target="_blank" rel="noopener" class="btn-add-cart" style="background-color: #25D366; text-decoration: none; text-align: center; display: block; padding: 0.8rem; border-radius: 6px; color: #fff; font-weight: bold;">
           📲 Enviar copia por WhatsApp (Opcional)
         </a>
-        <button onclick="closeReceiptModal()" class="qty-btn" style="width: 100%; padding: 0.8rem; background: #e2e8f0; color: #334155; font-weight: 600; border: none; border-radius: 6px; cursor: pointer;">
+        <button type="button" onclick="closeReceiptModal()" class="qty-btn" style="width: 100%; padding: 0.8rem; background: #e2e8f0; color: #334155; font-weight: 600; border: none; border-radius: 6px; cursor: pointer;">
           Cerrar y volver a la tienda
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ÚNICO MODAL DE VISTA RÁPIDA (MULTIMEDIA) -->
+  <!-- Modal de Vista Rápida -->
   <div id="image-modal" class="modal-overlay hidden" onclick="closeMediaModal()">
     <div class="modal-media-wrapper" onclick="event.stopPropagation()">
-      <button class="modal-close-btn" onclick="closeMediaModal()">&times;</button>
+      <button type="button" class="modal-close-btn" onclick="closeMediaModal()">&times;</button>
       <div id="modal-media-content">
-        <!-- El JavaScript inyecta aquí la imagen o el video -->
+        <!-- Inyección JS -->
       </div>
     </div>
   </div>
@@ -218,13 +218,13 @@
     <p class="sub">Productos Naturales | www.StarNatural.co</p>
   </footer>
 
-  <!-- Módulos JavaScript -->
-  <script src="public/assets/js/products.js"></script>
-  <script src="public/assets/js/cart.js"></script>
-  <script src="public/assets/js/ui.js"></script>
-  <script src="public/assets/js/checkout.js"></script>
-  <script src="public/assets/js/app.js"></script>
-  <script src="public/assets/js/script.js"></script>
+  <!-- Módulos JavaScript con soporte defer y rutas corregidas -->
+  <script src="./public/assets/js/products.js" defer></script>
+  <script src="./public/assets/js/cart.js" defer></script>
+  <script src="./public/assets/js/ui.js" defer></script>
+  <script src="./public/assets/js/checkout.js" defer></script>
+  <script src="./public/assets/js/app.js" defer></script>
+  <script src="./public/assets/js/script.js" defer></script>
 </body>
 
 </html>
