@@ -90,3 +90,8 @@ function closeMediaModal() {
     if (contentContainer) contentContainer.innerHTML = "";
   }
 }
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof renderProducts === "function") {
+    renderProducts();
+  }
+});
