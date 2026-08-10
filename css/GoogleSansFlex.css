@@ -10,8 +10,6 @@
   font-display: swap;
   src: url('../fonts/GoogleSansFlex.woff2') format('woff2-variations'),
        url('../fonts/GoogleSansFlex.woff2') format('woff2'),
-       url('../fonts/GoogleSansFlex.ttf') format('truetype-variations'),
-       url('../fonts/GoogleSansFlex.ttf') format('truetype');
 }
 
 /* Aplicación Global */
