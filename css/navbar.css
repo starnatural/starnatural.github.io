@@ -170,3 +170,64 @@
 .back-to-top:active {
   transform: scale(0.92);
 }
+/* Wrapper principal de la barra de búsqueda */
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* El input debe ser transparente para dejar ver el placeholder debajo cuando esté vacío */
+#product-search-input {
+  width: 100%;
+  background: transparent;
+  z-index: 2; /* Por encima del placeholder */
+  position: relative;
+}
+
+/* Contenedor enmascarado del Placeholder */
+.animated-placeholder-wrapper {
+  position: absolute;
+  left: 45px; /* Ajusta según el ancho de tu icono de lupa */
+  right: 40px;
+  height: 24px;
+  overflow: hidden;
+  pointer-events: none; /* Permite hacer click a través del placeholder hacia el input */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Pista de texto deslizable */
+.animated-placeholder-track {
+  display: flex;
+  flex-direction: column;
+  animation: slidePlaceholder 10s infinite ease-in-out;
+}
+
+.animated-placeholder-track span {
+  height: 24px;
+  line-height: 24px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+/* Oculta el placeholder cuando el usuario escribe o enfoca el input */
+.search-input-wrapper.active .animated-placeholder-wrapper,
+.search-input-wrapper.has-value .animated-placeholder-wrapper {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Keyframes para el desplazamiento vertical (Ajustado para 5 frases) */
+@keyframes slidePlaceholder {
+  0%, 15% { transform: translateY(0); }
+  20%, 35% { transform: translateY(-24px); }
+  40%, 55% { transform: translateY(-48px); }
+  60%, 75% { transform: translateY(-72px); }
+  80%, 95% { transform: translateY(-96px); }
+  100% { transform: translateY(0); }
+}
