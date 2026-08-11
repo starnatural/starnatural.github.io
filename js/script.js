@@ -160,3 +160,41 @@ if (isVideo) {
     </video>
   `;
 }
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('product-search-input');
+  const searchWrapper = document.querySelector('.search-input-wrapper');
+  const clearBtn = document.getElementById('clear-search-btn');
+
+  if (!searchInput || !searchWrapper) return;
+
+  // Manejar foco (cuando el usuario hace clic en el input)
+  searchInput.addEventListener('focus', () => {
+    searchWrapper.classList.add('active');
+  });
+
+  // Manejar cuando pierde el foco
+  searchInput.addEventListener('blur', () => {
+    searchWrapper.classList.remove('active');
+  });
+
+  // Manejar cuando se escribe texto
+  searchInput.addEventListener('input', () => {
+    if (searchInput.value.trim().length > 0) {
+      searchWrapper.classList.add('has-value');
+      if (clearBtn) clearBtn.classList.remove('hidden');
+    } else {
+      searchWrapper.classList.remove('has-value');
+      if (clearBtn) clearBtn.classList.add('hidden');
+    }
+  });
+
+  // Evento para limpiar la búsqueda
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchWrapper.classList.remove('has-value');
+      clearBtn.classList.add('hidden');
+      searchInput.focus();
+    });
+  }
+});
