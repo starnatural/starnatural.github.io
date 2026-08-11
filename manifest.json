@@ -3,7 +3,7 @@
   "name": "Star Natural • App",
   "icons": [
     {
-      "src": "https://fonts.gstatic.com/s/e/notoemoji/latest/2b50/512.webp",
+      "src": "icons/2b50_512.webp",
       "type": "image/webp",
       "sizes": "512x512"
     }
