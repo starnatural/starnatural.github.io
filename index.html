@@ -70,16 +70,28 @@
       <p>Productos con registro sanitario, envío seguro a toda Colombia y pago protegido.</p>
     </section>
 
-    <!-- Buscador de Ancho Completo con Lupa Animada -->
-    <div class="search-container">
-      <div class="search-input-wrapper">
-        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f50e/512.webp" alt="Lupa de Búsqueda"
-          class="search-animated-icon" />
-        <input type="text" id="product-search-input" placeholder="Buscar producto, beneficio o ingrediente..."
-          aria-label="Buscar productos" />
-        <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Limpiar búsqueda">&times;</button>
+   <!-- Buscador de Ancho Completo con Placeholder Animado Vertical (Tipo Temu/Amazon) -->
+<div class="search-container">
+  <div class="search-input-wrapper">
+    <!-- LUPA ANIMADA -->
+    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f50e/512.webp" alt="Lupa de Búsqueda" class="search-animated-icon" />
+    
+    <input type="text" id="product-search-input" aria-label="Buscar productos" autocomplete="off" />
+    
+    <!-- PLACEHOLDER SLIDER VERTICAL -->
+    <div class="animated-placeholder-wrapper" id="placeholder-wrapper">
+      <div class="animated-placeholder-track" id="placeholder-track">
+        <span>Buscar "Colágeno Hidrolizado"...</span>
+        <span>Buscar "Vitamina C + Zinc"...</span>
+        <span>Buscar "Omega 3 Aceite de Pescado"...</span>
+        <span>Buscar "Tratamientos para el insomnio"...</span>
+        <span>Buscar "Suplementos de Magnesio"...</span>
       </div>
     </div>
+
+    <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Limpiar búsqueda">&times;</button>
+  </div>
+</div>
 
     <!-- Catálogo de Productos -->
     <section class="catalog-section">
